@@ -1,0 +1,29 @@
+<tr class="list-group-item"> 
+  <div class="row">
+      <td class="col">
+        <span class="badge text-bg-secondary">{{review.fecha | date:'d'}}</span>
+      </td>
+      <td class="col">
+        <img src="{{peli.foto}}" class="img-thumbnail" width="100px" height="200px" alt="">
+      </td>
+      <td class="col">
+        {{peli.titulo}}
+      </td>
+      <td class="col">
+          {{peli.year}}
+      </td>
+      <td class="col">
+          {{getEstrellas()}}
+      </td>
+      <td class="col">
+        <i *ngIf="review.gustado == 1" class="fas fa-heart">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+          </svg>
+        </i>
+      </td>
+      <td class="col">
+        <button type="button" class="btn btn-danger" [routerLink]="['/review', currentUsername | async, peli.id]">Editar</button>
+      </td>
+  </div>
+</tr>

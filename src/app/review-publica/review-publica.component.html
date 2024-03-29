@@ -1,0 +1,6 @@
+<div class="container">
+    <h2>{{resena.titulo}}</h2>
+    <h3>{{resena.usuario}}</h3>
+    <p *ngIf="resena.calificacion != null">{{getEstrellas(resena.calificacion)}}</p>
+    <p *ngIf="resena.comentario != null">{{resena.comentario}}</p>
+</div>

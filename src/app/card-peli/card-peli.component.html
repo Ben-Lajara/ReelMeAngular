@@ -1,0 +1,11 @@
+<div class="card text-center bg-dark text-white mb-2 mr-2" style="height: 600px; width: 300px;">
+  <a>
+    <img src="{{peli.Poster}}" class="card-img-top">
+  </a>
+  <div class="card-body">
+    <h4 class="card-text">{{peli.Title}}</h4>
+    <p class="card-text">{{peli.Year}}</p>
+    <button type="button" routerLink="/details/{{peli.imdbID}}" class="btn btn-primary">Detalles</button>
+    <button type="button" *ngIf="(isLoggedIn | async)" [routerLink]="['/review', currentUsername | async, peli.imdbID]" class="btn btn-success">Reseñar</button>
+  </div>
+</div>

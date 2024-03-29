@@ -1,0 +1,7 @@
+<div class="card text-center bg-dark text-white mb-2 mr-2" style="height: 300px; width: 300px;">
+    <div class="card-body">
+      <a [routerLink]="['/about', usuario.nombre]"><h4 class="card-text">{{usuario.nombre}}</h4></a>
+      <button type="button" *ngIf="!usuario.seguido" class="btn btn-primary" (click)="seguir(username, usuario.nombre)">Seguir</button>
+      <button type="button" *ngIf="usuario.seguido" class="btn btn-danger" (click)="dejarDeSeguir(username, usuario.nombre)">Siguiendo</button>
+    </div>
+</div>

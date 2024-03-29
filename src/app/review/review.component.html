@@ -1,0 +1,29 @@
+<!-- 
+    Versión tosca de la pantalla de reseña. 
+    La idea es que tenga un sistema de estrellas y un botón para indicar si le ha gustado. 
+-->
+<div class="container bg-dark text-white">
+    <form (ngSubmit)="onSubmit()">
+        <h2>{{pelicula().Title}}</h2>
+        <div class="form-group">
+            <label for="comentario">Reseña</label>
+            <textarea class="form-control" id="comentario" rows="3" name="comentario" [(ngModel)]="comentario"></textarea>
+        </div>
+        <br>
+        <div>
+            <input type="number" name="calificacion" [(ngModel)]="calificacion">
+            <input class="form-check-input" type="checkbox" name="gustado" [(ngModel)]="gustado">
+            <label class="form-check-label" for="gustado">Gustado</label>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="fecha">Fecha</label>
+            <input type="date" id="fecha" class="form-control" name="fecha" [(ngModel)]="fecha">
+        </div>
+        <br>
+        <div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </div>
+    </form>
+</div>
+

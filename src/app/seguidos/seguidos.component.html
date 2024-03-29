@@ -1,0 +1,13 @@
+<!-- 
+    Por ahora se muestran como tarjetas, pero se podría cambiar a lista como muchas redes sociales.
+-->
+<div class="container">
+    <h4>Seguidos por {{username}}</h4>
+    <div class="row row-cols-md-3">
+        <ng-container *ngFor="let seguido of seguidos">
+            <ng-container *ngIf="seguido.usuarioSeguido.nombre !== username">
+                <app-card-usuario [usuario]="seguido.usuarioSeguido" [username]="username"></app-card-usuario>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>

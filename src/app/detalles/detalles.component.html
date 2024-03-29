@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="row" *ngIf="pelicula(); else loading">
+      <div class="col-7">
+        <dl>
+          <dt>Título</dt>
+          <dd>{{pelicula().Title}}</dd>
+        </dl>
+        <dl>
+          <dt>Año</dt>
+          <dd>{{pelicula().Year}}</dd>
+        </dl>
+        <dl>
+          <dt>Duración</dt>
+          <dd>{{pelicula().Runtime}}</dd>
+        </dl>
+        <dl>
+          <dt>Géneros</dt>
+          <dd>{{pelicula().Genre}}</dd>
+        </dl>
+        <dl>
+          <dt>Dirección</dt>
+          <dd>{{pelicula().Director}}</dd>
+        </dl>
+        <dl>
+          <dt>Reparto</dt>
+          <dd>{{pelicula().Actors}}</dd>
+        </dl>
+        <dl>
+          <dt>Sinopsis</dt>
+          <dd>{{pelicula().Plot}}</dd>
+        </dl>
+        <dl>
+          <dt>País</dt>
+          <dd>{{pelicula().Country}}</dd>
+        </dl>
+        <dl>
+          <dt>Reseñas</dt>
+          <dd *ngFor="let resena of resenas">{{resena.nomUsuario.nombre}}: {{getEstrellas(resena.calificacion)}}</dd>
+        </dl>
+      </div>
+      <div class="col-5">
+        <img src="{{pelicula().Poster}}" class="card-img-top">
+      </div>
+  </div>
+    
+    <ng-template #loading>Loading...</ng-template>
+</div>
+  

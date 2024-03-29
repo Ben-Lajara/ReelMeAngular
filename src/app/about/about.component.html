@@ -1,0 +1,14 @@
+<!-- Versión tosca del componente, seguramente se le añadirá más información -->
+<div class="container bg-dark">
+    <div *ngIf="isLoading">
+        <p>Cargando...</p>
+    </div>
+
+    <div *ngIf="!isLoading">
+        <h3>{{datos.nombre}}</h3>
+        <p>{{datos.vistas}} películas vistas</p>
+        <a [routerLink]="['/about', username, 'followers']">{{datos.seguidores}} seguidores</a>
+        <br>
+        <a [routerLink]="['/about', username, 'following']">{{datos.seguidos}} seguidos</a>
+    </div>
+</div>
