@@ -28,6 +28,8 @@ import { SeguidoresComponent } from './seguidores/seguidores.component';
 import { SeguidosComponent } from './seguidos/seguidos.component';
 import { SocialComponent } from './social/social.component';
 import { CardUsuarioComponent } from './card-usuario/card-usuario.component';
+import { AjustesComponent } from './ajustes/ajustes.component';
+import { BarraFiltrosBuscadorComponent } from './barra-filtros-buscador/barra-filtros-buscador.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { CardUsuarioComponent } from './card-usuario/card-usuario.component';
     SeguidoresComponent,
     SeguidosComponent,
     SocialComponent,
-    CardUsuarioComponent
+    CardUsuarioComponent,
+    AjustesComponent,
+    BarraFiltrosBuscadorComponent
   ],
   imports: [
     BrowserModule,

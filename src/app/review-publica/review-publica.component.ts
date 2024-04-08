@@ -37,4 +37,6 @@ export class ReviewPublicaComponent implements OnInit {
     return estrellas;
   }
 
+  
+
 }

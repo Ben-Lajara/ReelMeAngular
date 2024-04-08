@@ -17,7 +17,15 @@ export class AuthService {
     return this.username.asObservable();
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    const authToken = localStorage.getItem('authToken');
+    const username = localStorage.getItem('username');
+  
+    if (authToken && username) {
+      this.loggedIn.next(true);
+      this.username.next(username);
+    }
+  }
 
   register(nombre: string, pword: string): Observable<any> {
     return this.http.post('http://localhost:8080/register', { nombre, pword });
@@ -35,10 +43,14 @@ export class AuthService {
     );
   }
 
+  
+
   logout(): void {
     console.log('Logged out');
     this.loggedIn.next(false);
     this.username.next('');
-    // Remove the token from local storage or invalidate it on the server
+    // Elimina el token de autenticación y el nombre de usuario de localStorage
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('username');
   }
 }

@@ -13,6 +13,7 @@ export class CardReviewComponent implements OnInit {
   
   isLoggedIn: Observable<boolean>;
   currentUsername: Observable<string>;
+  starsCache: { [key: number]: string } = {};
 
   constructor(private authService: AuthService) {
     this.isLoggedIn = this.authService.isLoggedIn;
@@ -29,5 +30,26 @@ export class CardReviewComponent implements OnInit {
       estrellas += '⭐';
     }
     return estrellas;
+  }
+
+  getStars(i: number): string{
+    if (this.starsCache[i] !== undefined) {
+      return this.starsCache[i];
+    }
+
+    let starClass: string;
+    if (i < this.review.calificacion) {
+      console.log('Estrella llena');
+      starClass = 'bi bi-star-fill'; // Estrella llena y de color amarillo
+    } else if (i - 0.5 == this.review.calificacion) {
+      console.log('Mitad de estrella');
+      starClass = 'bi bi-star-half'; // Mitad de estrella y de color amarillo
+    } else {
+      console.log('Estrella vacía');
+      starClass = 'bi bi-star'; // Estrella vacía y de color oscuro
+    }
+
+    this.starsCache[i] = starClass;
+    return starClass;
   }
 }

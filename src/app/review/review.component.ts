@@ -21,12 +21,16 @@ export class ReviewComponent implements OnInit {
   gustado = false;
   resena: any;
   editado: boolean = false;
+  hoverState = 0
+ 
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.username = params['username'];
       this.busquedaID();
+     
+      console.log(this.fecha)
 
       this.getResena(this.username, this.id).subscribe(() => {
         console.log(this.editado);
@@ -86,6 +90,11 @@ export class ReviewComponent implements OnInit {
     this.enviarResena(this.fecha, this.calificacion, this.comentario, this.gustado, this.id, this.username, this.pelicula().Title, this.pelicula().Year, this.pelicula().Poster);
   }
 
+  updateHoverState(event: MouseEvent, star: number) {
+    const rect = (event.target as HTMLElement).getBoundingClientRect();
+    const offsetX = event.clientX - rect.left;
+    this.hoverState = offsetX < rect.width / 2 ? star - 0.5 : star;
+  }
   
 
 }

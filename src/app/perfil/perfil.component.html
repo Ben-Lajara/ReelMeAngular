@@ -3,25 +3,27 @@
     <h3>Actividad reciente de las cuentas que sigues.</h3>
     <div class="d-flex flex-wrap justify-content-start">
         <div *ngFor="let seguido of seguidos">
-            <div class="card text-center bg-dark text-white mb-2 mr-2" style="height: 600px; width: 300px;">
+            <div class="card text-center bg-dark text-white mb-3 mr-3" style="height: 600px; width: 300px; margin-right: 20px;">
                 <a>
-                <img src="{{seguido.foto}}" class="card-img-top">
+                <img src="{{seguido.foto}}" class="card-img-top" style="width: 298px; height: 450px;">
                 </a>
                 <div class="card-body">
                 <h4>{{seguido.usuarioSeguido}}</h4>
                 <h5 class="card-text">{{seguido.titulo}}</h5>
-                <p class = "card-text">{{getEstrellas(seguido.calificacion)}} &nbsp; <i *ngIf="seguido.gustado == 1" class="fas fa-heart">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
-                    </svg>
-                  </i> &nbsp;
-                  <i *ngIf="seguido.comentario != null" [routerLink]="['/reviewed', seguido.usuarioSeguido, seguido.idPelicula]">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-text-left" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"/>
-                      </svg>
-                  </i>
-                </p>                
-                </div>
+                <div class = "row">
+                  <td class="col me-3">
+                    <span *ngFor="let i of [1, 2, 3, 4, 5]">
+                      <i *ngIf="seguido.calificacion % 1 == 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= seguido.calificacion}"></i>
+                      <i *ngIf="seguido.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= seguido.calificacion}"></i>
+                      <span *ngIf="seguido.calificacion % 1 != 0 && i == (seguido.calificacion - seguido.calificacion % 1) + 1" class="text-warning fs-4 fw-bold">&#189;</span>
+                    </span>
+                    &nbsp;
+                    <i *ngIf="seguido.gustado == 1" class="bi bi-heart-fill"></i> 
+                    &nbsp;
+                    <i *ngIf="seguido.comentario != null" [routerLink]="['/reviewed', seguido.usuarioSeguido, seguido.idPelicula]" class="bi bi-text-left"></i>
+                  </td>
+                </div>                
+              </div>
             </div>
             
         </div>

@@ -9,14 +9,21 @@ import { AuthService } from '../auth.service';
 export class RegistroComponent {
   nombre='';
   pword='';
+  pword2='';
 
   constructor(private authService: AuthService) { }
 
   onSubmit(): void {
-    this.authService.register(this.nombre, this.pword).subscribe(
-      success => console.log('Registration Success'),
-      error => console.log('Registration Error', error.error)
-    );
+    if (this.pword !== this.pword2) {
+      console.log('Las contraseñas no coinciden');
+      return;
+    }else{
+      this.authService.register(this.nombre, this.pword).subscribe(
+        success => console.log('Registration Success'),
+        error => console.log('Registration Error', error.error)
+      );
+    }
+    
   }
 
 }

@@ -19,7 +19,6 @@ export class AuthGuard implements CanActivate {
         switchMap(isLoggedIn => {
           if (!isLoggedIn) {
             console.log('Not logged in');
-            // redirect to login page
             this.router.navigate(['/login']);      
             return of(false);
           } else {
@@ -28,7 +27,6 @@ export class AuthGuard implements CanActivate {
                 console.log('User: ' + user);
                 if (usuarioRuta === user) {
                   console.log('Logged in as correct user');
-                  // Show restricted access message and return false
                   //this.alertService.showAlert('Access restricted');
                   return true;
                 } else {

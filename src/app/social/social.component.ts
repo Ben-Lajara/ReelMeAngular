@@ -22,7 +22,7 @@ export class SocialComponent implements OnInit {
     if (nombre.trim() === '') {
       this.getUsuarios().subscribe((res: any) => {
         this.usuarios = res.map((usuario: any) => {
-          // Comprueba si el usuario está en la lista de seguidos
+          // Para ver si el usuario está en la lista de seguidos
           usuario.seguido = this.seguidos.some((seguido: any) => seguido.usuarioSeguido.nombre === usuario.nombre);
           
           return usuario;
@@ -39,7 +39,7 @@ export class SocialComponent implements OnInit {
           })
       ).subscribe((res: any) => {
         this.usuarios = res.map((usuario: any) => {
-          // Comprueba si el usuario está en la lista de seguidos
+          // Para ver si el usuario está en la lista de seguidos
           usuario.seguido = this.seguidos.some((seguido: any) => seguido.usuarioSeguido.nombre === usuario.nombre);
           
           return usuario;

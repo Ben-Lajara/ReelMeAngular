@@ -1,29 +1,50 @@
 <!-- 
-    Versión tosca de la pantalla de reseña. 
-    La idea es que tenga un sistema de estrellas y un botón para indicar si le ha gustado. 
+    Podría ser un modal.
 -->
-<div class="container bg-dark text-white">
-    <form (ngSubmit)="onSubmit()">
-        <h2>{{pelicula().Title}}</h2>
-        <div class="form-group">
-            <label for="comentario">Reseña</label>
-            <textarea class="form-control" id="comentario" rows="3" name="comentario" [(ngModel)]="comentario"></textarea>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-2">
+            <img src="{{pelicula().Poster}}" class="rounded card-img-top img-fluid" style="max-width: 100%;">
         </div>
-        <br>
-        <div>
-            <input type="number" name="calificacion" [(ngModel)]="calificacion">
-            <input class="form-check-input" type="checkbox" name="gustado" [(ngModel)]="gustado">
-            <label class="form-check-label" for="gustado">Gustado</label>
+        <div class="col-10">
+            <form (ngSubmit)="onSubmit()">
+                <h2>{{pelicula().Title}}</h2>
+                <div class="form-group">
+                    <label for="comentario">Reseña</label>
+                    <textarea class="form-control" id="comentario" rows="3" name="comentario" [(ngModel)]="comentario"></textarea>
+                </div>
+                <br>
+                <div class="row">
+                    <td class="col">
+                        <label for="calificacion">Calificación</label>
+                        <span *ngFor="let star of [1, 2, 3, 4, 5]; let i = index" id="calificacion">
+                            <button type="button" class="btn btn-default mr-1" 
+                                    (mouseover)="hoverState = i + 1" 
+                                    (mousemove)="updateHoverState($event, i + 1)"
+                                    (mouseleave)="hoverState = 0" 
+                                    (click)="calificacion = hoverState">
+                            <i class="h3 bi" [ngClass]="{'bi-star-fill': calificacion > i, 'bi-star-half': calificacion > i && calificacion < i + 1, 'bi-star': calificacion <= i}"></i>
+                            </button>
+                        </span>
+                    </td>
+                    <td class="col">
+                        <label for="gustado">Gustado</label>
+                        <button type="button" class="btn btn-default" (click)="gustado = !gustado" id="gustado">
+                            <i class="h3 bi" [ngClass]="{'bi-heart-fill text-warning': gustado, 'bi-heart': !gustado}"></i>
+                        </button>
+                    </td>
+                </div>
+                <br>
+                <div>
+                    <label for="fecha" class="mr-2">Vista el</label>
+                    <input type="date" id="fecha" class="form-control form-control-sm" name="fecha" [(ngModel)]="fecha">
+                </div> 
+                <br>
+                <div>
+                    <button type="submit" class="btn btn-success">Enviar</button>
+                </div>
+            </form>
         </div>
-        <br>
-        <div class="form-group">
-            <label for="fecha">Fecha</label>
-            <input type="date" id="fecha" class="form-control" name="fecha" [(ngModel)]="fecha">
-        </div>
-        <br>
-        <div>
-            <button type="submit" class="btn btn-primary">Enviar</button>
-        </div>
-    </form>
+    </div>
 </div>
 

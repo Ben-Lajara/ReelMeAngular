@@ -1,0 +1,14 @@
+i{
+    margin-right: 5px;
+}
+
+img:hover{
+    border: 2px solid white;
+}
+
+#usuario{
+    color: rgb(5, 225, 5);    
+}
+#usuario:hover{
+    color: white;
+}

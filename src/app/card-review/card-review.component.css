@@ -1,0 +1,19 @@
+.day-badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    background-color: darkgray;
+    font-size: 30px;
+}
+
+td {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+td{
+    font-size: 20px;
+}

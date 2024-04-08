@@ -11,15 +11,16 @@ export class LoginComponent {
   nombre='';
   pword='';
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router,) { }
 
   onSubmit(): void {
     this.authService.login(this.nombre, this.pword).subscribe(
         data => {
             if (data.status === 'success') {
                 localStorage.setItem('authToken', data.token); // guarda el token de autenticación
+                localStorage.setItem('username', this.nombre); // guarda el nombre de usuario
                 console.log('Login Success');
-                this.router.navigate(['/']);
+                this.router.navigate(['/profile', this.nombre]);
             } else {
                 console.log('Login Error', data.message);
             }

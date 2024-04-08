@@ -1,41 +1,46 @@
-<!-- Navbar en construcción, se mejorará más adelante -->
-<nav class="navbar bg-dark navbar-expand-lg" data-bs-theme="dark">
+<!-- Navbar mejorada, aún queda mejorar el apartado de perfil -->
+<nav class="navbar sticky-top bg-dark navbar-expand-lg" data-bs-theme="dark" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#">ReelMe</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a *ngIf="!(isLoggedIn | async)" class="nav-link" aria-current="home" href="#">Inicio</a>
           </li>
           <li class="nav-item">
-            <a routerLink="query" class="nav-link">Buscar</a>
+            <a *ngIf="(isLoggedIn | async)" [routerLink]="['/profile', currentUsername | async]" class="nav-link">Inicio</a>
           </li>
           <li class="nav-item">
-            <a *ngIf="(isLoggedIn | async)" [routerLink]="['/social', currentUsername | async]" class="nav-link">Social</a>
+            <a *ngIf="!(isLoggedIn | async)" routerLink="query" class="nav-link">Buscar</a>
           </li>
           <li class="nav-item">
+            <a *ngIf="(isLoggedIn | async)" [routerLink]="['/search', currentUsername | async]" class="nav-link">Buscar</a>
+          </li>
+          <!--<li class="nav-item">
             <a *ngIf="!(isLoggedIn | async)" routerLink="register" class="nav-link">Registrarse</a>
-          </li>
+          </li>-->
           <li class="nav-item">
-            <a *ngIf="!(isLoggedIn | async)" routerLink="login" class="nav-link">Iniciar sesión</a>
+            <a *ngIf="!(isLoggedIn | async)"  class="nav-link" data-bs-toggle="modal" data-bs-target="#loginModal">Iniciar sesión</a>
           </li>
-          <li class="nav-item">
-            <a *ngIf="(isLoggedIn | async)" (click)="logout()" class="nav-link">Logout</a>
-          </li>
+          
           <li class="nav-item">
             <a *ngIf="(isLoggedIn | async)" [routerLink]="['/journal', currentUsername | async]" class="nav-link">Diario</a>
           </li>
           <li class="nav-item">
-            <a *ngIf="(isLoggedIn | async)" [routerLink]="['/profile', currentUsername | async]" class="nav-link">Perfil</a>
+            <a *ngIf="(isLoggedIn | async)" [routerLink]="['/settings', currentUsername | async]" class="nav-link">Ajustes</a>
+          </li>
+          <li class="nav-item">
+            <a *ngIf="(isLoggedIn | async)" (click)="logout()" class="nav-link">Cerrar sesión</a>
           </li>
         </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        <div class="d-flex" *ngIf="(isLoggedIn | async)">
+          <a [routerLink]="['/settings', currentUsername | async]" class="nav-link">
+              <img [src]="'http://localhost:8080/uploads/PruebaPerfil.jpg'" alt="" height="30px" width="30px" class="rounded-circle">
+          </a>
+        </div>
       </div>
     </div>
   </nav>

@@ -1,7 +1,8 @@
-<div class="card text-center bg-dark text-white mb-2 mr-2" style="height: 300px; width: 300px;">
+<div class="card text-center bg-dark text-white mb-2 mr-2" style="height: 310px; width: 200px;">
+    <img *ngIf="usuario.perfil" [src]="'http://localhost:8080/uploads/' + usuario.perfil" class="card-img-top" alt="Perfil">   
     <div class="card-body">
-      <a [routerLink]="['/about', usuario.nombre]"><h4 class="card-text">{{usuario.nombre}}</h4></a>
-      <button type="button" *ngIf="!usuario.seguido" class="btn btn-primary" (click)="seguir(username, usuario.nombre)">Seguir</button>
-      <button type="button" *ngIf="usuario.seguido" class="btn btn-danger" (click)="dejarDeSeguir(username, usuario.nombre)">Siguiendo</button>
+      <a [routerLink]="['/about', usuario.nombre]" style="text-decoration:none; color: white; margin-bottom: 10px;"><h4 class="card-text">{{usuario.nombre}}</h4></a>
+      <button type="button" *ngIf="!usuario.seguido" class="btn btn-primary rounded-pill w-100" (click)="seguir(username, usuario.nombre)" style="margin-top: 10px;">Seguir</button>
+      <button type="button" *ngIf="usuario.seguido" class="btn btn-danger rounded-pill w-100" (click)="dejarDeSeguir(username, usuario.nombre)" style="margin-top: 10px;">Siguiendo</button>
     </div>
 </div>

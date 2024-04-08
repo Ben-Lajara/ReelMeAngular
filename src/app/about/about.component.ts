@@ -11,6 +11,8 @@ export class AboutComponent implements OnInit {
   username='';
   datos: any;
   isLoading = false;
+  actividadReciente: any[] = [];
+  resenasUsuario: any
   constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -21,6 +23,12 @@ export class AboutComponent implements OnInit {
       this.getUserData().subscribe((res: any) => {
         this.datos = res;
         this.isLoading = false;
+        this.getActividadReciente(this.username).subscribe((res: any) => {
+          this.actividadReciente = res;
+        });
+        this.getResenasUsuario(this.username).subscribe((res: any) => {
+          this.resenasUsuario = res;
+        })
       });
       
     });
@@ -30,4 +38,12 @@ export class AboutComponent implements OnInit {
     return this.http.get(`http://localhost:8080/about/${this.username}`)
   }
 
+  getActividadReciente(usuario: string){
+    return this.http.get(`http://localhost:8080/api/lastactivity/${usuario}`)	
+
+  }
+
+  getResenasUsuario(usuario: string){
+    return this.http.get(`http://localhost:8080/api/diario/${usuario}`)
+  }
 }

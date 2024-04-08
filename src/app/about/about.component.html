@@ -1,14 +1,64 @@
-<!-- Versión tosca del componente, seguramente se le añadirá más información -->
-<div class="container bg-dark">
+<!-- Versión un poco mejorada del componente, aún necesita más datos-->
+<div class="container">
     <div *ngIf="isLoading">
         <p>Cargando...</p>
     </div>
 
     <div *ngIf="!isLoading">
         <h3>{{datos.nombre}}</h3>
-        <p>{{datos.vistas}} películas vistas</p>
-        <a [routerLink]="['/about', username, 'followers']">{{datos.seguidores}} seguidores</a>
-        <br>
-        <a [routerLink]="['/about', username, 'following']">{{datos.seguidos}} seguidos</a>
+        <p>
+            {{datos.vistas}} películas vistas
+            &nbsp;
+            <a [routerLink]="['/about', username, 'followers']" style="text-decoration: none; color:white">{{datos.seguidores}} seguidores</a>
+            &nbsp;
+            <a [routerLink]="['/about', username, 'following']" style="text-decoration: none; color:white">{{datos.seguidos}} seguidos</a>
+        </p>
+        <ul class="nav nav-underline" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" id="actividad-tab" data-bs-toggle="tab" href="#actividad" role="tab" aria-controls="actividad" aria-selected="true">Actividad reciente</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="resenas-tab" data-bs-toggle="tab" href="#resenas" role="tab" aria-controls="resenas" aria-selected="false">Reseñas</a>
+            </li>
+          </ul>
+        <div class="tab-content m-2" id="myTabContent">
+            <div class="tab-pane fade show active" id="actividad" role="tabpanel" aria-labelledby="actividad-tab">
+                <div class="row">
+                    <div *ngFor="let resena of actividadReciente" class="col">
+                        <div class="card text-center bg-dark text-white mb-2 mr-2" style="height: 600px; width: 300px;">
+                            <a>
+                            <img src="{{resena.idPelicula.foto}}" class="card-img-top" style="width:298px; height:450px; object-fit: cover;">
+                            </a>
+                            <div class="card-body">
+                            <h5 class="card-text">{{resena.idPelicula.titulo}}</h5>
+                            <div class = "row">
+                            <td class="col me-3">
+                                <span *ngFor="let i of [1, 2, 3, 4, 5]">
+                                <i *ngIf="resena.calificacion % 1 == 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
+                                <i *ngIf="resena.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
+                                <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning fs-5 fw-bold">&#189;</span>
+                                </span>
+                                &nbsp;
+                                <i *ngIf="resena.gustado == 1" class="bi bi-heart-fill"></i> 
+                                &nbsp;
+                                <i *ngIf="resena.comentario != null" [routerLink]="['/reviewed', resena.nomUsuario.nombre, resena.idPelicula]" class="bi bi-text-left"></i>
+                            </td>
+                            </div>                
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="resenas" role="tabpanel" aria-labelledby="resenas-tab">
+                <div *ngFor="let resena of resenasUsuario">
+                    <a id="resena" [routerLink]="['/reviewed', resena.nomUsuario.nombre, resena.idPelicula]">{{resena.idPelicula.titulo}}</a> ({{resena.idPelicula.year}})  <span *ngFor="let i of [1, 2, 3, 4, 5]">
+                        <i *ngIf="resena.calificacion % 1 == 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
+                        <i *ngIf="resena.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
+                        <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning fs-5 fw-bold">&#189;</span>
+                        </span>
+                </div>
+            </div>
+        </div>
+       
     </div>
 </div>

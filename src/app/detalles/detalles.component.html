@@ -1,46 +1,116 @@
-<div class="container">
-  <div class="row" *ngIf="pelicula(); else loading">
-      <div class="col-7">
-        <dl>
-          <dt>Título</dt>
-          <dd>{{pelicula().Title}}</dd>
-        </dl>
-        <dl>
-          <dt>Año</dt>
-          <dd>{{pelicula().Year}}</dd>
-        </dl>
-        <dl>
-          <dt>Duración</dt>
-          <dd>{{pelicula().Runtime}}</dd>
-        </dl>
-        <dl>
-          <dt>Géneros</dt>
-          <dd>{{pelicula().Genre}}</dd>
-        </dl>
-        <dl>
-          <dt>Dirección</dt>
-          <dd>{{pelicula().Director}}</dd>
-        </dl>
-        <dl>
-          <dt>Reparto</dt>
-          <dd>{{pelicula().Actors}}</dd>
-        </dl>
-        <dl>
-          <dt>Sinopsis</dt>
-          <dd>{{pelicula().Plot}}</dd>
-        </dl>
-        <dl>
-          <dt>País</dt>
-          <dd>{{pelicula().Country}}</dd>
-        </dl>
-        <dl>
-          <dt>Reseñas</dt>
-          <dd *ngFor="let resena of resenas">{{resena.nomUsuario.nombre}}: {{getEstrellas(resena.calificacion)}}</dd>
-        </dl>
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-3">
+      <img src="{{pelicula().Poster}}" class="rounded card-img-top img-fluid" style="max-width: 100%;">
+      <p class="text-center"><i class="bi bi-eye-fill" style = "color:rgb(21, 223, 21);"></i> {{resenas.length}}  <i class="bi bi-heart-fill" style = "color:orange;"></i> {{getGustados()}}</p>
+      
+    </div>
+    <div class="col-6">
+      <dl>
+        <dt><h2>{{pelicula().Title}} ({{pelicula().Year}}), {{pelicula().Director}}</h2></dt>
+      </dl>
+      <dl>
+        <dd>{{pelicula().Runtime}}</dd>
+      </dl>
+      <dl>
+        <dd>{{pelicula().Plot}}</dd>
+      </dl>
+      
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active text-decoration-none" id="generos-tab" data-bs-toggle="tab" data-bs-target="#generos" type="button" role="tab" aria-controls="generos" aria-selected="true">Géneros</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link text-decoration-none" id="reparto-tab" data-bs-toggle="tab" data-bs-target="#reparto" type="button" role="tab" aria-controls="reparto" aria-selected="false">Reparto</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link text-decoration-none" id="pais-tab" data-bs-toggle="tab" data-bs-target="#pais" type="button" role="tab" aria-controls="pais" aria-selected="false">Países</button>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="generos" role="tabpanel" aria-labelledby="generos-tab">
+          <ul class="list-group">
+            <li style="list-style-type: none;" *ngFor="let genero of pelicula().Genre.split(', ')">{{genero}}</li>
+          </ul>
+        </div>
+        <div class="tab-pane fade" id="reparto" role="tabpanel" aria-labelledby="reparto-tab">
+          <ul class="list-group">
+            <li style="list-style-type: none;" *ngFor="let actor of pelicula().Actors.split(', ')">{{actor}}</li>
+          </ul>
+        </div>
+        <div class="tab-pane fade" id="pais" role="tabpanel" aria-labelledby="pais-tab">
+          <ul class="list-group">
+            <li style="list-style-type: none;" *ngFor="let pais of pelicula().Country.split(', ')">{{pais}}</li>
+          </ul>
+        </div>
       </div>
-      <div class="col-5">
-        <img src="{{pelicula().Poster}}" class="card-img-top">
+      <dl class="mt-3" *ngIf="resenasSeguidos.length > 0">
+        <dt style="border-bottom: 1px solid #ffffff; margin-bottom: 10px;">Vista por</dt>
+        <dd class="d-flex flex-row flex-wrap">
+          <ng-container *ngFor="let resena of resenasSeguidos">
+            <table style="margin-right: 10px;">
+              <tr>
+                  <td class="text-center">
+                      <img id="seguidoResena" [src]="'http://localhost:8080/uploads/' + resena.perfil" alt="" height="40px" width="40px" class="rounded-circle" [routerLink]="['/reviewed', resena.usuario, pelicula().imdbID]" >
+                  </td>
+              </tr>
+              <tr>
+                  <td class="text-center">
+                      <span class="col-auto" *ngFor="let i of [1, 2, 3, 4, 5]">
+                          <i *ngIf="resena.calificacion % 1 == 0" style="font-size: x-small;" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
+                          <i *ngIf="resena.calificacion % 1 != 0" style="font-size: x-small;" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
+                          <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" style="font-size: x-small;" class="text-warning fw-bold">&#189;</span>
+                      </span>
+                  </td>
+              </tr>
+            </table>
+          </ng-container>
+        </dd>
+        
+      </dl>
+
+      <dl class="mt-3">
+        <dt style="border-bottom: 1px solid #ffffff;">Reseñas</dt>
+        <dd *ngFor="let resena of resenas" style="margin-top: 10px;">
+          <img [src]="'http://localhost:8080/uploads/' + resena.nomUsuario.perfil" alt="" height="40px" width="40px" class="rounded-circle">&nbsp;<a id="resenaUsuario" style="text-decoration:none;" [routerLink]="['/reviewed', resena.nomUsuario.nombre, pelicula().imdbID]">Reseña de </a> <a id="usuario" [routerLink]="['/about', resena.nomUsuario.nombre]">{{resena.nomUsuario.nombre}}</a>: <span class="col-auto" *ngFor="let i of [1, 2, 3, 4, 5]">
+            <i *ngIf="resena.calificacion % 1 == 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
+                    <i *ngIf="resena.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
+                    <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning fs-6 fw-bold">&#189;</span>
+          </span>
+        </dd>
+      </dl>
+    </div>
+    <div class="col-3">
+      <div *ngIf="currentUsername!=''" class="card text-bg-dark">
+        <div class="card-header">
+          <div class="row justify-content-center gap-2">
+            <td class="col-auto">
+              <i class="h3 bi text-info" [ngClass]="{'bi-eye-fill': vista, 'bi-eye': !vista}"></i>
+            </td>
+            <td class="col-auto">
+              <i class="h3 text-warning bi" [ngClass]="{'bi-heart-fill': gustado, 'bi-heart': !gustado}"></i>
+            </td>   
+          </div>   
+        </div>        
+        <div class="card-body">
+          <div class="row justify-content-center gap-2">
+            <td class="col-auto" *ngFor="let i of [1, 2, 3, 4, 5]">
+              <i *ngIf="calificacion % 1 == 0" class="h4 text-warning bi" [ngClass]="{'bi-star-fill': i <= calificacion, 'bi-star': i > calificacion}"></i>
+              <i *ngIf="calificacion % 1 != 0" class="h4 text-warning" [ngClass]="getStars(i)"></i>
+            </td>   
+          </div>       
+        </div>
+        <div class="card-footer">
+          <p class="text-center"><a [routerLink]="['/review', currentUsername, pelicula().imdbID]" style="color:#ffffff; text-decoration:none;">Reseñar</a></p>
+        </div>
       </div>
+      <div class="chart-container" style="display: flex; align-items: center;height:20vh; width:13vw;">
+        <canvas #myChart id="myChart">{{chart}}</canvas>
+        <h4 style="margin-left: 20px">{{puntuacionMedia}}</h4>
+      </div>
+      
+    </div>
+      
   </div>
     
     <ng-template #loading>Loading...</ng-template>

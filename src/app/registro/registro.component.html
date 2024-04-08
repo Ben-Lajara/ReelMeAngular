@@ -2,16 +2,33 @@
     Como la base de datos actual no es la definitiva para simplificar el proceso, tanto el registro como el inicio de sesión dejan bastante que desear.
     Aquí debería comprobar si el usuario existe o no, pedir dos veces la contraseña, posiblemente un correo de confirmación, etc...
 -->
-<div class="container">
-    <form (ngSubmit)="onSubmit()" class="form-group">
-        <div class="mb-3">
-            <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" name="nombre" [(ngModel)]="nombre" class="form-control" id="nombre" placeholder="Nombre" required>
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content bg-dark text-white">
+        <div class="modal-header">
+          <h5 class="modal-title" id="registerModalLabel">Registrarse</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="mb-3">
-            <label for="pword" class="form-label">Contraseña</label>
-            <input type="password" name="pword" [(ngModel)]="pword" class="form-control" id="pword" placeholder="Contraseña" required>
+        <div class="modal-body">
+          <form (ngSubmit)="onSubmit()" class="form-group">
+              <div class="mb-3">
+                  <label for="nombre" class="form-label">Nombre</label>
+                  <input type="text" name="nombre" [(ngModel)]="nombre" class="form-control" id="nombre" placeholder="Nombre" required>
+              </div>
+              <div class="mb-3">
+                  <label for="pword" class="form-label">Contraseña</label>
+                  <input type="password" name="pword" [(ngModel)]="pword" class="form-control" id="pword" placeholder="Contraseña" required>
+              </div>
+              <div class="mb-3">
+                  <label for="pword2" class="form-label">Repite contraseña</label>
+                  <input type="password" name="pword2" [(ngModel)]="pword2" class="form-control" id="pword2" placeholder="Repite contraseña" required>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+          </form>
         </div>
-        <button type="submit" class="btn btn-primary">Registrarse</button>
-    </form>
-</div>
+      </div>
+    </div>
+  </div>
