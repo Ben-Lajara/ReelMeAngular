@@ -9,7 +9,7 @@
                 </a>
                 <div class="card-body">
                 <h4>{{seguido.usuarioSeguido}}</h4>
-                <h5 class="card-text">{{seguido.titulo}}</h5>
+                <a routerLink="/details/{{seguido.idPelicula}}"><h5 class="card-text">{{seguido.titulo}}</h5></a>
                 <div class = "row">
                   <td class="col me-3">
                     <span *ngFor="let i of [1, 2, 3, 4, 5]">

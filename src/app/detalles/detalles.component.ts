@@ -6,6 +6,7 @@ import { AuthService } from '../auth.service';
 import { tap } from 'rxjs';
 import { Chart } from 'chart.js';
 import 'chart.js/auto';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-detalles',
@@ -30,7 +31,9 @@ export class DetallesComponent implements OnInit, AfterViewInit {
     [3, 0], [3.5, 0], [4, 0], [4.5, 0], [5, 0]
   ]);
   chart: any;
-  constructor(private route: ActivatedRoute, private reelme: ReelMeService, private http: HttpClient, private authService: AuthService) {
+  trailerUrl: SafeResourceUrl = '';
+  peli: any;
+  constructor(private route: ActivatedRoute, private reelme: ReelMeService, private http: HttpClient, private authService: AuthService, private sanitizer: DomSanitizer) {
     this.authService.currentUsername.subscribe(username => {
       this.currentUsername = username;
     });
@@ -43,6 +46,12 @@ export class DetallesComponent implements OnInit, AfterViewInit {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.busquedaID();
+      
+      this.reelme.busquedaId(this.id).subscribe(() => {
+        this.peli = this.reelme.pelicula();
+        console.log(this.reelme.pelicula().Title);
+        this.getTrailer(this.reelme.pelicula().Title + ' ' + this.reelme.pelicula().Year);
+      });
       this.getActividad(this.currentUsername, this.id).subscribe(() => {
         console.log(this.vista);
       });
@@ -209,4 +218,26 @@ export class DetallesComponent implements OnInit, AfterViewInit {
       console.error('No se pudo obtener canvas');
     }
   }
+
+  getNombrePelicula(){
+    return this.pelicula().Title;
+  }
+
+  getTrailer(nombre: string){
+    //const apiKey = 'AIzaSyDGIswB-EArefbRs6cdzWa_fRjq_NXhfZI';
+    const apiKey = 'AIzaSyDR-mngrtrilvHbvrvrmqmJGWnRODRPDw0';
+    const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${nombre} official trailer&key=${apiKey}`;
+    this.http.get<YoutubeResponse>(searchUrl).subscribe(response=>{
+      const videoId = response.items[0].id.videoId;
+      this.trailerUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${videoId}`);
+    })
+  }
+}
+
+interface YoutubeResponse {
+  items: {
+    id: {
+      videoId: string;
+    };
+  }[];
 }

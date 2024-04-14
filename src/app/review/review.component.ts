@@ -79,6 +79,7 @@ export class ReviewComponent implements OnInit {
           this.fecha = this.resena.fecha;
           this.calificacion = this.resena.calificacion;
           this.comentario = this.resena.comentario;
+          this.gustado = this.resena.gustado;
           this.editado = true;
         }
       })

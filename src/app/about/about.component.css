@@ -19,3 +19,7 @@ a:hover{
 #resena:hover{
     color: orange;
 }
+
+i{
+    text-shadow: 0 0 2px black;
+}

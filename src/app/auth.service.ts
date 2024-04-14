@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
 
 @Injectable({
@@ -17,7 +18,7 @@ export class AuthService {
     return this.username.asObservable();
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     const authToken = localStorage.getItem('authToken');
     const username = localStorage.getItem('username');
   
@@ -52,5 +53,6 @@ export class AuthService {
     // Elimina el token de autenticación y el nombre de usuario de localStorage
     localStorage.removeItem('authToken');
     localStorage.removeItem('username');
+    this.router.navigate(['/home']);
   }
 }

@@ -1,7 +1,13 @@
-<div class="container">
-    <h4>Ajustes</h4>
+<div class="container mt-2">
     <div class="container d-flex justify-content-center align-items-center">
         <img [src]="'http://localhost:8080/uploads/' + usuario.perfil" alt="" class="rounded-circle" data-bs-toggle="modal" data-bs-target="#perfilModal">        
+    </div>
+
+    <h5>Reseñas hasta el siguiente rango</h5>
+    <div class="progress" style="width: 50%;">
+      <div class="progress-bar" role="progressbar" [style.width]="getProgreso() + '%'" aria-valuenow="getProgreso()" aria-valuemin="0" aria-valuemax="100">
+        {{  numResenas - getRangoActual() }}/{{ getTotalToNextRank() }}
+      </div>
     </div>
 
     <div class="modal fade" id="perfilModal" tabindex="-1" aria-labelledby="perfilModalLabel" aria-hidden="true">
@@ -49,7 +55,22 @@
                 <button type="submit" class="btn btn-primary" (click)="setNewPword()">Cambiar contraseña</button>
             </div>
           </div>
-        </div>      
+        </div>
+        <div class="accordion-item">
+          <!-- Primera versión de personalización según el rango. Los botones no hacen nada por ahora. -->
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseOne">
+              Personalizar avatar
+            </button>
+          </h2>
+          <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body d-flex justify-content-around">
+              <button type="button" class="btn btn-circle btn-green" [disabled]="usuario.rango == null" ></button>
+              <button type="button" class="btn btn-circle btn-orange" [disabled]="usuario.rango == 'BRONCE' || usuario.rango == null"></button>
+              <button type="button" class="btn btn-circle btn-purple" [disabled]="usuario.rango != 'ORO' || usuario.rango == null"></button>
+            </div>
+          </div>
+        </div>    
         
     </div>
 </div>

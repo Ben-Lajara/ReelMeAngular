@@ -33,6 +33,9 @@
             <a *ngIf="(isLoggedIn | async)" [routerLink]="['/settings', currentUsername | async]" class="nav-link">Ajustes</a>
           </li>
           <li class="nav-item">
+            <a *ngIf="(isLoggedIn | async)" [routerLink]="['/about', currentUsername | async]" class="nav-link">Perfil</a>
+          </li>
+          <li class="nav-item">
             <a *ngIf="(isLoggedIn | async)" (click)="logout()" class="nav-link">Cerrar sesión</a>
           </li>
         </ul>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
@@ -10,6 +10,7 @@ import { AuthService } from '../auth.service';
 export class LoginComponent {
   nombre='';
   pword='';
+  @ViewChild('closebutton') closebutton: any;
 
   constructor(private authService: AuthService, private router: Router,) { }
 
@@ -27,5 +28,6 @@ export class LoginComponent {
         },
         error => console.log('Login Error', error.error)
     );
+    this.closebutton.nativeElement.click();
 }
 }

@@ -14,6 +14,7 @@ export class AjustesComponent implements OnInit {
   pword = '';
   pword2 = '';
   exito='';
+  numResenas = 0
   constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -22,6 +23,9 @@ export class AjustesComponent implements OnInit {
       this.getUsuario().subscribe((res: any) => {
         this.usuario = res;
         console.log(this.usuario);
+        this.getNumResenas().subscribe((res: any) => {
+          this.numResenas = res;
+        })
       });
     });
   }
@@ -60,6 +64,47 @@ export class AjustesComponent implements OnInit {
         success => console.log('Upload Success'),
         error => console.log('Upload Error', error.error)
       );
+    }
+  }
+
+  getNumResenas(){
+    return this.http.get(`http://localhost:8080/numResenas/${this.username}`)
+  }
+
+  getProgreso(){
+    switch (this.usuario.rango){
+      case 'BRONCE':
+        return ((this.numResenas - 10) / 15) * 100;
+      case 'PLATA':
+        return ((this.numResenas - 25) / 25) * 100;
+      case 'ORO':
+        return 100;
+      default:
+        return (this.numResenas / 10) * 100;
+    }
+  }
+
+  getRangoActual(){
+    switch(this.usuario.rango){
+      case 'BRONCE':
+        return 10;
+      case 'PLATA':
+        return 25;
+      default:
+        return 0;
+    }
+  }
+  
+  getTotalToNextRank(){
+    switch (this.usuario.rango){
+      case 'BRONCE':
+        return 15;
+      case 'PLATA':
+        return 25;
+      case 'ORO':
+        return 0;
+      default:
+        return 10;
     }
   }
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +21,11 @@ export class ReelMeService {
   }
 
   busquedaId(id: string) {
-    this.http.get<any>(this.urlBase + '&i=' + id).subscribe((response) => {
-      this.peli = response;
-    });
+    return this.http.get<any>(this.urlBase + '&i=' + id).pipe(
+      tap((response) => {
+        this.peli = response;
+      })
+    );
   }
 
   peliculas() {

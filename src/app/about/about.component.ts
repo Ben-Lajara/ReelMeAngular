@@ -22,9 +22,11 @@ export class AboutComponent implements OnInit {
       this.isLoading = true;
       this.getUserData().subscribe((res: any) => {
         this.datos = res;
+        console.log(this.datos)
         this.isLoading = false;
         this.getActividadReciente(this.username).subscribe((res: any) => {
           this.actividadReciente = res;
+          console.log(this.actividadReciente)
         });
         this.getResenasUsuario(this.username).subscribe((res: any) => {
           this.resenasUsuario = res;
@@ -45,5 +47,18 @@ export class AboutComponent implements OnInit {
 
   getResenasUsuario(usuario: string){
     return this.http.get(`http://localhost:8080/api/diario/${usuario}`)
+  }
+
+  getColor(rango: string) {
+    switch (rango) {
+      case 'BRONCE':
+        return '#cd7f32';
+      case 'PLATA':
+        return '#c0c0c0';
+      case 'ORO':
+        return '#ffd700';
+      default:
+        return '#000000';
+    }
   }
 }

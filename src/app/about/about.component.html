@@ -5,13 +5,13 @@
     </div>
 
     <div *ngIf="!isLoading">
-        <h3>{{datos.nombre}}</h3>
+        <h3>{{datos.nombre}} <i *ngIf="datos.rango != null" class="bi bi-patch-check-fill" [ngStyle]="{'color': getColor(datos.rango)}"></i></h3>
         <p>
             {{datos.vistas}} películas vistas
             &nbsp;
-            <a [routerLink]="['/about', username, 'followers']" style="text-decoration: none; color:white">{{datos.seguidores}} seguidores</a>
+            <a id="seguidores" [routerLink]="['/about', username, 'followers']">{{datos.seguidores}} seguidores</a>
             &nbsp;
-            <a [routerLink]="['/about', username, 'following']" style="text-decoration: none; color:white">{{datos.seguidos}} seguidos</a>
+            <a id="seguidos" [routerLink]="['/about', username, 'following']">{{datos.seguidos}} seguidos</a>
         </p>
         <ul class="nav nav-underline" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -30,7 +30,7 @@
                             <img src="{{resena.idPelicula.foto}}" class="card-img-top" style="width:298px; height:450px; object-fit: cover;">
                             </a>
                             <div class="card-body">
-                            <h5 class="card-text">{{resena.idPelicula.titulo}}</h5>
+                            <a routerLink="/details/{{resena.idPelicula.id}}"><h5 class="card-text">{{resena.idPelicula.titulo}}</h5></a>
                             <div class = "row">
                             <td class="col me-3">
                                 <span *ngFor="let i of [1, 2, 3, 4, 5]">
