@@ -30,6 +30,8 @@ import { SocialComponent } from './social/social.component';
 import { CardUsuarioComponent } from './card-usuario/card-usuario.component';
 import { AjustesComponent } from './ajustes/ajustes.component';
 import { BarraFiltrosBuscadorComponent } from './barra-filtros-buscador/barra-filtros-buscador.component';
+import { RestablecerComponent } from './restablecer/restablecer.component';
+import { RestablecimientoComponent } from './restablecimiento/restablecimiento.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,9 @@ import { BarraFiltrosBuscadorComponent } from './barra-filtros-buscador/barra-fi
     SocialComponent,
     CardUsuarioComponent,
     AjustesComponent,
-    BarraFiltrosBuscadorComponent
+    BarraFiltrosBuscadorComponent,
+    RestablecerComponent,
+    RestablecimientoComponent
   ],
   imports: [
     BrowserModule,

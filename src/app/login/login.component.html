@@ -1,27 +1,22 @@
-
-  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content bg-dark text-light">
-        <div class="modal-header">
-          <h5 class="modal-title" id="loginModalLabel">Iniciar sesión</h5>
-          <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: white;"></button>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h5 class="mb-3">Iniciar sesión</h5>
+      <form (ngSubmit)="onSubmit()" class="form-group">
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input type="text" name="nombre" [(ngModel)]="nombre" class="form-control" id="nombre" placeholder="Nombre" required [ngStyle]="{'border-color': error ? 'red' : null}">
         </div>
-        <div class="modal-body">
-          <form (ngSubmit)="onSubmit()" class="form-group">
-              <div class="mb-3">
-                  <label for="nombre" class="form-label">Nombre</label>
-                  <input type="text" name="nombre" [(ngModel)]="nombre" class="form-control" id="nombre" placeholder="Nombre" required>
-              </div>
-              <div class="mb-3">
-                  <label for="pword" class="form-label">Contraseña</label>
-                  <input type="password" name="pword" [(ngModel)]="pword" class="form-control" id="pword" placeholder="Contraseña" required>
-              </div>
-              <button type="submit" class="btn btn-primary w-100" data-dismiss="modal">Iniciar sesión</button>
-              <div>
-                <p>¿No tienes cuenta? <a data-bs-toggle="modal" data-bs-target="#registerModal" style="color:rgb(0, 85, 255);">Regístrate</a></p>
-              </div>
-          </form>
+        <div class="mb-3">
+          <label for="pword" class="form-label">Contraseña</label>
+          <input type="password" name="pword" [(ngModel)]="pword" class="form-control" id="pword" placeholder="Contraseña" required [ngStyle]="{'border-color': error ? 'red' : null}">
         </div>
-      </div>
+        <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
+        <div>
+          <p>¿No tienes cuenta? <a routerLink="/register">Regístrate</a></p>
+          <p><a routerLink="/reset">He olvidado mi contraseña</a></p>
+        </div>
+      </form>
     </div>
   </div>
+</div>

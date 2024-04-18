@@ -1,0 +1,11 @@
+<div class="container">
+    <form (ngSubmit)="onSubmit()" class="form-group">
+        <div class="mb-3">
+            <label for="email">Email</label>
+            <input type="email" name="email" [(ngModel)]="email" class="form-control" id="email" placeholder="Email" required>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary w-100">Restablecer contraseña</button>
+        </div>
+    </form>
+</div>

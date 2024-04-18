@@ -1,0 +1,20 @@
+<div class="container">
+    <form (ngSubmit)="onSubmit()" class="form-group">
+        <div class="mb-3">
+            <label for="pword1">Tu nueva contraseña</label>
+            <input type="password" name="pword1" [(ngModel)]="pword1" class="form-control" id="pword1" placeholder="Contraseña nueva" required [disabled]="exito">
+        </div>
+        <div class="mb-3">
+            <label for="pword2">Repite tu nueva contraseña</label>
+            <input type="password" name="pword2" [(ngModel)]="pword2" class="form-control" id="pword2" placeholder="Repite tu contraseña" required [disabled]="exito">
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary w-100">Restablecer contraseña</button>
+        </div>
+        <div class="mb-3">
+            <div *ngIf="exito" class="alert alert-success" role="alert">
+                <p>Tu contraseña se ha restablecido correctamente</p>
+            </div>
+        </div>
+    </form>
+</div>

@@ -38,14 +38,14 @@ export class CardReviewComponent implements OnInit {
     }
 
     let starClass: string;
-    if (i < this.review.calificacion) {
-      console.log('Estrella llena');
+    if (i <= this.review.calificacion) {
+      //console.log('Estrella llena');
       starClass = 'bi bi-star-fill'; // Estrella llena y de color amarillo
     } else if (i - 0.5 == this.review.calificacion) {
-      console.log('Mitad de estrella');
+      //console.log('Mitad de estrella');
       starClass = 'bi bi-star-half'; // Mitad de estrella y de color amarillo
     } else {
-      console.log('Estrella vacía');
+      //console.log('Estrella vacía');
       starClass = 'bi bi-star'; // Estrella vacía y de color oscuro
     }
 

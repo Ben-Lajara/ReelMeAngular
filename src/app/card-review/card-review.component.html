@@ -13,11 +13,11 @@
           {{peli.year}}
       </td>
       <td class="col-auto" *ngFor="let i of [1, 2, 3, 4, 5]">
-        <i *ngIf="peli.calificacion % 1 == 0" class="h4 text-warning bi" [ngClass]="{'bi-star-fill': i <= peli.calificacion, 'bi-star': i > peli.calificacion}"></i>
-        <i *ngIf="peli.calificacion % 1 != 0" class="h4 text-warning" [ngClass]="getStars(i)"></i>
+        <i class="h4 text-warning" [ngClass]="getStars(i)"></i>
       </td>
       <td class="col">
         <i *ngIf="review.gustado == 1" class="h4 bi bi-heart-fill" style = "color:orange;"></i>
+        <i *ngIf="review.gustado != 1" class="h4 bi bi-heart" style = "color:orange;"></i>
       </td>
       <td class="col">
         <button type="button" class="btn btn-danger" [routerLink]="['/review', currentUsername | async, peli.id]">Editar</button>

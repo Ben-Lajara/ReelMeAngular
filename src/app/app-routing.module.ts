@@ -16,6 +16,8 @@ import { SeguidosComponent } from './seguidos/seguidos.component';
 import { SocialComponent } from './social/social.component';
 import { AjustesComponent } from './ajustes/ajustes.component';
 import { BarraFiltrosBuscadorComponent } from './barra-filtros-buscador/barra-filtros-buscador.component';
+import { RestablecerComponent } from './restablecer/restablecer.component';
+import { RestablecimientoComponent } from './restablecimiento/restablecimiento.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -32,7 +34,9 @@ const routes: Routes = [
   { path: 'about/:username/following', component: SeguidosComponent },
   { path: 'social/:username', component: SocialComponent, canActivate: [AuthGuard] },
   { path: 'settings/:username', component: AjustesComponent },
-  { path: 'search/:username', component: BarraFiltrosBuscadorComponent},
+  { path: 'search/:username', component: BarraFiltrosBuscadorComponent },
+  { path: 'reset', component: RestablecerComponent },
+  { path: 'reset/:token', component: RestablecimientoComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
 
