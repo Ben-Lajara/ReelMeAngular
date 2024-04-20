@@ -6,7 +6,7 @@
     <div class="row row-cols-md-3">
         <ng-container *ngFor="let seguidor of seguidores">
             <ng-container *ngIf="seguidor.nombreUsuario.nombre !== username">
-                <app-card-usuario [usuario]="seguidor.nombreUsuario" [username]="username"></app-card-usuario>
+                <app-card-usuario [usuario]="seguidor.nombreUsuario" [username]="currentUser"></app-card-usuario>
             </ng-container>
         </ng-container>
     </div>
