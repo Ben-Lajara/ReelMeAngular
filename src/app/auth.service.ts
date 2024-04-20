@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
@@ -21,7 +21,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {
     const authToken = localStorage.getItem('authToken');
     const username = localStorage.getItem('username');
-  
+
     if (authToken && username) {
       this.loggedIn.next(true);
       this.username.next(username);
@@ -31,20 +31,23 @@ export class AuthService {
   register(nombre: string, pword: string): Observable<any> {
     return this.http.post('http://localhost:8080/register', { nombre, pword });
   }
-  login(nombre: string, pword: string): Observable<any> {
-    return this.http.post('http://localhost:8080/login', { nombre, pword}).pipe(
+
+  login(nombreEmail: string, pword: string): Observable<any> {
+    const fd = new FormData();
+    fd.append('nombreEmail', nombreEmail);
+    fd.append('pword', pword);
+    return this.http.post('http://localhost:8080/loginNombreEmail', fd).pipe(
       tap((data: any) => {
         if (data.status === 'success') {
           this.loggedIn.next(true);
-          this.username.next(nombre);
+          this.username.next(data.usuario.nombre);
           console.log('Logged in');
           localStorage.setItem('isAuthenticated', 'true');
+          //localStorage.setItem('authToken', data.token);
         }
       })
     );
   }
-
-  
 
   logout(): void {
     console.log('Logged out');

@@ -6,38 +6,40 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  nombre='';
-  pword='';
+  nombre = '';
+  pword = '';
   restablecer = false;
   error = false;
   @ViewChild('closebutton') closebutton: any;
 
-  constructor(private authService: AuthService, private router: Router, private http: HttpClient) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private http: HttpClient
+  ) {}
 
-    onSubmit(): void {
-        this.authService.login(this.nombre, this.pword).subscribe(
-            data => {
-                if (data.status === 'success') {
-                    localStorage.setItem('authToken', data.token); // guarda el token de autenticación
-                    localStorage.setItem('username', this.nombre); // guarda el nombre de usuario
-                    console.log('Login Success');
-                    this.router.navigate(['/profile', this.nombre]);
-                } else {
-                    this.error = true;
-                    console.log('Login Error', data.message);
-                }
-            },
-            error => {
-                this.error = true;
-                console.log('Login Error', error.error)
-            }
-        );
-        //this.closebutton.nativeElement.click();
-    }
-
-    
-    
+  onSubmit(): void {
+    this.authService.login(this.nombre, this.pword).subscribe(
+      (data) => {
+        if (data.status === 'success') {
+          localStorage.setItem('authToken', data.token); // guarda el token de autenticación
+          localStorage.setItem('username', data.usuario.nombre); // guarda el nombre de usuario
+          this.nombre = data.usuario.nombre;
+          console.log('Login Success');
+          this.router.navigate(['/profile', this.nombre]);
+        } else {
+          this.error = true;
+          console.log('Login Error', data.message);
+        }
+      },
+      (error) => {
+        this.error = true;
+        console.log('Login Error', error.error);
+      }
+    );
+    //this.closebutton.nativeElement.click();
+  }
 }

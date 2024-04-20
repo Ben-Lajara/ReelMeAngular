@@ -4,8 +4,8 @@
       <h5 class="mb-3">Iniciar sesión</h5>
       <form (ngSubmit)="onSubmit()" class="form-group">
         <div class="mb-3">
-          <label for="nombre" class="form-label">Nombre</label>
-          <input type="text" name="nombre" [(ngModel)]="nombre" class="form-control" id="nombre" placeholder="Nombre" required [ngStyle]="{'border-color': error ? 'red' : null}">
+          <label for="nombre" class="form-label">Usuario o Email</label>
+          <input type="text" name="nombre" [(ngModel)]="nombre" class="form-control" id="nombre" placeholder="Usuario/Email" required [ngStyle]="{'border-color': error ? 'red' : null}">
         </div>
         <div class="mb-3">
           <label for="pword" class="form-label">Contraseña</label>

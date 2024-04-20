@@ -25,16 +25,32 @@ const routes: Routes = [
   { path: 'register', component: RegistroComponent },
   { path: 'login', component: LoginComponent },
   { path: 'details/:id', component: DetallesComponent },
-  { path: 'review/:username/:id', component: ReviewComponent, canActivate: [AuthGuard] },
-  { path: 'journal/:username', component: DiarioComponent, canActivate: [AuthGuard]  },
-  { path: 'profile/:username', component: PerfilComponent, canActivate: [AuthGuard]  },
+  {
+    path: 'review/:username/:id',
+    component: ReviewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'journal/:username',
+    component: DiarioComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'profile/:username',
+    component: PerfilComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'reviewed/:username/:id', component: ReviewPublicaComponent },
   { path: 'about/:username', component: AboutComponent },
   { path: 'about/:username/followers', component: SeguidoresComponent },
   { path: 'about/:username/following', component: SeguidosComponent },
-  { path: 'social/:username', component: SocialComponent, canActivate: [AuthGuard] },
-  { path: 'settings/:username', component: AjustesComponent },
-  { path: 'search/:username', component: BarraFiltrosBuscadorComponent },
+  {
+    path: 'social',
+    component: SocialComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'settings', component: AjustesComponent, canActivate: [AuthGuard] },
+  { path: 'search', component: BarraFiltrosBuscadorComponent },
   { path: 'reset', component: RestablecerComponent },
   { path: 'reset/:token', component: RestablecimientoComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -42,6 +58,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

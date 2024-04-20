@@ -5,48 +5,46 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
-  styleUrls: ['./registro.component.css']
+  styleUrls: ['./registro.component.css'],
 })
 export class RegistroComponent {
-  nombre='';
-  pword='';
-  pword2='';
-  noCoinciden=false;
-  existe=false;
+  nombre = '';
+  pword = '';
+  pword2 = '';
+  noCoinciden = false;
+  existe = false;
 
-  constructor(private authService: AuthService, private http: HttpClient) { }
+  constructor(private authService: AuthService, private http: HttpClient) {}
 
   onSubmit(): void {
     if (this.pword !== this.pword2) {
       this.noCoinciden = true;
       console.log('Las contraseñas no coinciden');
       return;
-    }else{
+    } else {
       this.authService.register(this.nombre, this.pword).subscribe(
-        success => console.log('Registration Success'),
-        error => console.log('Registration Error', error.error)
+        (success) => console.log('Registration Success'),
+        (error) => console.log('Registration Error', error.error)
       );
     }
-    
   }
 
-  checkPwords(){
-    if(this.pword === this.pword2){
+  checkPwords() {
+    if (this.pword === this.pword2) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
 
-  checkUsername(){
+  checkUsername() {
     this.http.get(`http://localhost:8080/usuario/${this.nombre}`).subscribe(
-      res=>{
+      (res) => {
         this.existe = true;
       },
-      error => {
+      (error) => {
         this.existe = false;
       }
-    )
+    );
   }
-
 }

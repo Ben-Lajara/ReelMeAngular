@@ -17,7 +17,7 @@
             <a *ngIf="!(isLoggedIn | async)" routerLink="query" class="nav-link">Buscar</a>
           </li>
           <li class="nav-item">
-            <a *ngIf="(isLoggedIn | async)" [routerLink]="['/search', currentUsername | async]" class="nav-link">Buscar</a>
+            <a *ngIf="(isLoggedIn | async)" routerLink="search" class="nav-link">Buscar</a>
           </li>
           <!--<li class="nav-item">
             <a *ngIf="!(isLoggedIn | async)" routerLink="register" class="nav-link">Registrarse</a>
@@ -30,7 +30,7 @@
             <a *ngIf="(isLoggedIn | async)" [routerLink]="['/journal', currentUsername | async]" class="nav-link">Diario</a>
           </li>
           <li class="nav-item">
-            <a *ngIf="(isLoggedIn | async)" [routerLink]="['/settings', currentUsername | async]" class="nav-link">Ajustes</a>
+            <a *ngIf="(isLoggedIn | async)" routerLink="settings" class="nav-link">Ajustes</a>
           </li>
           <li class="nav-item">
             <a *ngIf="(isLoggedIn | async)" [routerLink]="['/about', currentUsername | async]" class="nav-link">Perfil</a>
@@ -40,7 +40,7 @@
           </li>
         </ul>
         <div class="d-flex" *ngIf="(isLoggedIn | async)">
-          <a [routerLink]="['/settings', currentUsername | async]" class="nav-link">
+          <a routerLink="/settings" class="nav-link">
               <img [src]="'http://localhost:8080/uploads/PruebaPerfil.jpg'" alt="" height="30px" width="30px" class="rounded-circle">
           </a>
         </div>
