@@ -20,6 +20,9 @@
             <li class="nav-item" role="presentation">
               <a class="nav-link" id="resenas-tab" data-bs-toggle="tab" href="#resenas" role="tab" aria-controls="resenas" aria-selected="false">Reseñas</a>
             </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="diario-tab" data-bs-toggle="tab" href="#diario" role="tab" aria-controls="diario" aria-selected="false">Diario</a>
+            </li>
           </ul>
         <div class="tab-content m-2" id="myTabContent">
             <div class="tab-pane fade show active" id="actividad" role="tabpanel" aria-labelledby="actividad-tab">
@@ -57,6 +60,9 @@
                         <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning fs-5 fw-bold">&#189;</span>
                         </span>
                 </div>
+            </div>
+            <div class="tab-pane fade" id="diario" role="tabpanel" aria-labelledby="diario-tab">
+                <app-diario [username]="username"></app-diario>
             </div>
         </div>
        

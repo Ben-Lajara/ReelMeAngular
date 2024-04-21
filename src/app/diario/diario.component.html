@@ -5,7 +5,7 @@
       <tbody>
         <tr *ngFor="let review of reviews[monthYear] | orderBy: 'fecha'">
           <td>
-            <app-card-review [review]="review" [peli]="peliculas[review.idPelicula.id]"></app-card-review>
+            <app-card-review [review]="review" [peli]="peliculas[review.idPelicula.id]" [usuarioRuta]="username"></app-card-review>
           </td>
         </tr>
       </tbody>

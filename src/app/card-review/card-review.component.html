@@ -20,7 +20,7 @@
         <i *ngIf="review.gustado != 1" class="h4 bi bi-heart" style = "color:orange;"></i>
       </td>
       <td class="col">
-        <button type="button" class="btn btn-danger" [routerLink]="['/review', currentUsername | async, peli.id]">Editar</button>
+        <button type="button" *ngIf="usuarioRuta == currentUsername" class="btn btn-danger" [routerLink]="['/review', currentUsername, peli.id]">Editar</button>
       </td>
   </div>
 </tr>

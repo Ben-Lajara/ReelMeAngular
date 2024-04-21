@@ -1,19 +1,19 @@
 <div class="container mt-3">
   <div class="row">
     <div class="col-3">
-      <img src="{{pelicula().Poster}}" class="rounded card-img-top img-fluid" style="max-width: 100%;">
+      <img src="{{(pelicula$ | async)?.Poster}}" class="rounded card-img-top img-fluid" style="max-width: 100%;">
       <p class="text-center"><i class="bi bi-eye-fill" style = "color:rgb(21, 223, 21);"></i> {{resenas.length}}  <i class="bi bi-heart-fill" style = "color:orange;"></i> {{getGustados()}}</p>
       
     </div>
     <div class="col-6">
       <dl>
-        <dt><h2>{{pelicula().Title}} ({{pelicula().Year}}), {{pelicula().Director}}</h2></dt>
+        <dt><h2>{{(pelicula$ | async)?.Title}} ({{(pelicula$ | async)?.Year}}), {{(pelicula$ | async)?.Director}}</h2></dt>
       </dl>
       <dl>
-        <dd>{{pelicula().Runtime}}</dd>
+        <dd>{{(pelicula$ | async)?.Runtime}}</dd>
       </dl>
       <dl>
-        <dd>{{pelicula().Plot}}</dd>
+        <dd>{{(pelicula$ | async)?.Plot}}</dd>
       </dl>
       <dl>
         <iframe width="560" height="315" [src]="trailerUrl" frameborder="0"></iframe>

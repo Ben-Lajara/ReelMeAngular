@@ -7,13 +7,17 @@ import { tap } from 'rxjs';
 @Component({
   selector: 'app-review',
   templateUrl: './review.component.html',
-  styleUrls: ['./review.component.css']
+  styleUrls: ['./review.component.css'],
 })
 export class ReviewComponent implements OnInit {
   @Input() username: string = '';
   @Input() peli: any;
   private apiUrl = 'http://localhost:8080/api';
-  constructor(private route: ActivatedRoute, private reelme: ReelMeService, private http: HttpClient) {}
+  constructor(
+    private route: ActivatedRoute,
+    private reelme: ReelMeService,
+    private http: HttpClient
+  ) {}
   id = '';
   fecha = new Date();
   calificacion = 0;
@@ -21,23 +25,24 @@ export class ReviewComponent implements OnInit {
   gustado = false;
   resena: any;
   editado: boolean = false;
-  hoverState = 0
- 
+  hoverState = 0;
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.username = params['username'];
       this.busquedaID();
-     
-      console.log(this.fecha)
+      this.reelme.busquedaId(this.id).subscribe(() => {
+        this.peli = this.reelme.pelicula();
+        console.log(this.reelme.pelicula().Title);
+      });
+
+      console.log(this.fecha);
 
       this.getResena(this.username, this.id).subscribe(() => {
         console.log(this.editado);
       });
     });
-
-    
   }
 
   busquedaID() {
@@ -48,21 +53,40 @@ export class ReviewComponent implements OnInit {
     return this.reelme.pelicula();
   }
 
-  
-  enviarResena(fecha: Date, calificacion: number, comentario: string, gustado: boolean, id_pelicula: string, usuario: string, titulo: string, year: string, foto: string) {
-    const body = { fecha, calificacion, comentario, gustado, id_pelicula, usuario, titulo, year, foto };
-    if(this.editado) {
-      console.log("Editado")
+  enviarResena(
+    fecha: Date,
+    calificacion: number,
+    comentario: string,
+    gustado: boolean,
+    id_pelicula: string,
+    usuario: string,
+    titulo: string,
+    year: string,
+    foto: string
+  ) {
+    const body = {
+      fecha,
+      calificacion,
+      comentario,
+      gustado,
+      id_pelicula,
+      usuario,
+      titulo,
+      year,
+      foto,
+    };
+    if (this.editado) {
+      console.log('Editado');
       return this.http.put(`${this.apiUrl}/review`, body);
-    }else{
-      console.log("Enviado")
-      console.log(body)
+    } else {
+      console.log('Enviado');
+      console.log(body);
       return this.http.post(`${this.apiUrl}/review`, body).subscribe(
-        response => {
+        (response) => {
           console.log(response);
           return response;
         },
-        error => {
+        (error) => {
           console.error(error);
           return error;
         }
@@ -71,24 +95,36 @@ export class ReviewComponent implements OnInit {
   }
 
   getResena(usuario: string, id_pelicula: string) {
-    console.log("Existente")
-    return this.http.get(`${this.apiUrl}/review?usuario=${usuario}&idPelicula=${id_pelicula}`).pipe(
-      tap(res => {
-        this.resena = res;
-        if(this.resena) {
-          this.fecha = this.resena.fecha;
-          this.calificacion = this.resena.calificacion;
-          this.comentario = this.resena.comentario;
-          this.gustado = this.resena.gustado;
-          this.editado = true;
-        }
-      })
-    );
+    console.log('Existente');
+    return this.http
+      .get(`${this.apiUrl}/review?usuario=${usuario}&idPelicula=${id_pelicula}`)
+      .pipe(
+        tap((res) => {
+          this.resena = res;
+          if (this.resena) {
+            this.fecha = this.resena.fecha;
+            this.calificacion = this.resena.calificacion;
+            this.comentario = this.resena.comentario;
+            this.gustado = this.resena.gustado;
+            this.editado = true;
+          }
+        })
+      );
   }
 
-  onSubmit(): void{
+  onSubmit(): void {
     console.log(this.id);
-    this.enviarResena(this.fecha, this.calificacion, this.comentario, this.gustado, this.id, this.username, this.pelicula().Title, this.pelicula().Year, this.pelicula().Poster);
+    this.enviarResena(
+      this.fecha,
+      this.calificacion,
+      this.comentario,
+      this.gustado,
+      this.id,
+      this.username,
+      this.pelicula().Title,
+      this.pelicula().Year,
+      this.pelicula().Poster
+    );
   }
 
   updateHoverState(event: MouseEvent, star: number) {
@@ -96,6 +132,4 @@ export class ReviewComponent implements OnInit {
     const offsetX = event.clientX - rect.left;
     this.hoverState = offsetX < rect.width / 2 ? star - 0.5 : star;
   }
-  
-
 }
