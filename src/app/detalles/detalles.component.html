@@ -54,7 +54,7 @@
             <table style="margin-right: 10px;">
               <tr>
                   <td class="text-center">
-                      <img id="seguidoResena" [src]="'http://localhost:8080/uploads/' + resena.perfil" alt="" height="40px" width="40px" class="rounded-circle" [routerLink]="['/reviewed', resena.usuario, pelicula().imdbID]" >
+                      <img id="seguidoResena" [src]="'http://localhost:8080/uploads/' + resena.perfil" alt="" height="40px" width="40px" class="rounded-circle" [routerLink]="['/reviewed', resena.usuario, pelicula().imdbID]" style="border: 2px solid" [style.borderColor]="resena.color" >
                   </td>
               </tr>
               <tr>
@@ -75,7 +75,7 @@
       <dl class="mt-3">
         <dt style="border-bottom: 1px solid #ffffff;">Reseñas</dt>
         <dd *ngFor="let resena of resenas" style="margin-top: 10px;">
-          <img [src]="'http://localhost:8080/uploads/' + resena.nomUsuario.perfil" alt="" height="40px" width="40px" class="rounded-circle">&nbsp;<a id="resenaUsuario" style="text-decoration:none;" [routerLink]="['/reviewed', resena.nomUsuario.nombre, pelicula().imdbID]">Reseña de </a> <a id="usuario" [routerLink]="['/about', resena.nomUsuario.nombre]">{{resena.nomUsuario.nombre}}</a>: <span class="col-auto" *ngFor="let i of [1, 2, 3, 4, 5]">
+          <img [src]="'http://localhost:8080/uploads/' + resena.nomUsuario.perfil" alt="" height="40px" width="40px" class="rounded-circle" style="border: 2px solid" [style.borderColor]="resena.nomUsuario.color">&nbsp;<a id="resenaUsuario" style="text-decoration:none;" [routerLink]="['/reviewed', resena.nomUsuario.nombre, pelicula().imdbID]">Reseña de </a> <a id="usuario" [routerLink]="['/about', resena.nomUsuario.nombre]">{{resena.nomUsuario.nombre}}</a>: <span class="col-auto" *ngFor="let i of [1, 2, 3, 4, 5]">
             <i *ngIf="resena.calificacion % 1 == 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
                     <i *ngIf="resena.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
                     <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning fs-6 fw-bold">&#189;</span>

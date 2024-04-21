@@ -119,4 +119,19 @@ export class AjustesComponent implements OnInit {
         return 10;
     }
   }
+
+  setColor(color: string) {
+    if (color != '') {
+      this.usuario.color = color;
+    } else {
+      this.usuario.color = null;
+    }
+
+    this.http.put(`http://localhost:8080/color`, this.usuario).subscribe(
+      (success) => {
+        console.log('Color Updated');
+      },
+      (error) => console.log('Color Update Error', error.error)
+    );
+  }
 }

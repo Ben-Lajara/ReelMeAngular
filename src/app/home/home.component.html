@@ -1,11 +1,42 @@
 <!--
     La idea para este componente es que se muestre una landing page para usuarios no registrados y una página de inicio para usuarios registrados.
 -->
-<div class="container">
+<div *ngIf="username == ''" class="container">
     <h3>Te damos la bienvenida a ReelMe</h3>
     <p>
         En ReelMe podrás llevar un seguimiento de las películas que ves y reseñarlas.
         Sigue a tus amigos para descubrir nuevos horizontes.
     </p>
+</div>
+
+<div *ngIf="username != ''" class="container">
+    <h3>Actividad reciente de las cuentas que sigues.</h3>
+    <div class="d-flex flex-wrap justify-content-start">
+        <div *ngFor="let seguido of seguidos">
+            <div class="card text-center bg-dark text-white mb-3 mr-3" style="height: 600px; width: 300px; margin-right: 20px;">
+                <a>
+                <img src="{{seguido.foto}}" class="card-img-top" style="width: 298px; height: 450px;">
+                </a>
+                <div class="card-body">
+                <h4>{{seguido.usuarioSeguido}}</h4>
+                <a routerLink="/details/{{seguido.idPelicula}}"><h5 class="card-text">{{seguido.titulo}}</h5></a>
+                <div class = "row">
+                  <td class="col me-3">
+                    <span *ngFor="let i of [1, 2, 3, 4, 5]">
+                      <i *ngIf="seguido.calificacion % 1 == 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= seguido.calificacion}"></i>
+                      <i *ngIf="seguido.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= seguido.calificacion}"></i>
+                      <span *ngIf="seguido.calificacion % 1 != 0 && i == (seguido.calificacion - seguido.calificacion % 1) + 1" class="text-warning fs-4 fw-bold">&#189;</span>
+                    </span>
+                    &nbsp;
+                    <i *ngIf="seguido.gustado == 1" class="bi bi-heart-fill"></i> 
+                    &nbsp;
+                    <i *ngIf="seguido.comentario != null" [routerLink]="['/reviewed', seguido.usuarioSeguido, seguido.idPelicula]" class="bi bi-text-left"></i>
+                  </td>
+                </div>                
+              </div>
+            </div>
+            
+        </div>
+    </div>
 </div>
 

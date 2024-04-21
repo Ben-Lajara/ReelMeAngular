@@ -1,0 +1,12 @@
+.card:hover {
+  box-shadow: 0 0 5px white;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  color: rgb(189, 189, 189);
+}

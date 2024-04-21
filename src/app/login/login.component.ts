@@ -29,7 +29,7 @@ export class LoginComponent {
           localStorage.setItem('username', data.usuario.nombre); // guarda el nombre de usuario
           this.nombre = data.usuario.nombre;
           console.log('Login Success');
-          this.router.navigate(['/profile', this.nombre]);
+          this.router.navigate(['/home']);
         } else {
           this.error = true;
           console.log('Login Error', data.message);

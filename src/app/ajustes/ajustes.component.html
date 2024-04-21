@@ -1,6 +1,6 @@
 <div class="container mt-2">
     <div class="container d-flex justify-content-center align-items-center">
-        <img [src]="'http://localhost:8080/uploads/' + usuario.perfil" alt="" class="rounded-circle" data-bs-toggle="modal" data-bs-target="#perfilModal">        
+        <img [src]="'http://localhost:8080/uploads/' + usuario.perfil" alt="" class="rounded-circle" data-bs-toggle="modal" data-bs-target="#perfilModal" style="border: 2px solid" [style.borderColor]="usuario.color">        
     </div>
 
     <h5>Reseñas hasta el siguiente rango</h5>
@@ -65,9 +65,10 @@
           </h2>
           <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
             <div class="accordion-body d-flex justify-content-around">
-              <button type="button" class="btn btn-circle btn-green" [disabled]="usuario.rango == null" ></button>
-              <button type="button" class="btn btn-circle btn-orange" [disabled]="usuario.rango == 'BRONCE' || usuario.rango == null"></button>
-              <button type="button" class="btn btn-circle btn-purple" [disabled]="usuario.rango != 'ORO' || usuario.rango == null"></button>
+              <button type="button" class="btn btn-circle btn-no-color" (click)="setColor('')"><i class="bi bi-slash-circle h3"></i></button>
+              <button type="button" class="btn btn-circle btn-green" [disabled]="usuario.rango == null" (click)="setColor('green')"></button>
+              <button type="button" class="btn btn-circle btn-orange" [disabled]="usuario.rango == 'BRONCE' || usuario.rango == null" (click)="setColor('orange')"></button>
+              <button type="button" class="btn btn-circle btn-purple" [disabled]="usuario.rango != 'ORO' || usuario.rango == null" (click)="setColor('purple')"></button>
             </div>
           </div>
         </div>    
