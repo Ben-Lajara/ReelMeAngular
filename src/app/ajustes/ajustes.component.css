@@ -23,3 +23,16 @@ img:hover {
 .btn-circle:disabled {
   opacity: 0.5;
 }
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  color: rgb(189, 189, 189);
+}
+
+.nav-link.active {
+  color: white;
+}

@@ -1,25 +1,37 @@
-.card:hover{
-    box-shadow: 0 0 5px white;
+.card:hover {
+  box-shadow: 0 0 5px white;
 }
 
-a{
-    text-decoration: none;
-    color: white;
+a {
+  text-decoration: none;
+  color: white;
 }
 
-a:hover{
-    color: rgb(189, 189, 189);
+a:hover {
+  color: rgb(189, 189, 189);
 }
 
-#resena{
-    text-decoration: none;
-    color: rgb(186, 186, 186)
+#resena {
+  text-decoration: none;
+  color: rgb(186, 186, 186);
 }
 
-#resena:hover{
-    color: orange;
+#resena:hover {
+  color: orange;
 }
 
-i{
-    text-shadow: 0 0 2px black;
+i {
+  text-shadow: 0 0 2px black;
+}
+
+.apodo {
+  margin-bottom: 0;
+}
+
+.nombre {
+  margin-top: 0;
+}
+
+.nav-link.active {
+  color: white;
 }

@@ -2,45 +2,50 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
-  styleUrls: ['./perfil.component.css']
+  styleUrls: ['./perfil.component.css'],
 })
 export class PerfilComponent implements OnInit {
-
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
   username = '';
-  seguidos: any[] = [];
-  peliculas: {[key: string]: any} = {};
-  ids: any[] = [];
-
-  ngOnInit(): void {
-    this.route.params.subscribe(async (params) => {
-      this.username = params['username'];
-      this.seguidos = await this.getSeguidos(this.username);
-      console.log(this.seguidos);
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private authService: AuthService
+  ) {
+    this.authService.currentUsername.subscribe((username) => {
+      this.username = username;
+      console.log(this.username);
     });
   }
 
-  async getSeguidos(nombre: string): Promise<any> {
-    const response = await this.http.get(`http://localhost:8080/seguidos/${nombre}`).toPromise();
-    //await this.getPeliculas();
-    return response;
+  seguidos: any[] = [];
+  peliculas: { [key: string]: any } = {};
+  ids: any[] = [];
+  usuario: any;
+
+  ngOnInit(): void {
+    this.getUser().subscribe((res: any) => {
+      this.usuario = res;
+      console.log(this.usuario);
+    });
   }
 
-  async getLastReview(nombre: string): Promise<any> {
-    const response = await this.http.post('http://localhost/connection.php', {nombre, action: 'getLastReview'}).toPromise();
-    return response;
+  onSubmit() {
+    this.http.put(`http://localhost:8080/usuario`, this.usuario).subscribe(
+      (success) => {
+        console.log('Usuario Actualizado');
+      },
+      (error) => {
+        console.log('Error al actualizar usuario', error.error);
+      }
+    );
   }
 
-  getEstrellas(calificacion: number) {
-    let estrellas = '';
-    for (let i = 0; i < calificacion; i++) {
-      estrellas += '⭐';
-    }
-    return estrellas;
+  getUser() {
+    return this.http.get(`http://localhost:8080/usuario/${this.username}`);
   }
-
 }

@@ -1,31 +1,36 @@
-<!-- Aunque se llame perfil, lo que hace este componente es posiblemente lo que se mostrará más adelante en home cuando un usuario inicie sesión -->
-<div class="container">
-    <h3>Actividad reciente de las cuentas que sigues.</h3>
-    <div class="d-flex flex-wrap justify-content-start">
-        <div *ngFor="let seguido of seguidos">
-            <div class="card text-center bg-dark text-white mb-3 mr-3" style="height: 600px; width: 300px; margin-right: 20px;">
-                <a>
-                <img src="{{seguido.foto}}" class="card-img-top" style="width: 298px; height: 450px;">
-                </a>
-                <div class="card-body">
-                <h4>{{seguido.usuarioSeguido}}</h4>
-                <a routerLink="/details/{{seguido.idPelicula}}"><h5 class="card-text">{{seguido.titulo}}</h5></a>
-                <div class = "row">
-                  <td class="col me-3">
-                    <span *ngFor="let i of [1, 2, 3, 4, 5]">
-                      <i *ngIf="seguido.calificacion % 1 == 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= seguido.calificacion}"></i>
-                      <i *ngIf="seguido.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= seguido.calificacion}"></i>
-                      <span *ngIf="seguido.calificacion % 1 != 0 && i == (seguido.calificacion - seguido.calificacion % 1) + 1" class="text-warning fs-4 fw-bold">&#189;</span>
-                    </span>
-                    &nbsp;
-                    <i *ngIf="seguido.gustado == 1" class="bi bi-heart-fill"></i> 
-                    &nbsp;
-                    <i *ngIf="seguido.comentario != null" [routerLink]="['/reviewed', seguido.usuarioSeguido, seguido.idPelicula]" class="bi bi-text-left"></i>
-                  </td>
-                </div>                
-              </div>
+
+    <form #userForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="usuario.nombre" disabled>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="email">Correo</label>
+                    <input type="email" class="form-control" id="email" name="email" [(ngModel)]="usuario.email" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="apodo">Apodo</label>
+                    <input type="text" class="form-control" id="apodo" name="apodo" [(ngModel)]="usuario.apodo">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ubicacion">Ubicación</label>
+                    <input type="ubicacion" class="form-control" id="ubicacion" name="ubicacion" [(ngModel)]="usuario.ubicacion">
+                </div>
             </div>
             
+            <div class="form-group">
+                <label for="bio">Bio</label>
+                <textarea class="form-control" id="bio" name="bio" [(ngModel)]="usuario.bio" required></textarea>
+            </div>
         </div>
-    </div>
-</div>
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+        
+    </form>

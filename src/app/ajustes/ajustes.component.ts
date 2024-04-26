@@ -134,4 +134,13 @@ export class AjustesComponent implements OnInit {
       (error) => console.log('Color Update Error', error.error)
     );
   }
+
+  updateBio() {
+    this.http.put(`http://localhost:8080/bio`, this.usuario).subscribe(
+      (success) => {
+        console.log('Bio Updated');
+      },
+      (error) => console.log('Bio Update Error', error.error)
+    );
+  }
 }

@@ -1,7 +1,7 @@
-.nav-link{
-    color: white;
+.nav-link {
+  color: white;
 }
 
-.nav-link:active{
-    color: black;
+.nav-link.active {
+  color: white;
 }

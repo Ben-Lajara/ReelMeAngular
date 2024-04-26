@@ -1,13 +1,30 @@
 <!-- Versión un poco mejorada del componente, aún necesita más datos-->
-<div class="container">
+<div class="container mt-3">
     <div *ngIf="isLoading">
         <p>Cargando...</p>
     </div>
 
     <div *ngIf="!isLoading">
-        <h3>{{datos.nombre}} <i *ngIf="datos.rango != null" class="bi bi-patch-check-fill" [ngStyle]="{'color': getColor(datos.rango)}"></i></h3>
+        <div class="d-flex align-items-center">
+            <img [src]="'http://localhost:8080/uploads/' + datos.perfil" alt="" class="rounded-circle mr-2" style="border: 2px solid; width: 100px; height: 100px; margin-right: 0.5em;" [style.borderColor]="datos.color">
+            <div>
+                <dl>
+                    <dt>
+                        <h3 *ngIf="datos.apodo == null">@{{datos.nombre}} <i *ngIf="datos.rango != null" class="bi bi-patch-check-fill" [ngStyle]="{'color': getColor(datos.rango)}"></i></h3>
+                        <h3 class="apodo" *ngIf="datos.apodo != null">{{datos.apodo}} <i *ngIf="datos.rango != null" class="bi bi-patch-check-fill" [ngStyle]="{'color': getColor(datos.rango)}"></i></h3>
+                        <p class="nombre" *ngIf="datos.apodo != null">@{{datos.nombre}}</p>
+                    </dt>
+                    <dt>
+                        <p>{{datos.bio}}</p>
+                    </dt>
+                </dl>
+            </div>
+        </div>
+        
         <p>
             {{datos.vistas}} películas vistas
+            &nbsp;
+            {{datos.vistasYear}} este año
             &nbsp;
             <a id="seguidores" [routerLink]="['/about', username, 'followers']">{{datos.seguidores}} seguidores</a>
             &nbsp;
@@ -28,7 +45,7 @@
             <div class="tab-pane fade show active" id="actividad" role="tabpanel" aria-labelledby="actividad-tab">
                 <div class="row">
                     <div *ngFor="let resena of actividadReciente" class="col">
-                        <div class="card text-center bg-dark text-white mb-2 mr-2" style="height: 600px; width: 300px;">
+                        <div class="card text-center bg-secondary text-white mb-2 mr-2" style="height: 600px; width: 300px;">
                             <a>
                             <img src="{{resena.idPelicula.foto}}" class="card-img-top" style="width:298px; height:450px; object-fit: cover;">
                             </a>
