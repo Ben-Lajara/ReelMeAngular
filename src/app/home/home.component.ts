@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
     return response;
   }
 
-  async getLastReview(nombre: string): Promise<any> {
+  /* async getLastReview(nombre: string): Promise<any> {
     const response = await this.http
       .post('http://localhost/connection.php', {
         nombre,
@@ -49,5 +49,5 @@ export class HomeComponent implements OnInit {
       })
       .toPromise();
     return response;
-  }
+  }*/
 }

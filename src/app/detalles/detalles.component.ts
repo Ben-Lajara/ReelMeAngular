@@ -124,15 +124,6 @@ export class DetallesComponent implements OnInit, AfterViewInit {
     return this.http.get(`http://localhost:8080/api/reviewed/${this.id}`);
   }
 
-  getEstrellas(calificacion: number) {
-    // Método temporal, las estrellas se personalizarán más adelante y permitirán decimales.
-    let estrellas = '';
-    for (let i = 0; i < calificacion; i++) {
-      estrellas += '⭐';
-    }
-    return estrellas;
-  }
-
   getGustados() {
     return this.resenas.filter((resena) => resena.gustado === true).length;
   }
@@ -178,13 +169,13 @@ export class DetallesComponent implements OnInit, AfterViewInit {
     let starClass: string;
     if (i < this.calificacion) {
       console.log('Estrella llena');
-      starClass = 'bi bi-star-fill'; // Estrella llena y de color amarillo
+      starClass = 'bi bi-star-fill'; // Estrella llena
     } else if (i - 0.5 == this.calificacion) {
       console.log('Mitad de estrella');
-      starClass = 'bi bi-star-half'; // Mitad de estrella y de color amarillo
+      starClass = 'bi bi-star-half'; // Media estrella
     } else {
       console.log('Estrella vacía');
-      starClass = 'bi bi-star'; // Estrella vacía y de color oscuro
+      starClass = 'bi bi-star'; // Estrella vacía
     }
 
     this.starsCache[i] = starClass;

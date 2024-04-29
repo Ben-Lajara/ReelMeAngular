@@ -1,5 +1,5 @@
 <div class="container">
-  <ng-container *ngFor="let monthYear of reviews | keys | orden:getOrden()">
+  <ng-container *ngFor="let monthYear of reviews | keys">
     <h2>{{ monthYear | date: 'MMMM yyyy' }}</h2>
     <table class="table table-dark">
       <tbody>

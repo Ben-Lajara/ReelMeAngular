@@ -15,7 +15,7 @@
                 </div>
                 <br>
                 <div class="row">
-                    <td class="col">
+                    <td class="col-auto">
                         <label for="calificacion">Calificación</label>
                         <span *ngFor="let star of [1, 2, 3, 4, 5]; let i = index" id="calificacion">
                             <button type="button" class="btn btn-default mr-1" 
@@ -27,18 +27,19 @@
                             </button>
                         </span>
                     </td>
-                    <td class="col">
+                    <td class="col-auto">
                         <label for="gustado">Gustado</label>
                         <button type="button" class="btn btn-default" (click)="gustado = !gustado" id="gustado">
                             <i class="h3 bi" [ngClass]="{'bi-heart-fill text-warning': gustado, 'bi-heart': !gustado}"></i>
                         </button>
                     </td>
+                    <td class="col">
+                        <label for="fecha" class="mr-2">Vista el</label>
+                        <!-- <input type="date" id="fecha" class="form-control form-control-sm" name="fecha" [(ngModel)]="fecha"> -->
+                        <input type="date" id="fecha" class="form-control form-control-sm" name="fecha" [ngModel]="fecha | date:'yyyy-MM-dd'" (ngModelChange)="fecha = $event">
+                    </td>
                 </div>
                 <br>
-                <div>
-                    <label for="fecha" class="mr-2">Vista el</label>
-                    <input type="date" id="fecha" class="form-control form-control-sm" name="fecha" [(ngModel)]="fecha">
-                </div> 
                 <br>
                 <div>
                     <button type="submit" class="btn btn-success">Enviar</button>

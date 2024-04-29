@@ -31,15 +31,6 @@ export class CardReviewComponent implements OnInit {
     console.log(this.peli.id);
   }
 
-  getEstrellas() {
-    // Método provisional. Queda que admita decimales.
-    let estrellas = '';
-    for (let i = 0; i < this.review.calificacion; i++) {
-      estrellas += '⭐';
-    }
-    return estrellas;
-  }
-
   getStars(i: number): string {
     if (this.starsCache[i] !== undefined) {
       return this.starsCache[i];
@@ -48,13 +39,13 @@ export class CardReviewComponent implements OnInit {
     let starClass: string;
     if (i <= this.review.calificacion) {
       //console.log('Estrella llena');
-      starClass = 'bi bi-star-fill'; // Estrella llena y de color amarillo
+      starClass = 'bi bi-star-fill'; // Estrella llena
     } else if (i - 0.5 == this.review.calificacion) {
       //console.log('Mitad de estrella');
-      starClass = 'bi bi-star-half'; // Mitad de estrella y de color amarillo
+      starClass = 'bi bi-star-half'; // Mitad de estrella
     } else {
       //console.log('Estrella vacía');
-      starClass = 'bi bi-star'; // Estrella vacía y de color oscuro
+      starClass = 'bi bi-star'; // Estrella vacía
     }
 
     this.starsCache[i] = starClass;

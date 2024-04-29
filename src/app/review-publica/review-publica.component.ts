@@ -6,13 +6,13 @@ import { tap } from 'rxjs';
 @Component({
   selector: 'app-review-publica',
   templateUrl: './review-publica.component.html',
-  styleUrls: ['./review-publica.component.css']
+  styleUrls: ['./review-publica.component.css'],
 })
 export class ReviewPublicaComponent implements OnInit {
   id = '';
   username = '';
   resena: any;
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -26,17 +26,8 @@ export class ReviewPublicaComponent implements OnInit {
   }
 
   getResenaPublica(usuario: string, idPelicula: string) {
-    return this.http.get(`http://localhost:8080/api/reviewed/${usuario}/${idPelicula}`)
+    return this.http.get(
+      `http://localhost:8080/api/reviewed/${usuario}/${idPelicula}`
+    );
   }
-
-  getEstrellas(calificacion: number) {
-    let estrellas = '';
-    for (let i = 0; i < calificacion; i++) {
-      estrellas += '⭐';
-    }
-    return estrellas;
-  }
-
-  
-
 }
