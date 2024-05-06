@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -14,6 +14,8 @@ export class AjustesComponent implements OnInit {
   usuario: any;
   pword = '';
   pword2 = '';
+  pwordBorrar = '';
+  pwordBorrar2 = '';
   exito = '';
   numResenas = 0;
 
@@ -141,6 +143,20 @@ export class AjustesComponent implements OnInit {
         console.log('Bio Updated');
       },
       (error) => console.log('Bio Update Error', error.error)
+    );
+  }
+
+  deleteUser() {
+    console.log('Eliminando usuario');
+    const params = new HttpParams()
+      .set('pword', this.pwordBorrar)
+      .set('nombre', this.username);
+    this.http.delete(`http://localhost:8080/delete`, { params }).subscribe(
+      (success) => {
+        console.log('Usuario Eliminado');
+        this.authService.logout();
+      },
+      (error) => console.log('Error al eliminar usuario', error.error)
     );
   }
 }

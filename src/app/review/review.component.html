@@ -11,7 +11,7 @@
                 <h2>{{pelicula().Title}}</h2>
                 <div class="form-group">
                     <label for="comentario">Reseña</label>
-                    <textarea class="form-control" id="comentario" rows="3" name="comentario" [(ngModel)]="comentario"></textarea>
+                    <textarea class="form-control" id="comentario" rows="3" name="comentario" [(ngModel)]="comentario" [disabled]="hayVeto"></textarea>
                 </div>
                 <br>
                 <div class="row">

@@ -41,6 +41,9 @@
       <li class="nav-item" role="presentation">
         <a class="nav-link" id="pword-tab" data-bs-toggle="tab" href="#pword" role="tab" aria-controls="pword" aria-selected="false">Cambiar contraseña</a>
       </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="borrar-tab" data-bs-toggle="tab" href="#borrar" role="tab" aria-controls="borrar" aria-selected="false">Borrar cuenta</a>
+      </li>
     </ul>
   <div class="tab-content m-2" id="myTabContent">
       <div class="tab-pane fade show active" id="perfil" role="tabpanel" aria-labelledby="perfil-tab">
@@ -76,6 +79,17 @@
           </div>
           
         </div>
+      </div>
+      <div class="tab-pane fade" id="borrar" role="borrar" aria-labelledby="borrar-tab">
+        <div class="mb-3">
+          <label for="pwordBorrar" class="form-label">Contraseña actual</label>
+          <input type="password" name="pwordBorrar" [(ngModel)]="pwordBorrar" class="form-control" id="pwordBorrar" placeholder="Contraseña actual" required>
+      </div>
+      <div class="mb-3">
+        <label for="pwordBorrar2" class="form-label">Contraseña actual</label>
+        <input type="password" name="pwordBorrar2" [(ngModel)]="pwordBorrar2" class="form-control" id="pwordBorrar2" placeholder="Contraseña actual" required>
+      </div>
+      <button type="submit" class="btn btn-danger" (click)="deleteUser()">Borrar cuenta</button>
       </div>
   </div>
 </div>

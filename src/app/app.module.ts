@@ -32,6 +32,9 @@ import { AjustesComponent } from './ajustes/ajustes.component';
 import { BarraFiltrosBuscadorComponent } from './barra-filtros-buscador/barra-filtros-buscador.component';
 import { RestablecerComponent } from './restablecer/restablecer.component';
 import { RestablecimientoComponent } from './restablecimiento/restablecimiento.component';
+import { PanelAdminComponent } from './panel-admin/panel-admin.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -61,15 +64,14 @@ import { RestablecimientoComponent } from './restablecimiento/restablecimiento.c
     AjustesComponent,
     BarraFiltrosBuscadorComponent,
     RestablecerComponent,
-    RestablecimientoComponent
+    RestablecimientoComponent,
+    PanelAdminComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  providers: [
+    AuthGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
-  providers: [AuthGuard],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

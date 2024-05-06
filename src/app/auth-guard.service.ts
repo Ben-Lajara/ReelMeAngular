@@ -28,31 +28,20 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const usuarioRuta = next.params['username'];
-    const usuarioActual = localStorage.getItem('username');
-    console.log('Usuario de la ruta: ' + usuarioRuta);
-    return this.authService.isLoggedIn.pipe(
-      switchMap((isLoggedIn) => {
-        if (!isLoggedIn) {
-          console.log('Not logged in');
-          this.router.navigate(['/login']);
-          return of(false);
-        } else {
-          return this.authService.currentUsername.pipe(
-            map((user) => {
-              console.log('User: ' + user);
-              if (usuarioRuta === user || usuarioActual === user) {
-                console.log('Logged in as correct user');
-                //this.alertService.showAlert('Access restricted');
-                return true;
-              } else {
-                console.log('Access restricted');
-                return false;
-              }
-            })
-          );
-        }
-      })
-    );
+    if (!this.authService.isLoggedIn) {
+      console.log('Not logged in');
+      this.router.navigate(['/login']);
+      return false;
+    } else {
+      const token = localStorage.getItem('authToken');
+      if (token === null || this.authService.tokenExpired(token)) {
+        console.log('No token found or token expired');
+        this.router.navigate(['/login']);
+        return false;
+      } else {
+        console.log('Logged in with valid token');
+        return true;
+      }
+    }
   }
 }

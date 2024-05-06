@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReelMeService } from '../reel-me.service';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs';
+import { catchError, tap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-review',
@@ -16,7 +16,8 @@ export class ReviewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private reelme: ReelMeService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {}
   id = '';
   fecha = new Date();
@@ -26,6 +27,7 @@ export class ReviewComponent implements OnInit {
   resena: any;
   editado: boolean = false;
   hoverState = 0;
+  hayVeto = false;
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -41,6 +43,7 @@ export class ReviewComponent implements OnInit {
 
       this.getResena(this.username, this.id).subscribe(() => {
         console.log(this.editado);
+        this.checkVeto();
       });
     });
   }
@@ -108,6 +111,16 @@ export class ReviewComponent implements OnInit {
             this.gustado = this.resena.gustado;
             this.editado = true;
           }
+        }),
+        catchError((error) => {
+          if (error.status === 401) {
+            this.router.navigate([
+              '/review',
+              localStorage.getItem('username'),
+              this.id,
+            ]);
+          }
+          return throwError(error);
         })
       );
   }
@@ -131,5 +144,16 @@ export class ReviewComponent implements OnInit {
     const rect = (event.target as HTMLElement).getBoundingClientRect();
     const offsetX = event.clientX - rect.left;
     this.hoverState = offsetX < rect.width / 2 ? star - 0.5 : star;
+  }
+
+  checkVeto() {
+    if (
+      localStorage.getItem('veto') == null ||
+      localStorage.getItem('veto') == 'null'
+    ) {
+      this.hayVeto = false;
+    } else {
+      this.hayVeto = true;
+    }
   }
 }

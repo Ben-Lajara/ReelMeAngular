@@ -13,6 +13,14 @@
                 </span>
             </h4>
             <p *ngIf="resena.comentario != null">{{resena.comentario}}</p>
+            <button type="button" class="btn btn-danger" (click)="mostrarDenuncia = !mostrarDenuncia" [disabled]="denunciaExistente!=null">Denunciar</button>
+            <div *ngIf="mostrarDenuncia">
+                    <div class="mb-3">
+                        <label for="denuncia" class="form-label">Motivo de la denuncia</label>
+                        <textarea name="motivo" [(ngModel)]="motivo" class="form-control" id="motivo" placeholder="Motivo de la denuncia" required [disabled]="denunciaEnviada"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-danger w-100" (click)="denunciar(usuarioActual, resena.usuario, id, motivo)">Denunciar</button>
+            </div>
         </td>
     </div>
 </div>

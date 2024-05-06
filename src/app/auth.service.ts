@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, BehaviorSubject, tap } from 'rxjs';
+import { Observable, BehaviorSubject, tap, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +9,8 @@ import { Observable, BehaviorSubject, tap } from 'rxjs';
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
   private username = new BehaviorSubject<string>('');
+  private roles = new BehaviorSubject<string[]>([]);
+  private admin = new BehaviorSubject<boolean>(false);
 
   get isLoggedIn() {
     return this.loggedIn.asObservable();
@@ -18,13 +20,25 @@ export class AuthService {
     return this.username.asObservable();
   }
 
+  get rolesUsuario() {
+    return this.roles.asObservable();
+  }
+
+  get isAdmin(): Observable<boolean> {
+    return this.roles.pipe(map((roles) => roles.includes('ROLE_ADMIN')));
+  }
+
   constructor(private http: HttpClient, private router: Router) {
     const authToken = localStorage.getItem('authToken');
     const username = localStorage.getItem('username');
+    const rolesString = localStorage.getItem('roles');
+    const roles = rolesString ? JSON.parse(rolesString) : [];
+    console.log('Roles const: ', roles);
 
-    if (authToken && username) {
+    if (authToken && username && roles) {
       this.loggedIn.next(true);
       this.username.next(username);
+      this.roles.next(roles);
     }
   }
 
@@ -41,12 +55,45 @@ export class AuthService {
         if (data.status === 'success') {
           this.loggedIn.next(true);
           this.username.next(data.usuario.nombre);
+          localStorage.setItem('username', data.usuario.nombre);
+          localStorage.setItem('veto', data.usuario.veto);
+          let fechaActual = new Date();
+          let fechaVeto = new Date(data.usuario.veto);
+          if (fechaActual > fechaVeto) {
+            this.http
+              .put(
+                'http://localhost:8080/levantarVeto',
+                {},
+                {
+                  params: {
+                    nombre: data.usuario.nombre,
+                  },
+                }
+              )
+              .subscribe((res: any) => {
+                console.log(res);
+              });
+          }
+          this.roles.next(data.roles);
+          console.log('Roles: ', data.roles);
+          const rolesArray = Array.isArray(data.roles)
+            ? data.roles
+            : [data.roles];
+          this.roles.next(rolesArray);
           console.log('Logged in');
           localStorage.setItem('isAuthenticated', 'true');
-          //localStorage.setItem('authToken', data.token);
+          localStorage.setItem('authToken', data.token);
+          localStorage.setItem('roles', JSON.stringify(rolesArray));
+          console.log(JSON.stringify(rolesArray));
+          console.log(data.token);
         }
       })
     );
+  }
+
+  public tokenExpired(token: string) {
+    const expiry = JSON.parse(atob(token.split('.')[1])).exp;
+    return Math.floor(new Date().getTime() / 1000) >= expiry;
   }
 
   logout(): void {

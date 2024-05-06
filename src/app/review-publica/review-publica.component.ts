@@ -11,16 +11,25 @@ import { tap } from 'rxjs';
 export class ReviewPublicaComponent implements OnInit {
   id = '';
   username = '';
+  usuarioActual = '';
   resena: any;
+  mostrarDenuncia = false;
+  motivo = '';
+  denunciaEnviada = false;
+  denunciaExistente: any;
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.username = params['username'];
-
+      this.usuarioActual = localStorage.getItem('username') || '';
       this.getResenaPublica(this.username, this.id).subscribe((res: any) => {
         this.resena = res;
+        this.getDenuncia().subscribe((res: any) => {
+          this.denunciaExistente = res;
+        });
+        console.log(this.denunciaExistente);
       });
     });
   }
@@ -29,5 +38,41 @@ export class ReviewPublicaComponent implements OnInit {
     return this.http.get(
       `http://localhost:8080/api/reviewed/${usuario}/${idPelicula}`
     );
+  }
+
+  denunciar(
+    denunciante: string,
+    denunciado: string,
+    idPelicula: string,
+    motivo: string
+  ) {
+    console.log(denunciante, denunciado, idPelicula, motivo);
+    this.denunciaEnviada = true;
+    return this.http
+      .post(
+        'http://localhost:8080/denunciar',
+        {},
+        {
+          params: {
+            denunciante: denunciante,
+            denunciado: denunciado,
+            idPelicula: idPelicula,
+            motivo: motivo,
+          },
+        }
+      )
+      .subscribe((res: any) => {
+        console.log(res);
+      });
+  }
+
+  getDenuncia() {
+    return this.http.get('http://localhost:8080/denunciaExistente', {
+      params: {
+        denunciante: this.usuarioActual,
+        denunciado: this.username,
+        idPelicula: this.id,
+      },
+    });
   }
 }

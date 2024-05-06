@@ -25,10 +25,7 @@ export class LoginComponent {
     this.authService.login(this.nombre, this.pword).subscribe(
       (data) => {
         if (data.status === 'success') {
-          localStorage.setItem('authToken', data.token); // guarda el token de autenticación
-          localStorage.setItem('username', data.usuario.nombre); // guarda el nombre de usuario
           this.nombre = data.usuario.nombre;
-          console.log('Login Success');
           this.router.navigate(['/home']);
         } else {
           this.error = true;

@@ -18,6 +18,8 @@ import { AjustesComponent } from './ajustes/ajustes.component';
 import { BarraFiltrosBuscadorComponent } from './barra-filtros-buscador/barra-filtros-buscador.component';
 import { RestablecerComponent } from './restablecer/restablecer.component';
 import { RestablecimientoComponent } from './restablecimiento/restablecimiento.component';
+import { PanelAdminComponent } from './panel-admin/panel-admin.component';
+import { AdminGuard } from './admin.guard';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -53,6 +55,7 @@ const routes: Routes = [
   { path: 'search', component: BarraFiltrosBuscadorComponent },
   { path: 'reset', component: RestablecerComponent },
   { path: 'reset/:token', component: RestablecimientoComponent },
+  { path: 'admin', component: PanelAdminComponent, canActivate: [AdminGuard] },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
 

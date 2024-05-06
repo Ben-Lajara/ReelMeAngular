@@ -36,8 +36,12 @@
             <a *ngIf="(isLoggedIn | async)" [routerLink]="['/about', currentUsername | async]" class="nav-link">Perfil</a>
           </li>
           <li class="nav-item">
+            <a *ngIf="(isLoggedIn | async) && (isAdmin$ | async)" routerLink="admin" class="nav-link">Panel de administrador</a>
+          </li>
+          <li class="nav-item">
             <a *ngIf="(isLoggedIn | async)" (click)="logout()" class="nav-link">Cerrar sesión</a>
           </li>
+
         </ul>
         <div class="d-flex" *ngIf="(isLoggedIn | async)">
           <a routerLink="/settings" class="nav-link">
