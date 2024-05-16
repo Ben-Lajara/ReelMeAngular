@@ -31,6 +31,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
   gustado = false;
   vista = false;
   puntuacionMedia = '';
+  apiUrl = 'http://localhost:8080/api';
   frecuenciasDiccionario = {
     0.5: 0,
     1: 0,
@@ -121,7 +122,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
 
   getReviewsPelicula() {
     console.log('getReviewsPelicula');
-    return this.http.get(`http://localhost:8080/api/reviewed/${this.id}`);
+    return this.http.get(`${this.apiUrl}/reviewed/${this.id}`);
   }
 
   getGustados() {
@@ -131,9 +132,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
   getActividad(usuario: string, id_pelicula: string) {
     console.log('Existente');
     return this.http
-      .get(
-        `http://localhost:8080/api/review?usuario=${usuario}&idPelicula=${id_pelicula}`
-      )
+      .get(`${this.apiUrl}/review?usuario=${usuario}&idPelicula=${id_pelicula}`)
       .pipe(
         tap((res) => {
           this.resena = res;
@@ -184,7 +183,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
 
   getResenasSeguidos(nombre: string, idPelicula: string) {
     return this.http.get(
-      `http://localhost:8080/resenasSeguidosPor/${nombre}/${idPelicula}`
+      `${this.apiUrl}/resenasSeguidosPor/${nombre}/${idPelicula}`
     );
   }
 

@@ -45,7 +45,7 @@ export class CardReviewComponent implements OnInit {
       starClass = 'bi bi-star-half'; // Mitad de estrella
     } else {
       //console.log('Estrella vacía');
-      starClass = 'bi bi-star'; // Estrella vacía
+      starClass = 'bi bi-star d-none d-sm-inline-block'; // Estrella vacía
     }
 
     this.starsCache[i] = starClass;

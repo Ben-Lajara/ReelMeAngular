@@ -11,6 +11,7 @@ import { AuthService } from '../auth.service';
 })
 export class PerfilComponent implements OnInit {
   username = '';
+  apiUrl = 'http://localhost:8080/api';
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -36,7 +37,7 @@ export class PerfilComponent implements OnInit {
   }
 
   onSubmit() {
-    this.http.put(`http://localhost:8080/usuario`, this.usuario).subscribe(
+    this.http.put(`${this.apiUrl}/usuario`, this.usuario).subscribe(
       (success) => {
         console.log('Usuario Actualizado');
       },
@@ -47,14 +48,14 @@ export class PerfilComponent implements OnInit {
   }
 
   getUser() {
-    return this.http.get(`http://localhost:8080/usuario/${this.username}`);
+    return this.http.get(`${this.apiUrl}/usuario/${this.username}`);
   }
 
   deleteUser() {
     console.log('Eliminando usuario');
     console.log(this.usuario);
     this.http
-      .delete(`http://localhost:8080/delete`, { body: this.usuario })
+      .delete(`${this.apiUrl}/usuario/delete`, { body: this.usuario })
       .subscribe(
         (success) => {
           console.log('Usuario Eliminado');

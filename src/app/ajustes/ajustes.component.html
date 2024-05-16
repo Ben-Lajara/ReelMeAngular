@@ -10,25 +10,32 @@
       </div>
     </div>
 
-    <div class="modal fade" id="perfilModal" tabindex="-1" aria-labelledby="perfilModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content bg-dark text-light">
-          <div class="modal-header">
-            <h5 class="modal-title" id="perfilModalLabel">Cambia tu foto de perfil</h5>
+  <div class="modal fade" id="perfilModal" tabindex="-1" aria-labelledby="perfilModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-dark text-light rounded shadow">
+        <div class="modal-header">
+            <h5 class="modal-title" id="perfilModalLabel">Actualizar foto de perfil</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="input-group mb-3">
-              <input type="file" class="form-control" (change)="onFileSelected($event)">
-              <button class="btn btn-outline-secondary" type="button" (click)="onUpload()">Subir foto de perfil</button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <div class="profile-img-container">
+                <img src="#" id="previewFotoPerfil" alt="Preview" class="img-fluid mt-3 d-none rounded-circle">
+              </div>
+              <label for="inputFotoPerfil" class="form-label visually-hidden">Selecciona una nueva foto de perfil:</label>
+              <input type="file" class="form-control profile-input" id="inputFotoPerfil" accept="image/*" (change)="previewProfileImage($event)">
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cambiar</button>
-          </div>
+          </form> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="onUpload()">Guardar cambios</button>
         </div>
       </div>
     </div>
+  </div>
+
     
 
     <ul class="nav nav-underline" id="myTab" role="tablist">

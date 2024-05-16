@@ -5,22 +5,19 @@ import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-card-peli',
   templateUrl: './card-peli.component.html',
-  styleUrls: ['./card-peli.component.css']
+  styleUrls: ['./card-peli.component.css'],
 })
 export class CardPeliComponent implements OnInit {
   @Input() mostrar: boolean = true;
   @Input() peli: any;
-  
+
   isLoggedIn: Observable<boolean>;
   currentUsername: Observable<string>;
 
   constructor(private authService: AuthService) {
-    // Necesario para mostrar o no el botón de reseñar
     this.isLoggedIn = this.authService.isLoggedIn;
     this.currentUsername = this.authService.currentUsername;
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

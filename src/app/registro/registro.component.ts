@@ -13,6 +13,7 @@ export class RegistroComponent {
   pword2 = '';
   noCoinciden = false;
   existe = false;
+  apiUrl = 'http://localhost:8080/api';
 
   constructor(private authService: AuthService, private http: HttpClient) {}
 
@@ -38,7 +39,7 @@ export class RegistroComponent {
   }
 
   checkUsername() {
-    this.http.get(`http://localhost:8080/usuario/${this.nombre}`).subscribe(
+    this.http.get(`${this.apiUrl}/usuario/${this.nombre}`).subscribe(
       (res) => {
         this.existe = true;
       },

@@ -18,6 +18,7 @@ export class DiarioComponent implements OnInit {
   ids: any[] = [];
   peli: any;
   private loading: boolean = true;
+  apiUrl = 'http://localhost:8080/api';
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -74,7 +75,7 @@ export class DiarioComponent implements OnInit {
   }
 
   async getReviews(usuario: string): Promise<void> {
-    this.http.get(`http://localhost:8080/api/diario/${usuario}`).subscribe(
+    this.http.get(`${this.apiUrl}/diario/${usuario}`).subscribe(
       async (res: Object) => {
         console.log(res);
         this.reviews = this.groupReviewsByMonth(res as any[]);
@@ -101,7 +102,7 @@ export class DiarioComponent implements OnInit {
   }
 
   busquedaID(id: string): Observable<any> {
-    return this.http.get(`http://localhost:8080/pelicula/${id}`);
+    return this.http.get(`${this.apiUrl}/pelicula/${id}`);
   }
 
   pelicula() {

@@ -35,6 +35,7 @@ import { RestablecimientoComponent } from './restablecimiento/restablecimiento.c
 import { PanelAdminComponent } from './panel-admin/panel-admin.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,13 @@ import { AuthInterceptor } from './auth.interceptor';
     RestablecimientoComponent,
     PanelAdminComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+  ],
   providers: [
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

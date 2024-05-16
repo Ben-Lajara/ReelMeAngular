@@ -1,3 +1,42 @@
-.card:hover{
-    box-shadow: 0 0 5px white;
+.card {
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+.card:hover {
+  box-shadow: 0 0 5px white;
+}
+
+.card-title {
+  font-size: 1.25rem;
+}
+
+.tooltip-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.tooltip-title .card-title {
+  margin: 0;
+}
+
+.tooltip-title:hover .tooltiptext {
+  visibility: visible;
+}
+
+.tooltip-title .tooltiptext {
+  visibility: hidden;
+  width: auto;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
 }

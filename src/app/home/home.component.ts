@@ -11,6 +11,7 @@ import { AuthService } from '../auth.service';
 })
 export class HomeComponent implements OnInit {
   username = '';
+  apiUrl = 'http://localhost:8080/api';
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -35,7 +36,7 @@ export class HomeComponent implements OnInit {
 
   async getSeguidos(nombre: string): Promise<any> {
     const response = await this.http
-      .get(`http://localhost:8080/seguidos/${nombre}`)
+      .get(`${this.apiUrl}/usuario/${nombre}/seguidos/reviewed`)
       .toPromise();
     //await this.getPeliculas();
     return response;

@@ -14,6 +14,7 @@ export class SocialComponent implements OnInit {
   username = '';
   seguidos: any;
   nombre = '';
+  apiUrl = 'http://localhost:8080/api';
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -24,7 +25,7 @@ export class SocialComponent implements OnInit {
     });
   }
   getUsuarios() {
-    return this.http.get(`http://localhost:8080/usuarios`);
+    return this.http.get(`${this.apiUrl}/usuarios`);
   }
 
   findUsuarios(nombre: string) {
@@ -42,7 +43,7 @@ export class SocialComponent implements OnInit {
       });
     } else {
       this.http
-        .get(`http://localhost:8080/usuarios/${nombre}`)
+        .get(`${this.apiUrl}/usuarios/${nombre}`)
         .pipe(
           catchError((error) => {
             if (error.status === 404) {
@@ -65,7 +66,9 @@ export class SocialComponent implements OnInit {
   }
 
   getSeguidos() {
-    return this.http.get(`http://localhost:8080/seguidosPor/${this.username}`);
+    return this.http.get(
+      `${this.apiUrl}/usuarios/seguidosPor/${this.username}`
+    );
   }
 
   ngOnInit(): void {

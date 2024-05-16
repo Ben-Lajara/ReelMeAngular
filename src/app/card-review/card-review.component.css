@@ -1,19 +1,33 @@
 .day-badge {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 70px;
-    height: 70px;
-    background-color: darkgray;
-    font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  background-color: orange;
+  font-size: 30px;
+}
+
+i.bi-calendar2 {
+  color: orange;
+  font-size: 80px;
 }
 
 td {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-td{
-    font-size: 20px;
+td {
+  font-size: 20px;
+}
+
+i.iconos-estrellas {
+  margin: 0.5rem;
+  font-size: calc(min(1vw + 1vh + 1vmin, 24px));
+}
+
+i.icono-corazon {
+  font-size: calc(min(1vw + 1vh + 1vmin, 24px));
 }

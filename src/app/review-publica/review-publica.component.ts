@@ -17,6 +17,7 @@ export class ReviewPublicaComponent implements OnInit {
   motivo = '';
   denunciaEnviada = false;
   denunciaExistente: any;
+  apiUrl = 'http://localhost:8080/api';
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit(): void {
@@ -35,9 +36,7 @@ export class ReviewPublicaComponent implements OnInit {
   }
 
   getResenaPublica(usuario: string, idPelicula: string) {
-    return this.http.get(
-      `http://localhost:8080/api/reviewed/${usuario}/${idPelicula}`
-    );
+    return this.http.get(`${this.apiUrl}/reviewed/${usuario}/${idPelicula}`);
   }
 
   denunciar(
@@ -50,7 +49,7 @@ export class ReviewPublicaComponent implements OnInit {
     this.denunciaEnviada = true;
     return this.http
       .post(
-        'http://localhost:8080/denunciar',
+        `${this.apiUrl}/denuncias/denunciar`,
         {},
         {
           params: {
@@ -67,7 +66,7 @@ export class ReviewPublicaComponent implements OnInit {
   }
 
   getDenuncia() {
-    return this.http.get('http://localhost:8080/denunciaExistente', {
+    return this.http.get(`${this.apiUrl}/denuncias/existente`, {
       params: {
         denunciante: this.usuarioActual,
         denunciado: this.username,

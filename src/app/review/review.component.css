@@ -2,6 +2,38 @@ i {
   color: white;
 }
 
-i:hover {
+/*i:hover {
   color: rgb(189, 189, 189);
+}*/
+
+.bi-star-fill {
+  color: orange;
+}
+
+.bi-heart-fill {
+  color: rgb(195, 57, 57);
+}
+
+.bi-heart {
+  color: rgb(195, 57, 57);
+}
+
+#gustado,
+#estrella:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+#gustado,
+#estrella {
+  border: none;
+}
+
+.alert-success {
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 15px;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
 }

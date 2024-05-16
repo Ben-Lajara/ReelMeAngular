@@ -1,6 +1,3 @@
-<!-- 
-    Podría ser un modal.
--->
 <div class="container mt-3">
     <div class="row">
         <div class="col-2">
@@ -18,19 +15,19 @@
                     <td class="col-auto">
                         <label for="calificacion">Calificación</label>
                         <span *ngFor="let star of [1, 2, 3, 4, 5]; let i = index" id="calificacion">
-                            <button type="button" class="btn btn-default mr-1" 
+                            <button type="button" id="estrella" class="btn btn-default mr-1" 
                                     (mouseover)="hoverState = i + 1" 
                                     (mousemove)="updateHoverState($event, i + 1)"
                                     (mouseleave)="hoverState = 0" 
                                     (click)="calificacion = hoverState">
-                            <i class="h3 bi" [ngClass]="{'bi-star-fill': calificacion > i, 'bi-star-half': calificacion > i && calificacion < i + 1, 'bi-star': calificacion <= i}"></i>
+                            <i class="h3 text-warning bi" [ngClass]="{'bi-star-fill': calificacion > i, 'bi-star-half': calificacion > i && calificacion < i + 1, 'bi-star': calificacion <= i}"></i>
                             </button>
                         </span>
                     </td>
                     <td class="col-auto">
                         <label for="gustado">Gustado</label>
                         <button type="button" class="btn btn-default" (click)="gustado = !gustado" id="gustado">
-                            <i class="h3 bi" [ngClass]="{'bi-heart-fill text-warning': gustado, 'bi-heart': !gustado}"></i>
+                            <i class="h3 bi" [ngClass]="{'bi-heart-fill': gustado, 'bi-heart': !gustado}"></i>
                         </button>
                     </td>
                     <td class="col">
@@ -47,5 +44,8 @@
             </form>
         </div>
     </div>
+    <div *ngIf="cambiosGuardados" [@fade]="cambiosGuardados ? 'visible' : 'hidden'" class="alert alert-success" role="alert">
+    Se han guardado los cambios.
+  </div>
 </div>
 

@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-3">
       <img src="{{(pelicula$ | async)?.Poster}}" class="rounded card-img-top img-fluid" style="max-width: 100%;">
-      <p class="text-center"><i class="bi bi-eye-fill" style = "color:rgb(21, 223, 21);"></i> {{resenas.length}}  <i class="bi bi-heart-fill" style = "color:orange;"></i> {{getGustados()}}</p>
+      <p class="text-center"><i class="bi bi-eye-fill text-info"></i> {{resenas.length}}  <i class="bi bi-heart-fill text-danger"></i> {{getGustados()}}</p>
       
     </div>
     <div class="col-6">
@@ -84,14 +84,14 @@
       </dl>
     </div>
     <div class="col-3">
-      <div *ngIf="currentUsername!=''" class="card text-bg-secondary">
+      <div *ngIf="currentUsername!=''" class="card text-bg-success">
         <div class="card-header">
           <div class="row justify-content-center gap-2">
             <td class="col-auto">
               <i class="h3 bi text-info" [ngClass]="{'bi-eye-fill': vista, 'bi-eye': !vista}"></i>
             </td>
             <td class="col-auto">
-              <i class="h3 text-warning bi" [ngClass]="{'bi-heart-fill': gustado, 'bi-heart': !gustado}"></i>
+              <i class="h3 bi" [ngClass]="{'bi-heart-fill': gustado, 'bi-heart': !gustado}"></i>
             </td>   
           </div>   
         </div>        

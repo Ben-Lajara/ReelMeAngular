@@ -3,15 +3,43 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReelMeService } from '../reel-me.service';
 import { HttpClient } from '@angular/common/http';
 import { catchError, tap, throwError } from 'rxjs';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-review',
   templateUrl: './review.component.html',
   styleUrls: ['./review.component.css'],
+  animations: [
+    trigger('fade', [
+      state(
+        'visible',
+        style({
+          opacity: 1,
+          display: 'block',
+        })
+      ),
+      state(
+        'hidden',
+        style({
+          opacity: 0,
+          display: 'none',
+        })
+      ),
+      transition('visible => hidden', [animate('0.5s ease-out')]),
+      transition('hidden => visible', [animate('0.5s ease-in')]),
+    ]),
+  ],
 })
 export class ReviewComponent implements OnInit {
   @Input() username: string = '';
   @Input() peli: any;
+  cambiosGuardados = false;
   private apiUrl = 'http://localhost:8080/api';
   constructor(
     private route: ActivatedRoute,
@@ -39,10 +67,11 @@ export class ReviewComponent implements OnInit {
         console.log(this.reelme.pelicula().Title);
       });
 
-      console.log(this.fecha);
+      console.log('fecha inicial al entrar: ', this.fecha);
 
       this.getResena(this.username, this.id).subscribe(() => {
         console.log(this.editado);
+        console.log('fecha al recuperar los datos: ', this.fecha);
         this.checkVeto();
       });
     });
@@ -67,6 +96,8 @@ export class ReviewComponent implements OnInit {
     year: string,
     foto: string
   ) {
+    console.log('this.fecha: ', this.fecha);
+    console.log('fecha params: ', fecha);
     const body = {
       fecha,
       calificacion,
@@ -80,7 +111,17 @@ export class ReviewComponent implements OnInit {
     };
     if (this.editado) {
       console.log('Editado');
-      return this.http.put(`${this.apiUrl}/review`, body);
+      console.log('Fecha al actualizar: ' + fecha);
+      return this.http.put(`${this.apiUrl}/review`, body).subscribe(
+        (response) => {
+          console.log(response);
+          return response;
+        },
+        (error) => {
+          console.error(error);
+          return error;
+        }
+      );
     } else {
       console.log('Enviado');
       console.log(body);
@@ -100,7 +141,15 @@ export class ReviewComponent implements OnInit {
   getResena(usuario: string, id_pelicula: string) {
     console.log('Existente');
     return this.http
-      .get(`${this.apiUrl}/review?usuario=${usuario}&idPelicula=${id_pelicula}`)
+      .get(`${this.apiUrl}/review`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        params: {
+          usuario: usuario,
+          idPelicula: id_pelicula,
+        },
+      })
       .pipe(
         tap((res) => {
           this.resena = res;
@@ -138,6 +187,11 @@ export class ReviewComponent implements OnInit {
       this.pelicula().Year,
       this.pelicula().Poster
     );
+    this.cambiosGuardados = true;
+
+    setTimeout(() => {
+      this.cambiosGuardados = false; // Oculta el mensaje
+    }, 3000);
   }
 
   updateHoverState(event: MouseEvent, star: number) {

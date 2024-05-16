@@ -5,31 +5,30 @@
     </div>
 
     <div *ngIf="!isLoading">
-        <div class="d-flex align-items-center">
-            <img [src]="'http://localhost:8080/uploads/' + datos.perfil" alt="" class="rounded-circle mr-2" style="border: 4px solid; width: 100px; height: 100px; margin-right: 0.5em;" [style.borderColor]="datos.color">
-            <div>
-                <dl>
-                    <dt>
-                        <h3 *ngIf="datos.apodo == null">@{{datos.nombre}} <i *ngIf="datos.rango != null" class="bi bi-patch-check-fill" [ngStyle]="{'color': getColor(datos.rango)}"></i></h3>
-                        <h3 class="apodo" *ngIf="datos.apodo != null">{{datos.apodo}} <i *ngIf="datos.rango != null" class="bi bi-patch-check-fill" [ngStyle]="{'color': getColor(datos.rango)}"></i></h3>
-                        <p class="nombre" *ngIf="datos.apodo != null">@{{datos.nombre}}</p>
-                    </dt>
-                    <dt>
-                        <p>{{datos.bio}}</p>
-                    </dt>
-                </dl>
+        <div class="profile-card bg-black">
+            <div class="profile-header d-flex align-items-center">
+                <img [src]="'http://localhost:8080/uploads/' + datos.perfil" alt="" class="profile-image" [style.borderColor]="datos.color">
+                <div class="profile-info">
+                    <h3 *ngIf="datos.apodo; else nombreTemplate">
+                        {{datos.apodo}} <i *ngIf="datos.rango" class="bi bi-patch-check-fill" [ngStyle]="{'color': getColor(datos.rango)}"></i>
+                    </h3>
+                    <ng-template #nombreTemplate>
+                        <h3>@{{datos.nombre}} <i *ngIf="datos.rango" class="bi bi-patch-check-fill" [ngStyle]="{'color': getColor(datos.rango)}"></i></h3>
+                    </ng-template>
+                    <p class="nombre" *ngIf="datos.apodo">@{{datos.nombre}}</p>
+                    <p>{{datos.bio}}</p>
+                </div>
             </div>
+            <p class="profile-stats">
+                {{datos.vistas}} películas vistas
+                &nbsp;|&nbsp;
+                {{datos.vistasYear}} este año
+                &nbsp;|&nbsp;
+                <a id="seguidores" [routerLink]="['/about', username, 'followers']">{{datos.seguidores}} seguidores</a>
+                &nbsp;|&nbsp;
+                <a id="seguidos" [routerLink]="['/about', username, 'following']">{{datos.seguidos}} seguidos</a>
+            </p>
         </div>
-        
-        <p>
-            {{datos.vistas}} películas vistas
-            &nbsp;
-            {{datos.vistasYear}} este año
-            &nbsp;
-            <a id="seguidores" [routerLink]="['/about', username, 'followers']">{{datos.seguidores}} seguidores</a>
-            &nbsp;
-            <a id="seguidos" [routerLink]="['/about', username, 'following']">{{datos.seguidos}} seguidos</a>
-        </p>
         <ul class="nav nav-underline" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
               <a class="nav-link active" id="actividad-tab" data-bs-toggle="tab" href="#actividad" role="tab" aria-controls="actividad" aria-selected="true">Actividad reciente</a>
@@ -45,27 +44,31 @@
             <div class="tab-pane fade show active" id="actividad" role="tabpanel" aria-labelledby="actividad-tab">
                 <div class="row">
                     <div *ngFor="let resena of actividadReciente" class="col">
-                        <div class="card text-center bg-secondary text-white mb-2 mr-2" style="height: 600px; width: 300px;">
-                            <a>
-                            <img src="{{resena.idPelicula.foto}}" class="card-img-top" style="width:298px; height:450px; object-fit: cover;">
+                        <div class="card bg-success text-white mb-2 mr-2 rounded" style="width: 300px;">
+                            <a routerLink="/details/{{resena.idPelicula.id}}">
+                                <img src="{{resena.idPelicula.foto}}" class="card-img-top" style="height: 450px; object-fit: cover;">
                             </a>
                             <div class="card-body">
-                            <a routerLink="/details/{{resena.idPelicula.id}}"><h5 class="card-text">{{resena.idPelicula.titulo}}</h5></a>
-                            <div class = "row">
-                            <td class="col me-3">
-                                <span *ngFor="let i of [1, 2, 3, 4, 5]">
-                                <i *ngIf="resena.calificacion % 1 == 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
-                                <i *ngIf="resena.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
-                                <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning fs-5 fw-bold">&#189;</span>
-                                </span>
-                                &nbsp;
-                                <i *ngIf="resena.gustado == 1" class="bi bi-heart-fill"></i> 
-                                &nbsp;
-                                <i *ngIf="resena.comentario != null" [routerLink]="['/reviewed', resena.nomUsuario.nombre, resena.idPelicula.id]" class="bi bi-text-left"></i>
-                            </td>
-                            </div>                
+                                <a routerLink="/details/{{resena.idPelicula.id}}" class="tooltip-title">
+                                    <h5 class="card-title">{{resena.idPelicula.titulo}}</h5>
+                                    <span class="tooltiptext">{{resena.idPelicula.titulo}}</span>
+                                </a>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="rating">
+                                        <span *ngFor="let i of [1, 2, 3, 4, 5]">
+                                            <i *ngIf="resena.calificacion % 1 == 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
+                                            <i *ngIf="resena.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
+                                            <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning fs-5 fw-bold">&#189;</span>
+                                        </span>
+                                    </div>
+                                    <div class="actions">
+                                        <i *ngIf="resena.gustado == 1" class="bi bi-heart-fill me-2"></i>
+                                        <i *ngIf="resena.comentario != null" [routerLink]="['/reviewed', resena.nomUsuario.nombre, resena.idPelicula.id]" class="bi bi-chat-left-text"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-.card:hover {
+/*.card:hover {
   box-shadow: 0 0 5px white;
 }
 
@@ -9,4 +9,94 @@ a {
 
 a:hover {
   color: rgb(189, 189, 189);
+}*/
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  color: rgb(189, 189, 189);
+}
+
+i {
+  text-shadow: 0 0 2px black;
+}
+i.bi-star-fill {
+  font-size: 1.25rem;
+  margin-right: 0.25rem;
+}
+
+i.bi-heart-fill {
+  color: rgb(195, 57, 57);
+}
+
+.apodo {
+  margin-bottom: 0;
+}
+
+.nombre {
+  margin-top: 0;
+}
+
+.nav-link.active {
+  color: white;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  flex: 0 0 auto;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+  font-size: 1.25rem;
+}
+
+.rating .bi {
+  font-size: 1rem;
+}
+
+.actions .bi {
+  font-size: 1.5rem;
+}
+
+.actions .bi:hover {
+  cursor: pointer;
+}
+
+.tooltip-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.tooltip-title .card-title {
+  margin: 0;
+}
+
+.tooltip-title:hover .tooltiptext {
+  visibility: visible;
+}
+
+.tooltip-title .tooltiptext {
+  visibility: hidden;
+  width: auto;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
 }

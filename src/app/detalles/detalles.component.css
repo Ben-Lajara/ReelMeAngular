@@ -1,27 +1,36 @@
-.nav-link{
-    color: white;
+.nav-link {
+  color: white;
 }
 
-.nav-link:active{
-    color: black;
+.nav-link:active {
+  color: black;
 }
 
-#seguidoResena:hover{
-    box-shadow: 0 0 5px white;
+#seguidoResena:hover {
+  box-shadow: 0 0 5px white;
 }
 
-#resenaUsuario{
-    color: rgb(186, 186, 186);
+#resenaUsuario {
+  color: rgb(186, 186, 186);
 }
-#resenaUsuario:hover{
-    color:orange;
-}
-
-#usuario{
-    text-decoration: none;
-    color:white;
+#resenaUsuario:hover {
+  color: orange;
 }
 
-#usuario:hover{
-    color:rgb(5, 225, 5);
+#usuario {
+  text-decoration: none;
+  color: white;
+}
+
+#usuario:hover {
+  color: rgb(5, 225, 5);
+}
+
+i {
+  text-shadow: 0 0 2px black;
+}
+
+i.bi-heart-fill,
+i.bi-heart {
+  color: rgb(195, 57, 57);
 }

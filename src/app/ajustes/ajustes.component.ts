@@ -18,7 +18,7 @@ export class AjustesComponent implements OnInit {
   pwordBorrar2 = '';
   exito = '';
   numResenas = 0;
-
+  apiUrl = 'http://localhost:8080/api';
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -43,7 +43,7 @@ export class AjustesComponent implements OnInit {
   }
 
   getUsuario() {
-    return this.http.get(`http://localhost:8080/usuario/${this.username}`);
+    return this.http.get(`${this.apiUrl}/usuario/${this.username}`);
   }
 
   setNewPword() {
@@ -51,17 +51,15 @@ export class AjustesComponent implements OnInit {
       console.log('Contraseña incorrecta');
     } else {
       this.usuario.pword = this.pword2;
-      this.http
-        .put(`http://localhost:8080/cambiarPword`, this.usuario)
-        .subscribe(
-          (success) => {
-            console.log('Password Updated');
-            this.exito = 'Contraseña Actualizada';
-            this.pword = '';
-            this.pword2 = '';
-          },
-          (error) => console.log('Password Update Error', error.error)
-        );
+      this.http.put(`${this.apiUrl}/cambiarPword`, this.usuario).subscribe(
+        (success) => {
+          console.log('Password Updated');
+          this.exito = 'Contraseña Actualizada';
+          this.pword = '';
+          this.pword2 = '';
+        },
+        (error) => console.log('Password Update Error', error.error)
+      );
     }
   }
 
@@ -74,7 +72,7 @@ export class AjustesComponent implements OnInit {
       const fd = new FormData();
       fd.append('file', this.fotoSeleccionada, this.fotoSeleccionada.name);
       fd.append('nombre', this.username);
-      this.http.post('http://localhost:8080/upload', fd).subscribe(
+      this.http.post(`${this.apiUrl}/usuario/upload`, fd).subscribe(
         (success) => console.log('Upload Success'),
         (error) => console.log('Upload Error', error.error)
       );
@@ -82,7 +80,7 @@ export class AjustesComponent implements OnInit {
   }
 
   getNumResenas() {
-    return this.http.get(`http://localhost:8080/numResenas/${this.username}`);
+    return this.http.get(`${this.apiUrl}/usuario/numResenas/${this.username}`);
   }
 
   getProgreso() {
@@ -129,7 +127,7 @@ export class AjustesComponent implements OnInit {
       this.usuario.color = null;
     }
 
-    this.http.put(`http://localhost:8080/color`, this.usuario).subscribe(
+    this.http.put(`${this.apiUrl}/usuario/color`, this.usuario).subscribe(
       (success) => {
         console.log('Color Updated');
       },
@@ -138,7 +136,7 @@ export class AjustesComponent implements OnInit {
   }
 
   updateBio() {
-    this.http.put(`http://localhost:8080/bio`, this.usuario).subscribe(
+    this.http.put(`${this.apiUrl}/usuario/bio`, this.usuario).subscribe(
       (success) => {
         console.log('Bio Updated');
       },
@@ -151,12 +149,33 @@ export class AjustesComponent implements OnInit {
     const params = new HttpParams()
       .set('pword', this.pwordBorrar)
       .set('nombre', this.username);
-    this.http.delete(`http://localhost:8080/delete`, { params }).subscribe(
+    this.http.delete(`${this.apiUrl}/usuario/delete`, { params }).subscribe(
       (success) => {
         console.log('Usuario Eliminado');
         this.authService.logout();
       },
       (error) => console.log('Error al eliminar usuario', error.error)
     );
+  }
+
+  previewProfileImage(event: any) {
+    const input = event.target;
+    const preview = document.getElementById(
+      'previewFotoPerfil'
+    ) as HTMLImageElement;
+
+    if (input && input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        if (e.target) {
+          preview.src = e.target.result as string;
+          preview.classList.remove('d-none');
+        }
+      };
+      reader.readAsDataURL(input.files[0]);
+    } else {
+      preview.src = '#';
+      preview.classList.add('d-none');
+    }
   }
 }

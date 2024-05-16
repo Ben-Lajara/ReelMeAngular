@@ -1,4 +1,4 @@
-<div class="card text-center bg-secondary text-white mb-2 mr-2" style="height: 310px; width: 200px;">
+<div class="card text-center bg-success text-white mb-2 mr-2" style="height: 310px; width: 200px;">
     <img *ngIf="usuario.perfil" [src]="'http://localhost:8080/uploads/' + usuario.perfil" class="card-img-top" alt="Perfil">   
     <div class="card-body">
       <a [routerLink]="['/about', usuario.nombre]" style="text-decoration:none; color: white; margin-bottom: 10px;"><h4 class="card-text">{{usuario.nombre}}</h4></a>

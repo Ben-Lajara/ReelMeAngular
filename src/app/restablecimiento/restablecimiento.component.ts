@@ -5,23 +5,23 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-restablecimiento',
   templateUrl: './restablecimiento.component.html',
-  styleUrls: ['./restablecimiento.component.css']
+  styleUrls: ['./restablecimiento.component.css'],
 })
 export class RestablecimientoComponent implements OnInit {
-
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient) {}
   token = '';
   pword1 = '';
   pword2 = '';
   usuario: any;
   exito = false;
+  apiUrl = 'http://localhost:8080/api';
 
   ngOnInit(): void {
     this.route.params.subscribe(async (params) => {
       this.token = params['token'];
-      this.getUsuario().subscribe(res=>{
+      this.getUsuario().subscribe((res) => {
         this.usuario = res;
-      })
+      });
     });
   }
 
@@ -29,25 +29,28 @@ export class RestablecimientoComponent implements OnInit {
     this.restablecerPword();
   }
 
-  getUsuario(){
-    return this.http.get('http://localhost:8080/getUsuario', {params: {token: this.token}})
+  getUsuario() {
+    return this.http.get(`${this.apiUrl}/usuario/tokenPword`, {
+      params: { token: this.token },
+    });
   }
 
-  restablecerPword(){
-    if(this.pword1 !== this.pword2){
+  restablecerPword() {
+    if (this.pword1 !== this.pword2) {
       console.log('Contraseña incorrecta');
-    }else{
+    } else {
       this.usuario.pword = this.pword2;
-      this.http.put(`http://localhost:8080/cambiarPword`, this.usuario).subscribe(
-        success => {
-          console.log('Password Updated')
-          this.pword1 = '';
-          this.pword2 = '';
-          this.exito = true;
-        },
-        error => console.log('Password Update Error', error.error)
-      )
+      this.http
+        .put(`${this.apiUrl}/usuario/cambiarPword`, this.usuario)
+        .subscribe(
+          (success) => {
+            console.log('Password Updated');
+            this.pword1 = '';
+            this.pword2 = '';
+            this.exito = true;
+          },
+          (error) => console.log('Password Update Error', error.error)
+        );
     }
   }
-
 }

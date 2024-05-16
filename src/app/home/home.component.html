@@ -10,33 +10,35 @@
 </div>
 
 <div *ngIf="username != ''" class="container mt-3">
-    <h3>Actividad reciente de las cuentas que sigues.</h3>
-    <div class="d-flex flex-wrap justify-content-start">
-        <div *ngFor="let seguido of seguidos">
-            <div class="card text-center bg-secondary text-white mb-3 mr-3" style="height: 600px; width: 300px; margin-right: 20px;">
-                <a>
-                <img src="{{seguido.foto}}" class="card-img-top" style="width: 298px; height: 450px;">
-                </a>
-                <div class="card-body">
-                <h4>{{seguido.usuarioSeguido}}</h4>
-                <a routerLink="/details/{{seguido.idPelicula}}"><h5 class="card-text">{{seguido.titulo}}</h5></a>
-                <div class = "row">
-                  <td class="col me-3">
-                    <span *ngFor="let i of [1, 2, 3, 4, 5]">
-                      <i *ngIf="seguido.calificacion % 1 == 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= seguido.calificacion}"></i>
-                      <i *ngIf="seguido.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= seguido.calificacion}"></i>
-                      <span *ngIf="seguido.calificacion % 1 != 0 && i == (seguido.calificacion - seguido.calificacion % 1) + 1" class="text-warning fs-4 fw-bold">&#189;</span>
-                    </span>
-                    &nbsp;
-                    <i *ngIf="seguido.gustado == 1" class="bi bi-heart-fill"></i> 
-                    &nbsp;
-                    <i *ngIf="seguido.comentario != null" [routerLink]="['/reviewed', seguido.usuarioSeguido, seguido.idPelicula]" class="bi bi-text-left"></i>
-                  </td>
-                </div>                
-              </div>
+  <h3>Actividad reciente de las cuentas que sigues.</h3>
+  <div class="d-flex flex-wrap justify-content-start">
+    <div *ngFor="let seguido of seguidos">
+      <div class="card bg-success text-white mb-2 mr-2 rounded" style="height: 580px; width: 300px; margin-right: 20px;">
+        <a>
+        <img src="{{seguido.idPelicula.foto}}" class="card-img-top" style="height: 450px; object-fit: cover;">
+        </a>
+        <div class="card-body">
+          <h4>{{seguido.nomUsuario.nombre}}</h4>
+          <a routerLink="/details/{{seguido.idPelicula.id}}" class="tooltip-title">
+            <h5 class="card-title tooltip-title">{{seguido.idPelicula.titulo}}</h5>
+            <span class="tooltiptext">{{seguido.idPelicula.titulo}}</span>
+          </a>
+          <div class = "d-flex align-items-center justify-content-between">
+            <div class="rating">
+              <span *ngFor="let i of [1, 2, 3, 4, 5]">
+                <i *ngIf="seguido.calificacion % 1 == 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= seguido.calificacion}"></i>
+                <i *ngIf="seguido.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= seguido.calificacion}"></i>
+                <span *ngIf="seguido.calificacion % 1 != 0 && i == (seguido.calificacion - seguido.calificacion % 1) + 1" class="text-warning fs-4 fw-bold">&#189;</span>
+              </span>
             </div>
-            
+            <div class="actions">
+              <i *ngIf="seguido.gustado == 1" class="bi bi-heart-fill me-2"></i> 
+              <i *ngIf="seguido.comentario != null" [routerLink]="['/reviewed', seguido.nomUsuario.nombre, seguido.idPelicula.id]" class="bi bi-text-left-text"></i>
+            </div> 
+          </div>                
         </div>
+      </div>
     </div>
+  </div>
 </div>
 

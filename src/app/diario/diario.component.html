@@ -1,14 +1,18 @@
-<div class="container">
-  <ng-container *ngFor="let monthYear of reviews | keys">
-    <h2>{{ monthYear | date: 'MMMM yyyy' }}</h2>
-    <table class="table table-dark">
-      <tbody>
-        <tr *ngFor="let review of reviews[monthYear] | orderBy: 'fecha'">
-          <td>
-            <app-card-review [review]="review" [peli]="peliculas[review.idPelicula.id]" [usuarioRuta]="username"></app-card-review>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </ng-container>
+<div class="container mt-3">
+  <table class="table table-dark">
+      <ng-container *ngFor="let monthYear of reviews | keys">
+        <thead>
+          <tr>
+            <th><h2>{{ monthYear | date: 'MMMM yyyy' }}</h2></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let review of reviews[monthYear] | orderBy: 'fecha'">
+            <td>
+              <app-card-review [review]="review" [peli]="peliculas[review.idPelicula.id]" [usuarioRuta]="username"></app-card-review>
+            </td>
+          </tr>
+        </tbody>
+      </ng-container>      
+  </table>
 </div>

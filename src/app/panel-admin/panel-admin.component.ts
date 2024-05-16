@@ -8,24 +8,61 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PanelAdminComponent implements OnInit {
   denuncias: any;
+  denunciasPendientes: any;
+  denunciasAceptadas: any;
+  denunciasRechazadas: any;
   duracionVeto: Date = new Date();
+  denunciante: string = '';
   denunciado: string = '';
+  idResena: string = '';
+  motivo: string = '';
+  apiUrl = 'http://localhost:8080/api';
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.getDenuncias().subscribe((res: any) => {
       this.denuncias = res;
+      this.getDenunciasPendientes().subscribe((res: any) => {
+        this.denunciasPendientes = res;
+      });
+      this.getDenunciasAceptadas().subscribe((res: any) => {
+        this.denunciasAceptadas = res;
+      });
+      this.getDenunciasRechazadas().subscribe((res: any) => {
+        this.denunciasRechazadas = res;
+      });
     });
   }
 
   getDenuncias() {
-    return this.http.get('http://localhost:8080/denuncias');
+    return this.http.get(`${this.apiUrl}/denuncias`);
+  }
+
+  getDenunciasPendientes() {
+    return this.http.get(`${this.apiUrl}/denuncias/pendientes`);
+  }
+
+  getDenunciasAceptadas() {
+    return this.http.get(`${this.apiUrl}/denuncias/aceptadas`);
+  }
+
+  getDenunciasRechazadas() {
+    return this.http.get(`${this.apiUrl}/denuncias/rechazadas`);
+  }
+
+  getResenaDenunciada(id: number) {
+    return this.http.get(`${this.apiUrl}/reviewed`, {
+      params: {
+        id: id,
+      },
+    });
   }
 
   vetarUsuario(nombre: string, duracion: Date) {
+    console.log(duracion.toLocaleString('es-ES'));
     this.http
       .put(
-        'http://localhost:8080/vetar',
+        `${this.apiUrl}/usuario/vetar`,
         {},
         {
           params: {
@@ -37,6 +74,12 @@ export class PanelAdminComponent implements OnInit {
       .subscribe((res: any) => {
         console.log(res);
       });
+
+    this.aceptarDenuncia(
+      this.denunciante,
+      this.denunciado,
+      parseInt(this.idResena)
+    );
   }
 
   setDuracionVeto(dias: number) {
@@ -47,29 +90,38 @@ export class PanelAdminComponent implements OnInit {
     this.duracionVeto.setMinutes(this.duracionVeto.getMinutes() + minutos);
   }
 
-  rechazarDenuncia(
-    denunciante: string,
-    denunciado: string,
-    idPelicula: string
-  ) {
-    this.http
-      .put('http://localhost:8080/rechazarDenuncia', {
-        denunciante: denunciante,
-        denunciado: denunciado,
-        idPelicula: idPelicula,
-      })
+  rechazarDenuncia(denunciante: string, denunciado: string, idResena: number) {
+    console.log('rechazando');
+    return this.http
+      .put(
+        `${this.apiUrl}/rechazarDenuncia`,
+        {},
+        {
+          params: {
+            denunciante: denunciante,
+            denunciado: denunciado,
+            idResena: idResena,
+          },
+        }
+      )
       .subscribe((res: any) => {
         console.log(res);
       });
   }
 
-  aceptarDenuncia(denunciante: string, denunciado: string, idPelicula: string) {
-    this.http
-      .put('http://localhost:8080/aceptarDenuncia', {
-        denunciante: denunciante,
-        denunciado: denunciado,
-        idPelicula: idPelicula,
-      })
+  aceptarDenuncia(denunciante: string, denunciado: string, idResena: number) {
+    return this.http
+      .put(
+        `${this.apiUrl}/aceptarDenuncia`,
+        {},
+        {
+          params: {
+            denunciante: denunciante,
+            denunciado: denunciado,
+            idResena: idResena,
+          },
+        }
+      )
       .subscribe((res: any) => {
         console.log(res);
       });

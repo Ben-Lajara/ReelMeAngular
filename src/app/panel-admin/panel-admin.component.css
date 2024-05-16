@@ -1,0 +1,47 @@
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  color: rgb(189, 189, 189);
+}
+
+.nav-link.active {
+  color: white;
+}
+
+#textoDenuncia {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #343a40;
+  color: white;
+}
+
+td button {
+  margin-right: 8px;
+}
+
+td button:last-child {
+  margin-right: 0;
+}

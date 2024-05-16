@@ -5,48 +5,47 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
-  styleUrls: ['./about.component.css']
+  styleUrls: ['./about.component.css'],
 })
 export class AboutComponent implements OnInit {
-  username='';
+  username = '';
   datos: any;
   isLoading = false;
   actividadReciente: any[] = [];
-  resenasUsuario: any
-  constructor(private http: HttpClient, private route: ActivatedRoute) { }
+  resenasUsuario: any;
+  apiUrl = 'http://localhost:8080/api';
+  constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.username = params['username'];
-      console.log(this.username)
+      console.log(this.username);
       this.isLoading = true;
       this.getUserData().subscribe((res: any) => {
         this.datos = res;
-        console.log(this.datos)
+        console.log(this.datos);
         this.isLoading = false;
         this.getActividadReciente(this.username).subscribe((res: any) => {
           this.actividadReciente = res;
-          console.log(this.actividadReciente)
+          console.log(this.actividadReciente);
         });
         this.getResenasUsuario(this.username).subscribe((res: any) => {
           this.resenasUsuario = res;
-        })
+        });
       });
-      
     });
   }
 
   getUserData() {
-    return this.http.get(`http://localhost:8080/about/${this.username}`)
+    return this.http.get(`${this.apiUrl}/usuario/about/${this.username}`);
   }
 
-  getActividadReciente(usuario: string){
-    return this.http.get(`http://localhost:8080/api/lastactivity/${usuario}`)	
-
+  getActividadReciente(usuario: string) {
+    return this.http.get(`${this.apiUrl}/reviewed/lastactivity/${usuario}`);
   }
 
-  getResenasUsuario(usuario: string){
-    return this.http.get(`http://localhost:8080/api/diario/${usuario}`)
+  getResenasUsuario(usuario: string) {
+    return this.http.get(`${this.apiUrl}/diario/${usuario}`);
   }
 
   getColor(rango: string) {

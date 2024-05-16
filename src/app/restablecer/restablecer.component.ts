@@ -4,27 +4,28 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-restablecer',
   templateUrl: './restablecer.component.html',
-  styleUrls: ['./restablecer.component.css']
+  styleUrls: ['./restablecer.component.css'],
 })
 export class RestablecerComponent implements OnInit {
   email = '';
-  constructor(private http: HttpClient) { }
+  apiUrl = 'http://localhost:8080/api';
+  constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onSubmit(): void {
-    console.log('Enviando solicitud de restablecimiento de contraseña')
+    console.log('Enviando solicitud de restablecimiento de contraseña');
     this.enviarSolicitud().subscribe(
-      data => {
-        console.log('Solicitud enviada', data)
+      (data) => {
+        console.log('Solicitud enviada', data);
       },
-      error => console.log('Error al enviar la solicitud', error.error)
-    )
+      (error) => console.log('Error al enviar la solicitud', error.error)
+    );
   }
 
-  enviarSolicitud(){
-    return this.http.post('http://localhost:8080/restablecerPword', {email: this.email})
+  enviarSolicitud() {
+    return this.http.post(`${this.apiUrl}/usuario/restablecerPword`, {
+      email: this.email,
+    });
   }
-
 }

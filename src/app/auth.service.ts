@@ -7,6 +7,7 @@ import { Observable, BehaviorSubject, tap, map } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
+  apiUrl = 'http://localhost:8080/api';
   private loggedIn = new BehaviorSubject<boolean>(false);
   private username = new BehaviorSubject<string>('');
   private roles = new BehaviorSubject<string[]>([]);
@@ -43,14 +44,14 @@ export class AuthService {
   }
 
   register(nombre: string, pword: string): Observable<any> {
-    return this.http.post('http://localhost:8080/register', { nombre, pword });
+    return this.http.post(`${this.apiUrl}/usuario/register`, { nombre, pword });
   }
 
   login(nombreEmail: string, pword: string): Observable<any> {
     const fd = new FormData();
     fd.append('nombreEmail', nombreEmail);
     fd.append('pword', pword);
-    return this.http.post('http://localhost:8080/loginNombreEmail', fd).pipe(
+    return this.http.post(`${this.apiUrl}/usuario/loginNombreEmail`, fd).pipe(
       tap((data: any) => {
         if (data.status === 'success') {
           this.loggedIn.next(true);
@@ -62,7 +63,7 @@ export class AuthService {
           if (fechaActual > fechaVeto) {
             this.http
               .put(
-                'http://localhost:8080/levantarVeto',
+                `${this.apiUrl}/usuario/levantarVeto`,
                 {},
                 {
                   params: {

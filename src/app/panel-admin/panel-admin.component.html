@@ -1,24 +1,107 @@
 <div class="container mt-3">
-    <table class="table table-dark">
-        <thead>
-            <tr>
-                <th scope="col">Denunciante</th>
-                <th scope="col">Denunciado</th>
-                <th scope="col">Reseña</th>
-                <th scope="col">Motivo</th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody *ngFor="let denuncia of denuncias">
-            <tr>
-                <td>{{denuncia.denunciante}}</td>
-                <td><a [routerLink]="['/about', denuncia.denunciado]">{{denuncia.denunciado}}</a></td>
-                <td>{{denuncia.idResena}}</td>
-                <td>{{denuncia.motivo}}</td>
-                <td><button type="button" class="btn btn-warning">Rechazar</button> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#banModal" (click)="denunciado=denuncia.denunciado">Aceptar</button></td>
-            </tr>
-        </tbody>
-    </table>
+
+  <div class="container mt-3">
+    <ul class="nav nav-underline">
+      <li class="nav-item">
+        <a class="nav-link active" data-bs-toggle="tab" href="#pendientes">Pendientes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#aceptadas">Aceptadas</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#rechazadas">Rechazadas</a>
+      </li>
+    </ul>
+  
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="pendientes">
+        <div class="table-responsive">
+          <table class="table table-hover table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Denunciante</th>
+                    <th scope="col">Denunciado</th>
+                    <th scope="col">Reseña</th>
+                    <th scope="col">Motivo</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let denuncia of denunciasPendientes">
+                    <td>{{denuncia.denunciante}}</td>
+                    <td><a [routerLink]="['/about', denuncia.denunciado]">{{denuncia.denunciado}}</a></td>
+                    <td id="textoDenuncia">{{denuncia.comentarioResena}}</td>
+                    <td id="textoDenuncia"><a data-bs-toggle="modal" data-bs-target="#motivoModal" (click)="motivo = denuncia.motivo">{{denuncia.motivo}}</a></td>
+                    <td><button type="button" class="btn btn-warning" (click)="rechazarDenuncia(denuncia.denunciante, denuncia.denunciado, denuncia.idResena)">Rechazar</button> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#banModal" (click)="denunciado=denuncia.denunciado; denunciante=denuncia.denunciante; idResena = denuncia.idResena">Aceptar</button></td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="aceptadas">
+        <div class="table-responsive">
+          <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Denunciante</th>
+                    <th scope="col">Denunciado</th>
+                    <th scope="col">Reseña</th>
+                    <th scope="col">Motivo</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let denuncia of denunciasAceptadas">
+                <tr>
+                    <td>{{denuncia.denunciante}}</td>
+                    <td><a [routerLink]="['/about', denuncia.denunciado]">{{denuncia.denunciado}}</a></td>
+                    <td>{{denuncia.comentarioResena}}</td>
+                    <td>{{denuncia.motivo}}</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="rechazadas">
+        <div class="table-responsive">
+          <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Denunciante</th>
+                    <th scope="col">Denunciado</th>
+                    <th scope="col">Reseña</th>
+                    <th scope="col">Motivo</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let denuncia of denunciasRechazadas">
+                <tr>
+                    <td>{{denuncia.denunciante}}</td>
+                    <td><a [routerLink]="['/about', denuncia.denunciado]">{{denuncia.denunciado}}</a></td>
+                    <td>{{denuncia.comentarioResena}}</td>
+                    <td>{{denuncia.motivo}}</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="motivoModal" tabindex="-1" aria-labelledby="motivoModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content bg-dark text-white">
+          <div class="modal-header">
+            <h5 class="modal-title" id="motivoModalLabel">Motivo de la denuncia</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            {{motivo}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+  </div>
+    
     <div class="modal fade" id="banModal" tabindex="-1" aria-labelledby="banModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content bg-dark text-white">

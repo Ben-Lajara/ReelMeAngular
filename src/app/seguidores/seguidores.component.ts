@@ -6,51 +6,63 @@ import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-seguidores',
   templateUrl: './seguidores.component.html',
-  styleUrls: ['./seguidores.component.css']
+  styleUrls: ['./seguidores.component.css'],
 })
 export class SeguidoresComponent implements OnInit {
-  username='';
+  username = '';
   seguidores: any;
   seguidos: any;
   currentUser = '';
-  constructor(private http: HttpClient, private route: ActivatedRoute, private authService: AuthService) { }
+  apiUrl = 'http://localhost:8080/api';
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.username = params['username'];
-      console.log(this.username)
+      console.log(this.username);
       this.currentUser = localStorage.getItem('username') || '';
-      console.log('CurrentUser: '+ this.currentUser)
+      console.log('CurrentUser: ' + this.currentUser);
       this.getSeguidos().subscribe((res: any) => {
         this.seguidos = res;
-        console.log(this.seguidos)
+        console.log(this.seguidos);
         this.getSeguidores().subscribe((res: any) => {
-          this.seguidores = res.map((usuario: any)=>{
-            usuario.nombreUsuario.seguido = this.seguidos.some((seguido: any) => seguido.usuarioSeguido.nombre === usuario.nombreUsuario.nombre);
+          this.seguidores = res.map((usuario: any) => {
+            usuario.nombreUsuario.seguido = this.seguidos.some(
+              (seguido: any) =>
+                seguido.usuarioSeguido.nombre === usuario.nombreUsuario.nombre
+            );
             return usuario;
-          })
-          console.log(this.seguidores)
+          });
+          console.log(this.seguidores);
         });
       });
-      
-      
     });
   }
 
-  getSeguidores(){
-    return this.http.get(`http://localhost:8080/seguidores/${this.username}`)
+  getSeguidores() {
+    return this.http.get(
+      `${this.apiUrl}/usuarios/seguidoresDe/${this.username}`
+    );
   }
 
-  getSeguidos(){
-    return this.http.get(`http://localhost:8080/seguidosPor/${this.currentUser}`)
+  getSeguidos() {
+    return this.http.get(
+      `${this.apiUrl}/usuarios/seguidosPor/${this.currentUser}`
+    );
   }
 
-  findUsuarios(nombre: string){
+  findUsuarios(nombre: string) {
     this.getSeguidos().subscribe((res: any) => {
-      this.seguidores = res.map((usuario: any)=>{
-        usuario.seguido = this.seguidos.some((seguido: any) => seguido.usuarioSeguido.nombre === usuario.nombre);
+      this.seguidores = res.map((usuario: any) => {
+        usuario.seguido = this.seguidos.some(
+          (seguido: any) => seguido.usuarioSeguido.nombre === usuario.nombre
+        );
         return usuario;
-      })
-    })
+      });
+    });
   }
 }

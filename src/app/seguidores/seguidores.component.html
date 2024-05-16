@@ -3,7 +3,7 @@
 -->
 <div class="container">
     <h4>Seguidores de {{username}}</h4>
-    <div class="row row-cols-md-3">
+    <div class="row row-cols-md-5">
         <ng-container *ngFor="let seguidor of seguidores">
             <ng-container *ngIf="seguidor.nombreUsuario.nombre !== username">
                 <app-card-usuario [usuario]="seguidor.nombreUsuario" [username]="currentUser"></app-card-usuario>
