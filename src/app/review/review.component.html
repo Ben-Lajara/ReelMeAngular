@@ -11,7 +11,7 @@
                     <textarea class="form-control" id="comentario" rows="3" name="comentario" [(ngModel)]="comentario" [disabled]="hayVeto"></textarea>
                 </div>
                 <br>
-                <div class="row">
+                <div class="row mb-3">
                     <td class="col-auto">
                         <label for="calificacion">Calificación</label>
                         <span *ngFor="let star of [1, 2, 3, 4, 5]; let i = index" id="calificacion">
@@ -35,9 +35,29 @@
                         <!-- <input type="date" id="fecha" class="form-control form-control-sm" name="fecha" [(ngModel)]="fecha"> -->
                         <input type="date" id="fecha" class="form-control form-control-sm" name="fecha" [ngModel]="fecha | date:'yyyy-MM-dd'" (ngModelChange)="fecha = $event">
                     </td>
+                    <div *ngIf="resena.revisionados && resena.revisionados.length > 0">
+                        <h6 style="border-bottom: 1px solid #ffffff;">Revisionados</h6>
+                        <div *ngFor="let revisionadoExistente of resena.revisionados; let i = index" class="row">
+                            <td class="col-auto">
+                                <label [for]="'fechaRevisionado' + i" class="mr-2">Fecha revisionado</label>
+                                <input type="date" [id]="'fechaRevisionado' + i" class="form-control form-control-md" [name]="'fechaRevisionado' + i" [ngModel]="revisionadoExistente.fechaRevisionado | date:'yyyy-MM-dd'" (ngModelChange)="revisionadoExistente.fechaRevisionado = $event">
+                            </td>
+                            <td class="col">
+                                <label [for]="'comentarioRevisionado' + i" class="mr-2">Comentario</label>
+                                <textarea [id]="'comentarioRevisionado' + i" class="form-control form-control-md" [name]="'comentarioRevisionado' + i" [(ngModel)]="revisionadoExistente.comentarioRevisionado" rows="1" style="overflow-y: auto;"></textarea>
+                            </td>
+                        </div>                      
+                    </div>
+                    <div *ngIf="mostrarRevisionado" class="mt-3">
+                        <label for="revisionado" class="mr-2">Fecha de revisionado</label>
+                        <input type="date" id="revisionado" class="form-control form-control-sm" name="revisionado" [ngModel]="revisionado | date:'yyyy-MM-dd'" (ngModelChange)="revisionado = $event">
+                    </div>
+                    <button type="button" class="btn btn-primary mt-3" (click)="mostrarRevisionado = !mostrarRevisionado">
+                        Añadir revisionado
+                    </button>                   
+                      
+                    
                 </div>
-                <br>
-                <br>
                 <div>
                     <button type="submit" class="btn btn-success">Enviar</button>
                 </div>

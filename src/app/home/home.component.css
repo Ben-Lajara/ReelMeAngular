@@ -44,7 +44,17 @@ i.bi-heart-fill {
   color: white;
 }
 
+.card-container {
+  flex: 0 1 100%; /* Full width by default for small devices */
+  max-width: 100%;
+  margin: 0.5rem;
+}
+
 .card {
+  height: auto; /* Adjust height to fit content */
+  min-width: 40%;
+  max-width: 100%;
+  margin-right: 0;
   border: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
@@ -57,6 +67,25 @@ i.bi-heart-fill {
 
 .card-title {
   font-size: 1.25rem;
+}
+
+.embed-responsive .card-img-top {
+  object-fit: cover;
+}
+
+/*.card-img-top {
+  height: 460px; 
+  object-fit: cover; 
+}*/
+
+.rating {
+  display: flex;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
 }
 
 .rating .bi {
@@ -99,4 +128,69 @@ i.bi-heart-fill {
   top: -30px;
   left: 50%;
   transform: translateX(-50%);
+}
+
+@media (max-width: 576px) {
+  .card-container {
+    flex: 0 1 calc(25% - 1rem); /* Cuatro tarjetas por fila en dispositivos muy pequeños */
+    max-width: calc(25% - 1rem);
+  }
+
+  .card .card-body {
+    margin: 0.5rem 0; /* Ajusta el margen superior e inferior según sea necesario */
+    padding: 0.5rem; /* Ajusta el padding si es necesario para mantener el contenido bien espaciado */
+  }
+  .card-title {
+    display: none;
+  }
+  .rating i,
+  .rating span,
+  .actions .bi {
+    font-size: 0.45rem; /* Ajusta este valor según lo pequeño que quieras que sean */
+  }
+
+  .username {
+    font-size: 0.62rem;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .card-container {
+    flex: 0 1 calc(25% - 1rem); /* Cuatro tarjetas por fila en dispositivos pequeños */
+    max-width: calc(25% - 1rem);
+  }
+  .card-title {
+    display: none;
+  }
+
+  .username {
+    font-size: 0.5rem;
+  }
+
+  .rating i,
+  .actions .bi {
+    font-size: 0.75rem; /* Ajusta este valor según lo pequeño que quieras que sean */
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .card-container {
+    flex: 0 1 calc(25% - 1rem); /* Cuatro tarjetas por fila en dispositivos medianos */
+    max-width: calc(25% - 1rem);
+  }
+  .username,
+  .rating,
+  .actions {
+    font-size: 0.8rem; /* Ajusta el tamaño según necesites */
+  }
+}
+
+@media (min-width: 992px) {
+  .card-container {
+    flex: 0 1 calc(25% - 1rem); /* Cuatro tarjetas por fila en dispositivos grandes */
+    max-width: calc(25% - 1rem);
+  }
+  .username {
+    font-size: 1.5rem; /* Ajusta este valor según lo grande que quieras que sea */
+  }
 }

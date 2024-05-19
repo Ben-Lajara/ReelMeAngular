@@ -1,6 +1,14 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { HttpClient } from '@angular/common/http';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
+import { Observable, catchError, map, of } from 'rxjs';
 
 @Component({
   selector: 'app-registro',
@@ -8,44 +16,67 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./registro.component.css'],
 })
 export class RegistroComponent {
-  nombre = '';
-  pword = '';
-  pword2 = '';
-  noCoinciden = false;
+  registroForm!: FormGroup;
   existe = false;
   apiUrl = 'http://localhost:8080/api';
 
-  constructor(private authService: AuthService, private http: HttpClient) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private http: HttpClient
+  ) {}
+
+  ngOnInit(): void {
+    this.registroForm = this.fb.group(
+      {
+        nombre: ['', [Validators.required], [this.checkUsername()]],
+        email: ['', [Validators.required, Validators.email]],
+        pword: ['', [Validators.required]],
+        pword2: ['', [Validators.required]],
+      },
+      { validator: this.checkPasswords }
+    );
+  }
+
+  checkPasswords(group: FormGroup) {
+    console.log('checkPasswords');
+    const pass = group.get('pword')?.value;
+    const confirmPass = group.get('pword2')?.value;
+    return pass === confirmPass ? null : { notSame: true };
+  }
 
   onSubmit(): void {
-    if (this.pword !== this.pword2) {
-      this.noCoinciden = true;
-      console.log('Las contraseñas no coinciden');
+    if (this.registroForm.invalid) {
       return;
-    } else {
-      this.authService.register(this.nombre, this.pword).subscribe(
-        (success) => console.log('Registration Success'),
-        (error) => console.log('Registration Error', error.error)
-      );
     }
-  }
 
-  checkPwords() {
-    if (this.pword === this.pword2) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+    const { nombre, email, pword } = this.registroForm.value;
 
-  checkUsername() {
-    this.http.get(`${this.apiUrl}/usuario/${this.nombre}`).subscribe(
-      (res) => {
-        this.existe = true;
-      },
-      (error) => {
-        this.existe = false;
-      }
+    this.authService.register(nombre, pword).subscribe(
+      (success) => console.log('Registration Success'),
+      (error) => console.log('Registration Error', error.error)
     );
+  }
+
+  checkUsername(): (
+    control: AbstractControl
+  ) => Observable<ValidationErrors | null> {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      if (!control.value) {
+        // Si el campo está vacío, retorna null inmediatamente
+        return of(null);
+      }
+      const nombre = control.value;
+      return this.http.get(`${this.apiUrl}/usuario/${nombre}`).pipe(
+        map((res) => {
+          // Si el usuario existe, retorna un objeto de error
+          return { exists: true };
+        }),
+        catchError((error) => {
+          // Si ocurre un error (por ejemplo, el usuario no existe), retorna null
+          return of(null);
+        })
+      );
+    };
   }
 }

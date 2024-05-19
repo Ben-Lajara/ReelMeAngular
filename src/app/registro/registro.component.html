@@ -1,25 +1,34 @@
 
-  <div class="container mt-3">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <h5 class="mb-3">Registrarse</h5>
-        <form (ngSubmit)="onSubmit()" class="form-group">
-          <div class="mb-3">
-            <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" name="nombre" [(ngModel)]="nombre" class="form-control" id="nombre" placeholder="Nombre" required (blur)="checkUsername()" [ngStyle]="{'border-color': existe ? 'red' : null}">
-            <div *ngIf="existe" id="error">El usuario ya existe</div>
-          </div>
-          <div class="mb-3">
-            <label for="pword" class="form-label">Contraseña</label>
-            <input type="password" name="pword" [(ngModel)]="pword" class="form-control" id="pword" placeholder="Contraseña" required>
-          </div>
-          <div class="mb-3">
-            <label for="pword2" class="form-label">Repite contraseña</label>
-            <input type="password" name="pword2" [(ngModel)]="pword2" class="form-control" id="pword2" placeholder="Repite contraseña" required [ngStyle]="{'border-color': noCoinciden ? 'red' : null}">
-            <div *ngIf="noCoinciden" id="error">Las contraseñas no coinciden</div>
-          </div>
-          <button type="submit" class="btn btn-primary w-100">Registrarse</button>
-        </form>
-      </div>
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h5 class="mb-3 text-center">Registrarse</h5>
+      <form [formGroup]="registroForm" (ngSubmit)="onSubmit()" class="form-group">
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input type="text" formControlName="nombre" class="form-control" id="nombre" placeholder="Nombre">
+          <div *ngIf="registroForm.get('nombre')?.touched && registroForm.get('nombre')?.hasError('required')" class="text-danger">El nombre es obligatorio</div>
+          <div *ngIf="registroForm.get('nombre')?.touched && registroForm.get('nombre')?.hasError('exists')" class="text-danger">El usuario ya existe</div>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Correo electrónico</label>
+          <input type="email" formControlName="email" class="form-control" id="email" placeholder="Correo electrónico">
+          <div *ngIf="registroForm.get('email')?.touched && registroForm.get('email')?.hasError('required')" class="text-danger">El correo es obligatorio</div>
+          <div *ngIf="registroForm.get('email')?.hasError('email')" class="text-danger">Correo no válido</div>
+        </div>
+        <div class="mb-3">
+          <label for="pword" class="form-label">Contraseña</label>
+          <input type="password" formControlName="pword" class="form-control" id="pword" placeholder="Contraseña">
+          <div *ngIf="registroForm.get('pword')?.touched && registroForm.get('pword')?.hasError('required')" class="text-danger">La contraseña es obligatoria</div>
+        </div>
+        <div class="mb-3">
+          <label for="pword2" class="form-label">Repite contraseña</label>
+          <input type="password" formControlName="pword2" class="form-control" id="pword2" placeholder="Repite contraseña">
+          <div *ngIf="registroForm.hasError('notSame') && (registroForm.get('pword2')?.touched || registroForm.get('pword')?.touched)" class="text-danger">Las contraseñas no coinciden</div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+      </form>
     </div>
   </div>
+</div>
+

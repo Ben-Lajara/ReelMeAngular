@@ -50,7 +50,7 @@
                             </a>
                             <div class="card-body">
                                 <a routerLink="/details/{{resena.idPelicula.id}}" class="tooltip-title">
-                                    <h5 class="card-title">{{resena.idPelicula.titulo}}</h5>
+                                    <h5 class="card-title tooltip-title">{{resena.idPelicula.titulo}}</h5>
                                     <span class="tooltiptext">{{resena.idPelicula.titulo}}</span>
                                 </a>
                                 <div class="d-flex align-items-center justify-content-between">
@@ -62,6 +62,7 @@
                                         </span>
                                     </div>
                                     <div class="actions">
+                                        <i *ngIf="resena.revisionado == true" class="bi bi-repeat me-2"></i>
                                         <i *ngIf="resena.gustado == 1" class="bi bi-heart-fill me-2"></i>
                                         <i *ngIf="resena.comentario != null" [routerLink]="['/reviewed', resena.nomUsuario.nombre, resena.idPelicula.id]" class="bi bi-chat-left-text"></i>
                                     </div>

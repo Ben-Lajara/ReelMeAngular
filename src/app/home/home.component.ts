@@ -25,11 +25,14 @@ export class HomeComponent implements OnInit {
   seguidos: any[] = [];
   peliculas: { [key: string]: any } = {};
   ids: any[] = [];
+  showAll: boolean = false;
+  visibleSeguidos: any[] = [];
 
   ngOnInit(): void {
     this.route.params.subscribe(async (params) => {
       //this.username = params['username'];
       this.seguidos = await this.getSeguidos(this.username);
+      this.updateVisibleSeguidos();
       console.log(this.seguidos);
     });
   }
@@ -42,13 +45,14 @@ export class HomeComponent implements OnInit {
     return response;
   }
 
-  /* async getLastReview(nombre: string): Promise<any> {
-    const response = await this.http
-      .post('http://localhost/connection.php', {
-        nombre,
-        action: 'getLastReview',
-      })
-      .toPromise();
-    return response;
-  }*/
+  updateVisibleSeguidos() {
+    this.visibleSeguidos = this.showAll
+      ? this.seguidos
+      : this.seguidos.slice(0, 4);
+  }
+
+  toggleShowAll() {
+    this.showAll = !this.showAll;
+    this.updateVisibleSeguidos();
+  }
 }

@@ -122,7 +122,11 @@ i.bi-heart-fill {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  position: relative;
+  max-width: 100%;
+}
+
+.tooltip-title .card-title {
+  margin: 0;
 }
 
 .tooltip-title:hover .tooltiptext {

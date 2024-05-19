@@ -41,6 +41,7 @@ export class ReviewComponent implements OnInit {
   @Input() peli: any;
   cambiosGuardados = false;
   private apiUrl = 'http://localhost:8080/api';
+
   constructor(
     private route: ActivatedRoute,
     private reelme: ReelMeService,
@@ -56,6 +57,12 @@ export class ReviewComponent implements OnInit {
   editado: boolean = false;
   hoverState = 0;
   hayVeto = false;
+  mostrarRevisionado: boolean = false;
+  revisionado: Date | undefined;
+  fechaRevisionado = new Date();
+  comentarioRevisionado = '';
+  revisionados: any;
+  isAddingRevisionado: boolean = false;
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -72,6 +79,7 @@ export class ReviewComponent implements OnInit {
       this.getResena(this.username, this.id).subscribe(() => {
         console.log(this.editado);
         console.log('fecha al recuperar los datos: ', this.fecha);
+        console.log('revisionados: ', this.revisionados);
         this.checkVeto();
       });
     });
@@ -94,11 +102,13 @@ export class ReviewComponent implements OnInit {
     usuario: string,
     titulo: string,
     year: string,
-    foto: string
+    foto: string,
+    revisionados: any,
+    revisionado?: Date
   ) {
     console.log('this.fecha: ', this.fecha);
     console.log('fecha params: ', fecha);
-    const body = {
+    const body: any = {
       fecha,
       calificacion,
       comentario,
@@ -108,8 +118,12 @@ export class ReviewComponent implements OnInit {
       titulo,
       year,
       foto,
+      revisionados,
     };
     if (this.editado) {
+      if (revisionado) {
+        body.revisionado = revisionado;
+      }
       console.log('Editado');
       console.log('Fecha al actualizar: ' + fecha);
       return this.http.put(`${this.apiUrl}/review`, body).subscribe(
@@ -159,6 +173,7 @@ export class ReviewComponent implements OnInit {
             this.comentario = this.resena.comentario;
             this.gustado = this.resena.gustado;
             this.editado = true;
+            this.revisionados = this.resena.revisionados;
           }
         }),
         catchError((error) => {
@@ -176,6 +191,7 @@ export class ReviewComponent implements OnInit {
 
   onSubmit(): void {
     console.log(this.id);
+    console.log('revisionados', this.revisionados);
     this.enviarResena(
       this.fecha,
       this.calificacion,
@@ -185,7 +201,9 @@ export class ReviewComponent implements OnInit {
       this.username,
       this.pelicula().Title,
       this.pelicula().Year,
-      this.pelicula().Poster
+      this.pelicula().Poster,
+      this.revisionados,
+      this.revisionado ?? undefined
     );
     this.cambiosGuardados = true;
 
@@ -208,6 +226,18 @@ export class ReviewComponent implements OnInit {
       this.hayVeto = false;
     } else {
       this.hayVeto = true;
+    }
+  }
+
+  toggleAgregarRevisionado() {
+    this.mostrarRevisionado = !this.mostrarRevisionado;
+    this.isAddingRevisionado = this.mostrarRevisionado;
+    if (this.isAddingRevisionado) {
+      // Solo inicializa `revisionado` si el usuario decide añadir uno.
+      this.revisionado = new Date(); // O la fecha que el usuario elija.
+    } else {
+      // Si el usuario decide no añadir un revisionado, asegúrate de que `revisionado` no tenga un valor.
+      this.revisionado = undefined;
     }
   }
 }

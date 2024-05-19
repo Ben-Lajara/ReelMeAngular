@@ -6,13 +6,22 @@
         <td class="col-6">
             <h6 style="border-bottom: 1px solid #ffffff;">Reseña de <a [routerLink]="['/about', resena.usuario]" style="text-decoration: none;" id="usuario">{{resena.usuario}}</a></h6>
             <h4>
-                {{resena.titulo}} ({{resena.year}}) <span *ngFor="let i of [1, 2, 3, 4, 5]">
-                    <i *ngIf="resena.calificacion % 1 == 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
-                    <i *ngIf="resena.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
-                    <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning fs-4 fw-bold">&#189;</span>
-                </span>
+                {{resena.titulo}} ({{resena.year}}) 
             </h4>
+            <span *ngFor="let i of [1, 2, 3, 4, 5]">
+                <i *ngIf="resena.calificacion % 1 == 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
+                <i *ngIf="resena.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
+                <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning fs-4 fw-bold">&#189;</span>
+            </span>
             <p *ngIf="resena.comentario != null">{{resena.comentario}}</p>
+            <div class="mb-2" *ngIf="resena.revisionados">
+                <div *ngFor="let revisionado of resena.revisionados" class="mb-2">
+                    <div class="d-flex align-items-start">
+                        <span class="badge rounded-pill text-bg-success me-2"><i class="bi bi-repeat"></i> {{revisionado.fechaRevisionado | date:'dd/MM/yyyy'}}</span>
+                        <div *ngIf="revisionado.comentarioRevisionado" class="container" style="max-width: 80%; margin-top: -0.25rem;">{{revisionado.comentarioRevisionado}}</div>
+                    </div>
+                </div>
+            </div>
             <button type="button" class="btn btn-danger" (click)="mostrarDenuncia = !mostrarDenuncia" [disabled]="denunciaExistente!=null">Denunciar</button>
             <div *ngIf="mostrarDenuncia">
                     <div class="mb-3">
