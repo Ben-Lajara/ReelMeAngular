@@ -1,10 +1,14 @@
-<div class="card text-center bg-success text-white mb-2 mr-2" style="height: 560px; width: 300px;">
-  <a>
-    <img src="{{peli.Poster}}" class="card-img-top" routerLink="/details/{{peli.imdbID}}" style="height: 450px; object-fit: cover;">
-  </a>
-  <div class="card-body tooltip-title">
-    <h4 class="card-text tooltip-title">{{peli.Title}}</h4>
-    <span class="tooltiptext">{{peli.Title}}</span>
-    <p class="card-text">{{peli.Year}}</p>
+<div class="card text-center bg-success text-white mb-2 mr-2 rounded">
+  <div class="embed-responsive">
+    <a>
+      <img src="{{peli.Poster}}" class="card-img-top img-fluid" routerLink="/details/{{peli.imdbID}}">
+    </a>
+  </div>
+  <div class="card-body">
+    <div class="tooltip-title">
+      <h4 class="card-text tooltip-title">{{peli.Title}}</h4>
+      <span class="tooltiptext">{{peli.Title}}</span>
+    </div>
+    <p class="card-text year">{{peli.Year}}</p>
   </div>
 </div>

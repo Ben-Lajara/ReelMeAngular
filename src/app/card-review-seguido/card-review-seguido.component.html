@@ -1,0 +1,31 @@
+<div class="card bg-success text-white mb-2 mr-2 rounded">
+    <div class="embed-responsive">
+        <a>
+            <img src="{{seguido.idPelicula.foto}}" class="card-img-top img-fluid">
+        </a>
+    </div>
+    <div class="card-body">
+        <span class="username">{{seguido.nomUsuario.nombre}}</span>
+        <a routerLink="/details/{{seguido.idPelicula.id}}" class="tooltip-title">
+            <h5 class="card-title tooltip-title text-info">{{seguido.idPelicula.titulo}}</h5>
+            <span class="tooltiptext text">{{seguido.idPelicula.titulo}}</span>
+        </a>
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="rating">
+                <span *ngFor="let i of [1, 2, 3, 4, 5]">
+                    <i *ngIf="seguido.calificacion % 1 == 0" class="text-warning bi bi-star-fill"
+                        [ngClass]="{'bi-star-fill': i <= seguido.calificacion}"></i>
+                    <i *ngIf="seguido.calificacion % 1 != 0" class="text-warning bi bi-star-fill"
+                        [ngClass]="{'bi-star-fill': i <= seguido.calificacion}"></i>
+                    <span *ngIf="seguido.calificacion % 1 != 0 && i == (seguido.calificacion - seguido.calificacion % 1) + 1"
+                        class="text-warning fs-4 fw-bold">&#189;</span>
+                </span>
+            </div>
+            <div class="actions">
+                <i *ngIf="seguido.gustado == 1" class="bi bi-heart-fill text-danger me-2"></i>
+                <i *ngIf="seguido.comentario != null" [routerLink]="['/reviewed', seguido.nomUsuario.nombre, seguido.idPelicula.id]"
+                    class="bi bi-chat-left-text mr-2"></i>
+            </div>
+        </div>
+    </div>
+</div>

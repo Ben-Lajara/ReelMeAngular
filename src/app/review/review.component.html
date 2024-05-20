@@ -35,7 +35,7 @@
                         <!-- <input type="date" id="fecha" class="form-control form-control-sm" name="fecha" [(ngModel)]="fecha"> -->
                         <input type="date" id="fecha" class="form-control form-control-sm" name="fecha" [ngModel]="fecha | date:'yyyy-MM-dd'" (ngModelChange)="fecha = $event">
                     </td>
-                    <div *ngIf="resena.revisionados && resena.revisionados.length > 0">
+                    <div *ngIf="resena && resena.revisionados && resena.revisionados.length > 0">
                         <h6 style="border-bottom: 1px solid #ffffff;">Revisionados</h6>
                         <div *ngFor="let revisionadoExistente of resena.revisionados; let i = index" class="row">
                             <td class="col-auto">

@@ -45,8 +45,9 @@
                 <div class="row">
                     <div *ngFor="let resena of actividadReciente" class="col">
                         <div class="card bg-success text-white mb-2 mr-2 rounded" style="width: 300px;">
+                            
                             <a routerLink="/details/{{resena.idPelicula.id}}">
-                                <img src="{{resena.idPelicula.foto}}" class="card-img-top" style="height: 450px; object-fit: cover;">
+                                <img src="{{resena.idPelicula.foto}}" class="img-responsive">
                             </a>
                             <div class="card-body">
                                 <a routerLink="/details/{{resena.idPelicula.id}}" class="tooltip-title">

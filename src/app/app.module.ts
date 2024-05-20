@@ -36,6 +36,7 @@ import { PanelAdminComponent } from './panel-admin/panel-admin.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CardReviewSeguidoComponent } from './card-review-seguido/card-review-seguido.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RestablecerComponent,
     RestablecimientoComponent,
     PanelAdminComponent,
+    CardReviewSeguidoComponent,
   ],
   imports: [
     BrowserModule,

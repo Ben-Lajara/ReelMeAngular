@@ -1,0 +1,33 @@
+.card-container {
+  flex: 0 1 100%; /* Full width by default for small devices */
+  max-width: 100%;
+  margin: 0.5rem;
+}
+
+@media (max-width: 576px) {
+  .card-container {
+    flex: 0 1 calc(26% - 1rem); /* Cuatro tarjetas por fila en dispositivos muy pequeños */
+    max-width: calc(25% - 1rem);
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .card-container {
+    flex: 0 1 calc(25% - 1rem); /* Cuatro tarjetas por fila en dispositivos pequeños */
+    max-width: calc(25% - 1rem);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .card-container {
+    flex: 0 1 calc(25% - 1rem); /* Cuatro tarjetas por fila en dispositivos medianos */
+    max-width: calc(25% - 1rem);
+  }
+}
+
+@media (min-width: 992px) {
+  .card-container {
+    flex: 0 1 calc(25% - 1rem); /* Cuatro tarjetas por fila en dispositivos grandes */
+    max-width: calc(25% - 1rem);
+  }
+}

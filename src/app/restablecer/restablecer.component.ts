@@ -24,8 +24,12 @@ export class RestablecerComponent implements OnInit {
   }
 
   enviarSolicitud() {
-    return this.http.post(`${this.apiUrl}/usuario/restablecerPword`, {
-      email: this.email,
-    });
+    return this.http.post(
+      `${this.apiUrl}/usuario/restablecerPword`,
+      {},
+      {
+        params: { email: this.email },
+      }
+    );
   }
 }

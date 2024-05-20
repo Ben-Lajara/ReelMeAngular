@@ -1,15 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-card-peli',
-  templateUrl: './card-peli.component.html',
-  styleUrls: ['./card-peli.component.css'],
+  selector: 'app-card-review-seguido',
+  templateUrl: './card-review-seguido.component.html',
+  styleUrls: ['./card-review-seguido.component.css'],
 })
-export class CardPeliComponent implements OnInit {
-  @Input() mostrar: boolean = true;
-  @Input() peli: any;
+export class CardReviewSeguidoComponent implements OnInit {
+  @Input() seguido: any;
 
   isLoggedIn: Observable<boolean>;
   currentUsername: Observable<string>;
@@ -37,7 +36,7 @@ export class CardPeliComponent implements OnInit {
       if (ctx) {
         ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
         const resizedImageUrl = canvas.toDataURL('image/jpeg');
-        this.peli.Poster = resizedImageUrl;
+        this.seguido.idPelicula.foto = resizedImageUrl;
         console.log('Imagen redimensionada'); // Verificación de redimensionamiento
       } else {
         console.error('No se pudo obtener el contexto del canvas');
@@ -46,6 +45,6 @@ export class CardPeliComponent implements OnInit {
     img.onerror = (error) => {
       console.error('Error al cargar la imagen', error);
     };
-    img.src = this.peli.Poster;
+    img.src = this.seguido.idPelicula.foto;
   }
 }

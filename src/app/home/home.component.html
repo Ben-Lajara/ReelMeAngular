@@ -10,42 +10,17 @@
 </div>
 
 <div *ngIf="username != ''" class="container mt-3">
-  <h3>Actividad reciente de las cuentas que sigues.</h3>
-  <h6 *ngIf="seguidos.length > 4" (click)="toggleShowAll()" class="text-primary" style="cursor: pointer;">
-    {{ showAll ? 'Mostrar menos' : 'Ver todos' }}
-  </h6>
+  <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ffffff;">
+    <h5 >Actividad reciente de las cuentas que sigues</h5>
+    <h6 *ngIf="seguidos.length > 4" (click)="toggleShowAll()" class="text-primary" style="cursor: pointer; margin-bottom: 0;">
+      {{ showAll ? 'Mostrar menos' : 'Ver todos' }}
+    </h6>
+  </div>
   <div class="d-flex flex-wrap justify-content-start">
     <div *ngFor="let seguido of visibleSeguidos" class="card-container">
-      <div class="card bg-success text-white mb-2 mr-2 rounded">
-        <div class="embed-responsive embed-responsive-1by1">
-          <a>
-            <img src="{{seguido.idPelicula.foto}}" class="card-img-top embed-responsive-item">
-          </a>
-        </div>
-        <div class="card-block">
-          <div class="card-body">
-            <span class="username">{{seguido.nomUsuario.nombre}}</span>
-            <a routerLink="/details/{{seguido.idPelicula.id}}" class="tooltip-title">
-              <h5 class="card-title tooltip-title">{{seguido.idPelicula.titulo}}</h5>
-              <span class="tooltiptext">{{seguido.idPelicula.titulo}}</span>
-            </a>
-            <div class = "d-flex align-items-center justify-content-between">
-              <div class="rating">
-                <span *ngFor="let i of [1, 2, 3, 4, 5]">
-                  <i *ngIf="seguido.calificacion % 1 == 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= seguido.calificacion}"></i>
-                  <i *ngIf="seguido.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= seguido.calificacion}"></i>
-                  <span *ngIf="seguido.calificacion % 1 != 0 && i == (seguido.calificacion - seguido.calificacion % 1) + 1" class="text-warning fs-4 fw-bold">&#189;</span>
-                </span>
-              </div>
-              <div class="actions">
-                <i *ngIf="seguido.gustado == 1" class="bi bi-heart-fill me-2"></i> 
-                <i *ngIf="seguido.comentario != null" [routerLink]="['/reviewed', seguido.nomUsuario.nombre, seguido.idPelicula.id]" class="bi bi-text-left-text"></i>
-              </div> 
-            </div>                
-          </div>
-        </div>
-      </div>
+        <app-card-review-seguido [seguido]="seguido"></app-card-review-seguido>
     </div>
-  </div>
+</div>
+
 </div>
 

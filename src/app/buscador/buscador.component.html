@@ -1,9 +1,9 @@
 <div class="container">
   <input class="form-control" id="exampleDataList" [(ngModel)]="pelis" [(ngModel)]="id" (keyup)="busqueda()"
     placeholder="Busca una película...">
-  <div class="row row-cols-md-3 mt-3">
-    <ng-container *ngFor="let peli of peliculas()">
+  <div class="d-flex flex-wrap justify-content-start mt-2">
+    <div *ngFor="let peli of peliculas()" class="card-container">
         <app-card-peli [peli]="peli"></app-card-peli>
-    </ng-container>
+    </div>
   </div>
 </div>
