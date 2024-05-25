@@ -37,6 +37,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CardReviewSeguidoComponent } from './card-review-seguido/card-review-seguido.component';
+import { CardReviewLastactivityComponent } from './card-review-lastactivity/card-review-lastactivity.component';
+import { CardPeliBdComponent } from './card-peli-bd/card-peli-bd.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +71,8 @@ import { CardReviewSeguidoComponent } from './card-review-seguido/card-review-se
     RestablecimientoComponent,
     PanelAdminComponent,
     CardReviewSeguidoComponent,
+    CardReviewLastactivityComponent,
+    CardPeliBdComponent,
   ],
   imports: [
     BrowserModule,

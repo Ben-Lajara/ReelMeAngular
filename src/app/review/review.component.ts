@@ -17,20 +17,8 @@ import {
   styleUrls: ['./review.component.css'],
   animations: [
     trigger('fade', [
-      state(
-        'visible',
-        style({
-          opacity: 1,
-          display: 'block',
-        })
-      ),
-      state(
-        'hidden',
-        style({
-          opacity: 0,
-          display: 'none',
-        })
-      ),
+      state('visible', style({ opacity: 1, display: 'block' })),
+      state('hidden', style({ opacity: 0, display: 'none' })),
       transition('visible => hidden', [animate('0.5s ease-out')]),
       transition('hidden => visible', [animate('0.5s ease-in')]),
     ]),
@@ -48,6 +36,7 @@ export class ReviewComponent implements OnInit {
     private http: HttpClient,
     private router: Router
   ) {}
+
   id = '';
   fecha = new Date();
   calificacion = 0;
@@ -57,12 +46,10 @@ export class ReviewComponent implements OnInit {
   editado: boolean = false;
   hoverState = 0;
   hayVeto = false;
+  revisionados: any[] = [];
+  revisionadosNuevos: any[] = [];
   mostrarRevisionado: boolean = false;
-  revisionado: Date | undefined;
-  fechaRevisionado = new Date();
-  comentarioRevisionado = '';
-  revisionados: any;
-  isAddingRevisionado: boolean = false;
+  mensajeError: string = '';
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -103,8 +90,8 @@ export class ReviewComponent implements OnInit {
     titulo: string,
     year: string,
     foto: string,
-    revisionados: any,
-    revisionado?: Date
+    revisionados: any[],
+    revisionadosNuevos: any[]
   ) {
     console.log('this.fecha: ', this.fecha);
     console.log('fecha params: ', fecha);
@@ -119,11 +106,9 @@ export class ReviewComponent implements OnInit {
       year,
       foto,
       revisionados,
+      revisionadosNuevos,
     };
     if (this.editado) {
-      if (revisionado) {
-        body.revisionado = revisionado;
-      }
       console.log('Editado');
       console.log('Fecha al actualizar: ' + fecha);
       return this.http.put(`${this.apiUrl}/review`, body).subscribe(
@@ -173,7 +158,7 @@ export class ReviewComponent implements OnInit {
             this.comentario = this.resena.comentario;
             this.gustado = this.resena.gustado;
             this.editado = true;
-            this.revisionados = this.resena.revisionados;
+            this.revisionados = this.resena.revisionados || [];
           }
         }),
         catchError((error) => {
@@ -192,6 +177,7 @@ export class ReviewComponent implements OnInit {
   onSubmit(): void {
     console.log(this.id);
     console.log('revisionados', this.revisionados);
+    console.log('revisionadosNuevos', this.revisionadosNuevos);
     this.enviarResena(
       this.fecha,
       this.calificacion,
@@ -203,7 +189,7 @@ export class ReviewComponent implements OnInit {
       this.pelicula().Year,
       this.pelicula().Poster,
       this.revisionados,
-      this.revisionado ?? undefined
+      this.revisionadosNuevos
     );
     this.cambiosGuardados = true;
 
@@ -229,15 +215,76 @@ export class ReviewComponent implements OnInit {
     }
   }
 
-  toggleAgregarRevisionado() {
-    this.mostrarRevisionado = !this.mostrarRevisionado;
-    this.isAddingRevisionado = this.mostrarRevisionado;
-    if (this.isAddingRevisionado) {
-      // Solo inicializa `revisionado` si el usuario decide añadir uno.
-      this.revisionado = new Date(); // O la fecha que el usuario elija.
-    } else {
-      // Si el usuario decide no añadir un revisionado, asegúrate de que `revisionado` no tenga un valor.
-      this.revisionado = undefined;
+  puedeAgregarRevisionadoNuevo(): boolean {
+    const hoy = new Date().toISOString().split('T')[0]; // Solo la fecha, sin tiempo
+    if (this.revisionados.length > 0) {
+      const ultimaFechaExistente = new Date(
+        this.revisionados[this.revisionados.length - 1].fechaRevisionado
+      )
+        .toISOString()
+        .split('T')[0];
+      if (ultimaFechaExistente === hoy) {
+        return false;
+      }
     }
+    if (this.revisionadosNuevos.length > 0) {
+      const ultimaFechaNueva = new Date(
+        this.revisionadosNuevos[
+          this.revisionadosNuevos.length - 1
+        ].fechaRevisionado
+      )
+        .toISOString()
+        .split('T')[0];
+      if (ultimaFechaNueva === hoy) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  agregarRevisionadoNuevo() {
+    if (this.puedeAgregarRevisionadoNuevo()) {
+      this.revisionadosNuevos.push({
+        fechaRevisionado: new Date(),
+        comentarioRevisionado: '',
+      });
+      this.mensajeError = ''; // Limpiar el mensaje de error si se puede agregar un nuevo revisionado
+    } else {
+      this.mensajeError =
+        'No se puede añadir un nuevo revisionado con la fecha actual.';
+    }
+  }
+
+  eliminarRevisionadoNuevo(i: number) {
+    this.revisionadosNuevos.splice(i, 1);
+  }
+
+  confirmarEliminacion(i: number, id: number) {
+    if (confirm('¿Estás seguro de que quieres eliminar este elemento?')) {
+      this.eliminarRevisionado(i, id);
+    }
+  }
+
+  eliminarRevisionado(i: number, id: number) {
+    this.revisionados.splice(i, 1);
+    console.log(this.revisionados);
+    console.log('id: ', id);
+    this.http
+      .delete(`${this.apiUrl}/revisionado`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        params: {
+          id: id.toString(),
+        },
+      })
+      .subscribe(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 }

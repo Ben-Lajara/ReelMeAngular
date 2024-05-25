@@ -1,71 +1,77 @@
 <div class="container mt-3">
     <div class="row">
-        <div class="col-2">
-            <img src="{{pelicula().Poster}}" class="rounded card-img-top img-fluid" style="max-width: 100%;">
-        </div>
-        <div class="col-10">
-            <form (ngSubmit)="onSubmit()">
-                <h2>{{pelicula().Title}}</h2>
-                <div class="form-group">
-                    <label for="comentario">Reseña</label>
-                    <textarea class="form-control" id="comentario" rows="3" name="comentario" [(ngModel)]="comentario" [disabled]="hayVeto"></textarea>
-                </div>
-                <br>
-                <div class="row mb-3">
-                    <td class="col-auto">
-                        <label for="calificacion">Calificación</label>
-                        <span *ngFor="let star of [1, 2, 3, 4, 5]; let i = index" id="calificacion">
-                            <button type="button" id="estrella" class="btn btn-default mr-1" 
-                                    (mouseover)="hoverState = i + 1" 
-                                    (mousemove)="updateHoverState($event, i + 1)"
-                                    (mouseleave)="hoverState = 0" 
-                                    (click)="calificacion = hoverState">
-                            <i class="h3 text-warning bi" [ngClass]="{'bi-star-fill': calificacion > i, 'bi-star-half': calificacion > i && calificacion < i + 1, 'bi-star': calificacion <= i}"></i>
-                            </button>
-                        </span>
-                    </td>
-                    <td class="col-auto">
-                        <label for="gustado">Gustado</label>
-                        <button type="button" class="btn btn-default" (click)="gustado = !gustado" id="gustado">
-                            <i class="h3 bi" [ngClass]="{'bi-heart-fill': gustado, 'bi-heart': !gustado}"></i>
-                        </button>
-                    </td>
-                    <td class="col">
-                        <label for="fecha" class="mr-2">Vista el</label>
-                        <!-- <input type="date" id="fecha" class="form-control form-control-sm" name="fecha" [(ngModel)]="fecha"> -->
-                        <input type="date" id="fecha" class="form-control form-control-sm" name="fecha" [ngModel]="fecha | date:'yyyy-MM-dd'" (ngModelChange)="fecha = $event">
-                    </td>
-                    <div *ngIf="resena && resena.revisionados && resena.revisionados.length > 0">
-                        <h6 style="border-bottom: 1px solid #ffffff;">Revisionados</h6>
-                        <div *ngFor="let revisionadoExistente of resena.revisionados; let i = index" class="row">
-                            <td class="col-auto">
-                                <label [for]="'fechaRevisionado' + i" class="mr-2">Fecha revisionado</label>
-                                <input type="date" [id]="'fechaRevisionado' + i" class="form-control form-control-md" [name]="'fechaRevisionado' + i" [ngModel]="revisionadoExistente.fechaRevisionado | date:'yyyy-MM-dd'" (ngModelChange)="revisionadoExistente.fechaRevisionado = $event">
-                            </td>
-                            <td class="col">
-                                <label [for]="'comentarioRevisionado' + i" class="mr-2">Comentario</label>
-                                <textarea [id]="'comentarioRevisionado' + i" class="form-control form-control-md" [name]="'comentarioRevisionado' + i" [(ngModel)]="revisionadoExistente.comentarioRevisionado" rows="1" style="overflow-y: auto;"></textarea>
-                            </td>
-                        </div>                      
-                    </div>
-                    <div *ngIf="mostrarRevisionado" class="mt-3">
-                        <label for="revisionado" class="mr-2">Fecha de revisionado</label>
-                        <input type="date" id="revisionado" class="form-control form-control-sm" name="revisionado" [ngModel]="revisionado | date:'yyyy-MM-dd'" (ngModelChange)="revisionado = $event">
-                    </div>
-                    <button type="button" class="btn btn-primary mt-3" (click)="mostrarRevisionado = !mostrarRevisionado">
-                        Añadir revisionado
-                    </button>                   
-                      
-                    
-                </div>
-                <div>
-                    <button type="submit" class="btn btn-success">Enviar</button>
-                </div>
-            </form>
-        </div>
+      <div class="col-2">
+        <img src="{{pelicula().Poster}}" class="rounded card-img-top img-fluid" style="max-width: 100%;">
+      </div>
+      <div class="col-10">
+        <form (ngSubmit)="onSubmit()">
+          <h2>{{pelicula().Title}}</h2>
+          <div class="form-group">
+            <label for="comentario">Reseña</label>
+            <textarea class="form-control" id="comentario" rows="3" name="comentario" [(ngModel)]="comentario" [disabled]="hayVeto"></textarea>
+          </div>
+          <br>
+          <div class="row mb-3">
+            <div class="col-auto">
+              <label for="calificacion">Calificación</label>
+              <span *ngFor="let star of [1, 2, 3, 4, 5]; let i = index" id="calificacion">
+                <button type="button" id="estrella" class="btn btn-default mr-1"
+                        (mouseover)="hoverState = i + 1"
+                        (mousemove)="updateHoverState($event, i + 1)"
+                        (mouseleave)="hoverState = 0"
+                        (click)="calificacion = hoverState">
+                  <i class="h3 text-warning bi" [ngClass]="{'bi-star-fill': calificacion > i, 'bi-star-half': calificacion > i && calificacion < i + 1, 'bi-star': calificacion <= i}"></i>
+                </button>
+              </span>
+            </div>
+            <div class="col-auto">
+              <label for="gustado">Gustado</label>
+              <button type="button" class="btn btn-default" (click)="gustado = !gustado" id="gustado">
+                <i class="h3 bi" [ngClass]="{'bi-heart-fill': gustado, 'bi-heart': !gustado}"></i>
+              </button>
+            </div>
+            <div class="col">
+              <label for="fecha" class="mr-2">Vista el</label>
+              <input type="date" id="fecha" class="form-control form-control-sm" name="fecha" [ngModel]="fecha | date:'yyyy-MM-dd'" (ngModelChange)="fecha = $event">
+            </div>
+          </div>
+          <div *ngFor="let revisionadoExistente of revisionados; let i = index" class="row mb-3">
+            <div class="col-auto">
+              <label [for]="'fechaRevisionado' + i" class="mr-2">Fecha revisionado</label>
+              <input type="date" [id]="'fechaRevisionado' + i" class="form-control form-control-md" [name]="'fechaRevisionado' + i" [ngModel]="revisionadoExistente.fechaRevisionado | date:'yyyy-MM-dd'" (ngModelChange)="revisionadoExistente.fechaRevisionado = $event">
+            </div>
+            <div class="col">
+              <label [for]="'comentarioRevisionado' + i" class="mr-2">Comentario</label>
+              <textarea [id]="'comentarioRevisionado' + i" class="form-control form-control-md" [name]="'comentarioRevisionado' + i" [(ngModel)]="revisionadoExistente.comentarioRevisionado" rows="1" style="overflow-y: auto;"></textarea>
+            </div>
+            <div class="col-auto d-flex align-items-center">
+              <button class="btn btn-danger" (click)="confirmarEliminacion(i, revisionadoExistente.id)">Eliminar</button>
+            </div>
+          </div>
+          <div *ngFor="let revisionadoNuevo of revisionadosNuevos; let i = index" class="row mb-3">
+            <div class="col-auto">
+              <label [for]="'fechaRevisionadoNuevo' + i" class="mr-2">Fecha revisionado</label>
+              <input type="date" [id]="'fechaRevisionadoNuevo' + i" class="form-control form-control-md" [name]="'fechaRevisionadoNuevo' + i" [ngModel]="revisionadoNuevo.fechaRevisionado | date:'yyyy-MM-dd'" (ngModelChange)="revisionadoNuevo.fechaRevisionado = $event">
+            </div>
+            <div class="col">
+              <label [for]="'comentarioRevisionadoNuevo' + i" class="mr-2">Comentario</label>
+              <textarea [id]="'comentarioRevisionadoNuevo' + i" class="form-control form-control-md" [name]="'comentarioRevisionadoNuevo' + i" [(ngModel)]="revisionadoNuevo.comentarioRevisionado" rows="1" style="overflow-y: auto;"></textarea>
+            </div>
+            <div class="col-auto d-flex align-items-center">
+                <button class="btn btn-danger" (click)="eliminarRevisionadoNuevo(i)">Eliminar</button>
+            </div>
+          </div>
+          <div *ngIf="mensajeError" class="alert alert-danger mt-3">{{ mensajeError }}</div>
+
+          <button type="button" class="btn btn-primary mt-3" (click)="agregarRevisionadoNuevo()" [disabled]="hayVeto">Añadir revisionado</button>
+          <div>
+            <button type="submit" class="btn btn-success mt-3">Enviar</button>
+          </div>
+        </form>
+      </div>
     </div>
     <div *ngIf="cambiosGuardados" [@fade]="cambiosGuardados ? 'visible' : 'hidden'" class="alert alert-success" role="alert">
-    Se han guardado los cambios.
+      Se han guardado los cambios.
+    </div>
   </div>
-</div>
-
+  

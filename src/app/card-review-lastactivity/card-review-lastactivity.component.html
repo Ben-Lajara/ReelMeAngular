@@ -1,0 +1,26 @@
+<div class="card bg-success text-white mb-2 mr-2 rounded">
+    <div class="embed-responsive">
+        <a routerLink="/details/{{resena.idPelicula.id}}">
+            <img src="{{resena.idPelicula.foto}}" class="card-img-top img-fluid">
+        </a>
+    </div>                  
+    <div class="card-body">
+        <a routerLink="/details/{{resena.idPelicula.id}}" class="tooltip-title">
+            <h5 class="card-title tooltip-title">{{resena.idPelicula.titulo}}</h5>
+            <span class="tooltiptext text">{{resena.idPelicula.titulo}}</span>
+        </a>
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="rating">
+                <span *ngFor="let i of [1, 2, 3, 4, 5]">
+                    <i *ngIf="resena.calificacion % 1 == 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
+                    <i *ngIf="resena.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
+                    <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning fs-5 fw-bold">&#189;</span>
+                </span>
+            </div>
+            <div class="actions">
+                <i *ngIf="resena.revisionado == true" class="bi bi-repeat me-2"></i>
+                <i *ngIf="resena.gustado == 1" class="bi bi-heart-fill me-2"></i>
+                <i *ngIf="resena.comentario != null" [routerLink]="['/reviewed', resena.nomUsuario.nombre, resena.idPelicula.id]" class="bi bi-chat-left-text"></i>
+            </div>
+        </div>
+    </div>

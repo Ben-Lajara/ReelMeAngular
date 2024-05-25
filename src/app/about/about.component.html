@@ -42,35 +42,9 @@
           </ul>
         <div class="tab-content m-2" id="myTabContent">
             <div class="tab-pane fade show active" id="actividad" role="tabpanel" aria-labelledby="actividad-tab">
-                <div class="row">
-                    <div *ngFor="let resena of actividadReciente" class="col">
-                        <div class="card bg-success text-white mb-2 mr-2 rounded" style="width: 300px;">
-                            
-                            <a routerLink="/details/{{resena.idPelicula.id}}">
-                                <img src="{{resena.idPelicula.foto}}" class="img-responsive">
-                            </a>
-                            <div class="card-body">
-                                <a routerLink="/details/{{resena.idPelicula.id}}" class="tooltip-title">
-                                    <h5 class="card-title tooltip-title">{{resena.idPelicula.titulo}}</h5>
-                                    <span class="tooltiptext">{{resena.idPelicula.titulo}}</span>
-                                </a>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="rating">
-                                        <span *ngFor="let i of [1, 2, 3, 4, 5]">
-                                            <i *ngIf="resena.calificacion % 1 == 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
-                                            <i *ngIf="resena.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
-                                            <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning fs-5 fw-bold">&#189;</span>
-                                        </span>
-                                    </div>
-                                    <div class="actions">
-                                        <i *ngIf="resena.revisionado == true" class="bi bi-repeat me-2"></i>
-                                        <i *ngIf="resena.gustado == 1" class="bi bi-heart-fill me-2"></i>
-                                        <i *ngIf="resena.comentario != null" [routerLink]="['/reviewed', resena.nomUsuario.nombre, resena.idPelicula.id]" class="bi bi-chat-left-text"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
+                <div class="d-flex flex-wrap justify-content-start">
+                    <div *ngFor="let resena of actividadReciente" class="card-container">
+                        <app-card-review-lastactivity [resena]="resena"></app-card-review-lastactivity>
                     </div>
                 </div>
             </div>

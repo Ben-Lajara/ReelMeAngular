@@ -1,0 +1,13 @@
+<div class="card text-center bg-success text-white mb-2 mr-2 rounded">
+    <div class="embed-responsive">
+      <a>
+        <img src="{{peli.foto}}" class="card-img-top img-fluid" routerLink="/details/{{peli.id}}">
+      </a>
+    </div>
+    <div class="card-body">
+      <div class="tooltip-title">
+        <h4 class="card-text tooltip-title">{{peli.titulo}}</h4>
+        <span class="tooltiptext">{{peli.titulo}}</span>
+      </div>
+      <p class="card-text year">{{peli.year}}</p>
+    </div>
