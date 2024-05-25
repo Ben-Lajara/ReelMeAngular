@@ -92,5 +92,7 @@
       }
     }
   },
-  "defaultProject": "ReelMe"
+  "cli": {
+    "analytics": false
+  }
 }

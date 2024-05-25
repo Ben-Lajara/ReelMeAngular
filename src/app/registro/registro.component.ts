@@ -3,8 +3,8 @@ import { AuthService } from '../auth.service';
 import { HttpClient } from '@angular/common/http';
 import {
   AbstractControl,
-  FormBuilder,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   ValidationErrors,
   Validators,
 } from '@angular/forms';
@@ -16,12 +16,12 @@ import { Observable, catchError, map, of } from 'rxjs';
   styleUrls: ['./registro.component.css'],
 })
 export class RegistroComponent {
-  registroForm!: FormGroup;
+  registroForm!: UntypedFormGroup;
   existe = false;
   apiUrl = 'http://localhost:8080/api';
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private authService: AuthService,
     private http: HttpClient
   ) {}
@@ -38,7 +38,7 @@ export class RegistroComponent {
     );
   }
 
-  checkPasswords(group: FormGroup) {
+  checkPasswords(group: UntypedFormGroup) {
     console.log('checkPasswords');
     const pass = group.get('pword')?.value;
     const confirmPass = group.get('pword2')?.value;
