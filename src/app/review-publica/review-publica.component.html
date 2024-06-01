@@ -1,10 +1,10 @@
 <div class="container mt-3">
     <div class="row">
         <td class="col-3">
-            <img src="{{resena.foto}}" class="rounded card-img-top img-fluid" style="max-width: 100%;" routerLink="/details/{{id}}">
+            <img src="{{resena.foto}}" class="rounded card-img-top img-fluid" routerLink="/details/{{id}}">
         </td>
         <td class="col-6">
-            <h6 style="border-bottom: 1px solid #ffffff;">Reseña de <a [routerLink]="['/about', resena.usuario]" style="text-decoration: none;" id="usuario">{{resena.usuario}}</a></h6>
+            <h6 id='encabezado'>Reseña de <a [routerLink]="['/about', resena.usuario]" id="usuario">{{resena.usuario}}</a></h6>
             <h4>
                 {{resena.titulo}} ({{resena.year}}) 
             </h4>
@@ -13,23 +13,45 @@
                 <i *ngIf="resena.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
                 <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning fs-4 fw-bold">&#189;</span>
             </span>
-            <p *ngIf="resena.comentario != null">{{resena.comentario}}</p>
+            <div>
+                <p *ngIf="resena.comentario != null && !resena.spoiler">{{resena.comentario}}</p>
+                <div *ngIf="resena.spoiler" (click)="mostrarSpoiler = true" [class.alert]="!mostrarSpoiler" [class.spoiler-revealed]="mostrarSpoiler" role="alert" style="cursor: pointer;">
+                    <i class="bi bi-exclamation-triangle me-2" *ngIf="!mostrarSpoiler"></i> 
+                    <span *ngIf="!mostrarSpoiler">Este comentario contiene spoilers.</span>
+                    <p *ngIf="mostrarSpoiler">{{resena.comentario}}</p>
+                </div>
+            </div>
+            
             <div class="mb-2" *ngIf="resena.revisionados">
                 <div *ngFor="let revisionado of resena.revisionados" class="mb-2">
                     <div class="d-flex align-items-start">
                         <span class="badge rounded-pill text-bg-success me-2"><i class="bi bi-repeat"></i> {{revisionado.fechaRevisionado | date:'dd/MM/yyyy'}}</span>
-                        <div *ngIf="revisionado.comentarioRevisionado" class="container" style="max-width: 80%; margin-top: -0.25rem;">{{revisionado.comentarioRevisionado}}</div>
+                        <div id="comentarioRevisionado" *ngIf="revisionado.comentarioRevisionado" class="container">{{revisionado.comentarioRevisionado}}</div>
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-danger" (click)="mostrarDenuncia = !mostrarDenuncia" [disabled]="denunciaExistente!=null">Denunciar</button>
-            <div *ngIf="mostrarDenuncia">
-                    <div class="mb-3">
-                        <label for="denuncia" class="form-label">Motivo de la denuncia</label>
-                        <textarea name="motivo" [(ngModel)]="motivo" class="form-control" id="motivo" placeholder="Motivo de la denuncia" required [disabled]="denunciaEnviada"></textarea>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#denunciaModal" [disabled]="denunciaExistente!=null">
+                Denunciar
+            </button>
+              
+            <div class="modal fade" id="denunciaModal" tabindex="-1" aria-labelledby="denunciaModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content bg-dark text-white">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="denunciaModalLabel">Motivo de la denuncia</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <textarea name="motivo" [(ngModel)]="motivo" class="form-control mb-2" id="motivo" placeholder="Motivo de la denuncia" required [disabled]="denunciaEnviada"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-danger" (click)="denunciar(usuarioActual, resena.usuario, id, motivo)" data-bs-dismiss="modal">Enviar denuncia</button>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-danger w-100" (click)="denunciar(usuarioActual, resena.usuario, id, motivo)">Denunciar</button>
+                </div>
             </div>
+              
         </td>
     </div>
 </div>

@@ -18,14 +18,21 @@ i {
   color: rgb(195, 57, 57);
 }
 
+.bi-exclamation-octagon,
+.bi-exclamation-octagon-fill {
+  color: rgb(210, 119, 210);
+}
+
 #gustado,
+#spoiler,
 #estrella:focus {
   outline: none !important;
   box-shadow: none !important;
 }
 
 #gustado,
-#estrella {
+#estrella,
+#spoiler {
   border: none;
 }
 
@@ -36,4 +43,8 @@ i {
   padding: 15px;
   opacity: 1;
   transition: opacity 0.5s ease-out;
+}
+
+img {
+  max-width: 100%;
 }

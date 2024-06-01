@@ -10,6 +10,7 @@ import { AuthService } from '../auth.service';
 export class CardPeliComponent implements OnInit {
   @Input() mostrar: boolean = true;
   @Input() peli: any;
+  isLoaded = false;
 
   isLoggedIn: Observable<boolean>;
   currentUsername: Observable<string>;
@@ -20,6 +21,7 @@ export class CardPeliComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isLoaded = false;
     this.resizeImage();
   }
 
@@ -42,6 +44,7 @@ export class CardPeliComponent implements OnInit {
       } else {
         console.error('No se pudo obtener el contexto del canvas');
       }
+      this.isLoaded = true;
     };
     img.onerror = (error) => {
       console.error('Error al cargar la imagen', error);

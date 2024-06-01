@@ -2,8 +2,8 @@
   <div class="row">
     <td class="col position-relative text-center">
       <i class="bi bi-calendar2"></i>
-      <span class="position-absolute top-50 start-50 translate-middle" style="font-weight: bold;">{{review.fecha | date:'d'}}</span>
-      <i *ngIf="review.esRevisionado" class="bi bi-repeat" style="position: absolute; bottom: 0;"></i>
+      <span class="position-absolute top-50 start-50 translate-middle">{{review.fecha | date:'d'}}</span>
+      <i *ngIf="review.esRevisionado" class="bi bi-repeat"></i>
     </td>
     <td class="col">
       <img src="{{peli.foto}}" class="img-thumbnail" width="100px" height="200px" alt="">

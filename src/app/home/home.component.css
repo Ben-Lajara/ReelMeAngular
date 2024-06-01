@@ -20,6 +20,18 @@ a:hover {
   color: rgb(189, 189, 189);
 }
 
+.mb-3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ffffff;
+}
+
+#mostrar {
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
 i {
   text-shadow: 0 0 2px black;
 }

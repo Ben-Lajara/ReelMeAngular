@@ -39,6 +39,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CardReviewSeguidoComponent } from './card-review-seguido/card-review-seguido.component';
 import { CardReviewLastactivityComponent } from './card-review-lastactivity/card-review-lastactivity.component';
 import { CardPeliBdComponent } from './card-peli-bd/card-peli-bd.component';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { DetallesReviewedSeguidoComponent } from './detalles-reviewed-seguido/detalles-reviewed-seguido.component';
+import { DetallesReviewedComponent } from './detalles-reviewed/detalles-reviewed.component';
+import { AjustesPersonalizarComponent } from './ajustes-personalizar/ajustes-personalizar.component';
+import { AjustesBarraProgresoComponent } from './ajustes-barra-progreso/ajustes-barra-progreso.component';
+import { AjustesFotoPerfilComponent } from './ajustes-foto-perfil/ajustes-foto-perfil.component';
+import { AjustesCambiarPwordComponent } from './ajustes-cambiar-pword/ajustes-cambiar-pword.component';
+import { AjustesBorrarCuentaComponent } from './ajustes-borrar-cuenta/ajustes-borrar-cuenta.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +55,8 @@ import { CardPeliBdComponent } from './card-peli-bd/card-peli-bd.component';
     BuscadorComponent,
     HomeComponent,
     DetallesComponent,
+    DetallesReviewedComponent,
+    DetallesReviewedSeguidoComponent,
     CardPeliComponent,
     RegistroComponent,
     LoginComponent,
@@ -66,6 +76,9 @@ import { CardPeliBdComponent } from './card-peli-bd/card-peli-bd.component';
     SocialComponent,
     CardUsuarioComponent,
     AjustesComponent,
+    AjustesPersonalizarComponent,
+    AjustesBarraProgresoComponent,
+    AjustesFotoPerfilComponent,
     BarraFiltrosBuscadorComponent,
     RestablecerComponent,
     RestablecimientoComponent,
@@ -73,6 +86,8 @@ import { CardPeliBdComponent } from './card-peli-bd/card-peli-bd.component';
     CardReviewSeguidoComponent,
     CardReviewLastactivityComponent,
     CardPeliBdComponent,
+    AjustesCambiarPwordComponent,
+    AjustesBorrarCuentaComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,6 +96,9 @@ import { CardPeliBdComponent } from './card-peli-bd/card-peli-bd.component';
     FormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
   ],
   providers: [
     AuthGuard,

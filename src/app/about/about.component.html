@@ -1,10 +1,6 @@
-<!-- Versión un poco mejorada del componente, aún necesita más datos-->
 <div class="container mt-3">
-    <div *ngIf="isLoading">
-        <p>Cargando...</p>
-    </div>
 
-    <div *ngIf="!isLoading">
+    <div *ngIf="!isLoading; else loading" [@fadeIn] (@fadeIn.done)="onFadeInDone()">
         <div class="profile-card bg-black">
             <div class="profile-header d-flex align-items-center">
                 <img [src]="'http://localhost:8080/uploads/' + datos.perfil" alt="" class="profile-image" [style.borderColor]="datos.color">
@@ -13,9 +9,9 @@
                         {{datos.apodo}} <i *ngIf="datos.rango" class="bi bi-patch-check-fill" [ngStyle]="{'color': getColor(datos.rango)}"></i>
                     </h3>
                     <ng-template #nombreTemplate>
-                        <h3>@{{datos.nombre}} <i *ngIf="datos.rango" class="bi bi-patch-check-fill" [ngStyle]="{'color': getColor(datos.rango)}"></i></h3>
+                        <h3>&#64;{{datos.nombre}} <i *ngIf="datos.rango" class="bi bi-patch-check-fill" [ngStyle]="{'color': getColor(datos.rango)}"></i></h3>
                     </ng-template>
-                    <p class="nombre" *ngIf="datos.apodo">@{{datos.nombre}}</p>
+                    <p class="nombre" *ngIf="datos.apodo">&#64;{{datos.nombre}}</p>
                     <p>{{datos.bio}}</p>
                 </div>
             </div>
@@ -42,8 +38,8 @@
           </ul>
         <div class="tab-content m-2" id="myTabContent">
             <div class="tab-pane fade show active" id="actividad" role="tabpanel" aria-labelledby="actividad-tab">
-                <div class="d-flex flex-wrap justify-content-start">
-                    <div *ngFor="let resena of actividadReciente" class="card-container">
+                <div class="d-flex flex-wrap justify-content-start" *ngIf="fadeInDone" [@listAnimation]="actividadReciente.length">
+                    <div  *ngFor="let resena of actividadReciente" class="card-container" >
                         <app-card-review-lastactivity [resena]="resena"></app-card-review-lastactivity>
                     </div>
                 </div>
@@ -64,3 +60,11 @@
        
     </div>
 </div>
+
+<ng-template #loading>
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+      <div class="spinner-grow" role="status">
+        <!--<span class="sr-only">Loading...</span>-->
+      </div>
+    </div>
+  </ng-template>

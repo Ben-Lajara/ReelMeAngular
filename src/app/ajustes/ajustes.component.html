@@ -1,102 +1,43 @@
-<div class="container mt-3">
-  <div class="container d-flex justify-content-center align-items-center">
-    <img [src]="'http://localhost:8080/uploads/' + usuario.perfil" alt="" class="rounded-circle" data-bs-toggle="modal" data-bs-target="#perfilModal" style="border: 6px solid" [style.borderColor]="usuario.color">        
-  </div>
-    
-    <h5>Reseñas hasta el siguiente rango</h5>
-    <div class="progress" style="width: 50%;">
-      <div class="progress-bar" role="progressbar" [style.width]="getProgreso() + '%'" aria-valuenow="getProgreso()" aria-valuemin="0" aria-valuemax="100">
-        {{  numResenas - getRangoActual() }}/{{ getTotalToNextRank() }}
-      </div>
-    </div>
+<div *ngIf="!isLoading; else loading" [@fadeIn] [ngClass]="{'fade-in': true, 'show': !isLoading}" class="container mt-3">
+  <app-ajustes-foto-perfil [usuario]="usuario" [username]="username"></app-ajustes-foto-perfil>
+  
+  <h5>Reseñas hasta el siguiente rango</h5>
+  <app-ajustes-barra-progreso [usuario]="usuario" [numResenas]="numResenas" ></app-ajustes-barra-progreso>    
 
-  <div class="modal fade" id="perfilModal" tabindex="-1" aria-labelledby="perfilModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content bg-dark text-light rounded shadow">
-        <div class="modal-header">
-            <h5 class="modal-title" id="perfilModalLabel">Actualizar foto de perfil</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <div class="profile-img-container">
-                <img src="#" id="previewFotoPerfil" alt="Preview" class="img-fluid mt-3 d-none rounded-circle">
-              </div>
-              <label for="inputFotoPerfil" class="form-label visually-hidden">Selecciona una nueva foto de perfil:</label>
-              <input type="file" class="form-control profile-input" id="inputFotoPerfil" accept="image/*" (change)="previewProfileImage($event)">
-            </div>
-          </form> 
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" (click)="onUpload()">Guardar cambios</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-    
-
-    <ul class="nav nav-underline" id="myTab" role="tablist">
-      <li class="nav-item" role="presentation">
-        <a class="nav-link active" id="perfil-tab" data-bs-toggle="tab" href="#perfil" role="tab" aria-controls="perfil" aria-selected="true">Editar perfil</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="personalizar-tab" data-bs-toggle="tab" href="#personalizar" role="tab" aria-controls="personalizar" aria-selected="false">Personalizar avatar</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="pword-tab" data-bs-toggle="tab" href="#pword" role="tab" aria-controls="pword" aria-selected="false">Cambiar contraseña</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="borrar-tab" data-bs-toggle="tab" href="#borrar" role="tab" aria-controls="borrar" aria-selected="false">Borrar cuenta</a>
-      </li>
-    </ul>
+  <ul class="nav nav-underline" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="perfil-tab" data-bs-toggle="tab" href="#perfil" role="tab" aria-controls="perfil" aria-selected="true">Editar perfil</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="personalizar-tab" data-bs-toggle="tab" href="#personalizar" role="tab" aria-controls="personalizar" aria-selected="false">Personalizar avatar</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="pword-tab" data-bs-toggle="tab" href="#pword" role="tab" aria-controls="pword" aria-selected="false">Cambiar contraseña</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="borrar-tab" data-bs-toggle="tab" href="#borrar" role="tab" aria-controls="borrar" aria-selected="false">Borrar cuenta</a>
+    </li>
+  </ul>
   <div class="tab-content m-2" id="myTabContent">
       <div class="tab-pane fade show active" id="perfil" role="tabpanel" aria-labelledby="perfil-tab">
           <app-perfil></app-perfil>
       </div>
       <div class="tab-pane fade" id="personalizar" role="tabpanel" aria-labelledby="personalizar-tab">
-          <div class="d-flex justify-content-around">
-            <button type="button" class="btn btn-circle btn-no-color" (click)="setColor('')"><i class="bi bi-slash-circle h3 text-white"></i></button>
-              <button type="button" class="btn btn-circle btn-green" [disabled]="usuario.rango == null" (click)="setColor('green')"></button>
-              <button type="button" class="btn btn-circle btn-orange" [disabled]="usuario.rango == 'BRONCE' || usuario.rango == null" (click)="setColor('orange')"></button>
-              <button type="button" class="btn btn-circle btn-purple" [disabled]="usuario.rango != 'ORO' || usuario.rango == null" (click)="setColor('purple')"></button>
-          </div>
+          <app-ajustes-personalizar [usuario]="usuario"></app-ajustes-personalizar>
       </div>
       <div class="tab-pane fade" id="pword" role="pword" aria-labelledby="pword-tab">
-        <div class="row">
-          <div class="col-md-6">
-            <div *ngIf="exito !== ''" class="alert alert-success" role="alert">
-              {{exito}}
-            </div>
-            
-            <div class="mb-3">
-                <label for="pword" class="form-label">Contraseña actual</label>
-                <input type="password" name="pword" [(ngModel)]="pword" class="form-control" id="pword" placeholder="Contraseña actual" required>
-            </div>
-            <div class="mb-3">
-                <label for="pword2" class="form-label">Nueva contraseña</label>
-                <input type="password" name="pword2" [(ngModel)]="pword2" class="form-control" id="pword2" placeholder="Nueva contraseña" required>
-            </div>
-            <button type="submit" class="btn btn-primary" (click)="setNewPword()">Cambiar contraseña</button>
-          </div>
-          <div class="col-md-6">
-            <!--Aquí irá una imagen -->
-          </div>
-          
-        </div>
+        <app-ajustes-cambiar-pword [usuario]="usuario"></app-ajustes-cambiar-pword>
       </div>
       <div class="tab-pane fade" id="borrar" role="borrar" aria-labelledby="borrar-tab">
-        <div class="mb-3">
-          <label for="pwordBorrar" class="form-label">Contraseña actual</label>
-          <input type="password" name="pwordBorrar" [(ngModel)]="pwordBorrar" class="form-control" id="pwordBorrar" placeholder="Contraseña actual" required>
-      </div>
-      <div class="mb-3">
-        <label for="pwordBorrar2" class="form-label">Contraseña actual</label>
-        <input type="password" name="pwordBorrar2" [(ngModel)]="pwordBorrar2" class="form-control" id="pwordBorrar2" placeholder="Contraseña actual" required>
-      </div>
-      <button type="submit" class="btn btn-danger" (click)="deleteUser()">Borrar cuenta</button>
+        <app-ajustes-borrar-cuenta [username]="username"></app-ajustes-borrar-cuenta>
       </div>
   </div>
 </div>
+
+<ng-template #loading>
+  <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="spinner-grow" role="status">
+      <!--<span class="sr-only">Loading...</span>-->
+    </div>
+  </div>
+</ng-template>

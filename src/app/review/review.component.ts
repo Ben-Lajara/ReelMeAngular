@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReelMeService } from '../reel-me.service';
 import { HttpClient } from '@angular/common/http';
-import { catchError, tap, throwError } from 'rxjs';
+import { Observable, catchError, first, tap, throwError } from 'rxjs';
 import {
   animate,
   state,
@@ -16,11 +16,11 @@ import {
   templateUrl: './review.component.html',
   styleUrls: ['./review.component.css'],
   animations: [
-    trigger('fade', [
-      state('visible', style({ opacity: 1, display: 'block' })),
-      state('hidden', style({ opacity: 0, display: 'none' })),
-      transition('visible => hidden', [animate('0.5s ease-out')]),
-      transition('hidden => visible', [animate('0.5s ease-in')]),
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('600ms', style({ opacity: 1 })),
+      ]),
     ]),
   ],
 })
@@ -29,6 +29,9 @@ export class ReviewComponent implements OnInit {
   @Input() peli: any;
   cambiosGuardados = false;
   private apiUrl = 'http://localhost:8080/api';
+  isLoading = true;
+  pelicula$: Observable<any> | undefined;
+  existente = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,6 +45,7 @@ export class ReviewComponent implements OnInit {
   calificacion = 0;
   comentario = '';
   gustado = false;
+  spoiler = false;
   resena: any;
   editado: boolean = false;
   hoverState = 0;
@@ -52,13 +56,19 @@ export class ReviewComponent implements OnInit {
   mensajeError: string = '';
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.username = params['username'];
       this.busquedaID();
+
       this.reelme.busquedaId(this.id).subscribe(() => {
         this.peli = this.reelme.pelicula();
         console.log(this.reelme.pelicula().Title);
+        this.pelicula$ = this.reelme.busquedaId(this.id);
+        this.pelicula$?.pipe(first()).subscribe(() => {
+          this.isLoading = false;
+        });
       });
 
       console.log('fecha inicial al entrar: ', this.fecha);
@@ -85,6 +95,7 @@ export class ReviewComponent implements OnInit {
     calificacion: number,
     comentario: string,
     gustado: boolean,
+    spoiler: boolean,
     id_pelicula: string,
     usuario: string,
     titulo: string,
@@ -100,6 +111,7 @@ export class ReviewComponent implements OnInit {
       calificacion,
       comentario,
       gustado,
+      spoiler,
       id_pelicula,
       usuario,
       titulo,
@@ -157,8 +169,10 @@ export class ReviewComponent implements OnInit {
             this.calificacion = this.resena.calificacion;
             this.comentario = this.resena.comentario;
             this.gustado = this.resena.gustado;
+            this.spoiler = this.resena.spoiler;
             this.editado = true;
             this.revisionados = this.resena.revisionados || [];
+            this.existente = true;
           }
         }),
         catchError((error) => {
@@ -183,6 +197,7 @@ export class ReviewComponent implements OnInit {
       this.calificacion,
       this.comentario,
       this.gustado,
+      this.spoiler,
       this.id,
       this.username,
       this.pelicula().Title,
@@ -286,5 +301,33 @@ export class ReviewComponent implements OnInit {
           console.error(error);
         }
       );
+  }
+
+  eliminarReview(nombreUsuario: string, idPelicula: string) {
+    if (
+      confirm(
+        '¿Estás seguro de que quieres eliminar esta reseña? Se eliminarán también sus revisionados.'
+      )
+    ) {
+      this.http
+        .delete(`${this.apiUrl}/review`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+          params: {
+            usuario: nombreUsuario,
+            idPelicula: idPelicula,
+          },
+        })
+        .subscribe(
+          (response) => {
+            console.log(response);
+            this.router.navigate(['/about', nombreUsuario]);
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
+    }
   }
 }

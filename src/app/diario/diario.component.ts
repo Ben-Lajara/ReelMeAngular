@@ -1,16 +1,26 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReelMeService } from '../reel-me.service';
 import { Observable } from 'rxjs';
 import { ParamsFiltrosService } from '../params-filtros.service';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-diario',
   templateUrl: './diario.component.html',
   styleUrls: ['./diario.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('600ms', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class DiarioComponent implements OnInit {
+  isLoading = true;
   sortOrder = 'asc';
   @Input() username: string = '';
   reviews: any;
@@ -23,7 +33,8 @@ export class DiarioComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private reelme: ReelMeService,
-    private filtros: ParamsFiltrosService
+    private filtros: ParamsFiltrosService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -83,6 +94,8 @@ export class DiarioComponent implements OnInit {
         await this.getPeliculas();
         console.log('Despues del await');
         console.log(this.peliculas);
+        this.isLoading = false;
+        this.cdr.detectChanges();
       },
       (error) => {
         console.log('Error:', error);

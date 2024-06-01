@@ -1,0 +1,36 @@
+img {
+  border: 2px solid;
+}
+
+.nav-link {
+  color: white;
+}
+
+.nav-link:active {
+  color: black;
+}
+
+#resenaUsuario {
+  color: rgb(186, 186, 186);
+  text-decoration: none;
+}
+#resenaUsuario:hover {
+  color: orange;
+}
+
+#usuario {
+  text-decoration: none;
+  color: white;
+}
+
+#usuario:hover {
+  color: rgb(5, 225, 5);
+}
+
+i {
+  text-shadow: 0 0 2px black;
+}
+
+#alertaSpoiler {
+  cursor: pointer;
+}

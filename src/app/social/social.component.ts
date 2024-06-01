@@ -1,8 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { catchError, of } from 'rxjs';
+import {
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  of,
+  switchMap,
+} from 'rxjs';
 import { AuthService } from '../auth.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-social',
@@ -10,11 +17,12 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./social.component.css'],
 })
 export class SocialComponent implements OnInit {
-  usuarios: any;
+  usuarios: any[] = [];
   username = '';
-  seguidos: any;
-  nombre = '';
+  seguidos: any[] = [];
+  nombreControl = new FormControl('');
   apiUrl = 'http://localhost:8080/api';
+
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -24,73 +32,57 @@ export class SocialComponent implements OnInit {
       this.username = username;
     });
   }
-  getUsuarios() {
-    return this.http.get(`${this.apiUrl}/usuarios`);
+
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      console.log(this.username);
+      this.getSeguidos().subscribe((seguidos: any) => {
+        this.seguidos = seguidos;
+        this.setupBuscador();
+      });
+    });
   }
 
-  findUsuarios(nombre: string) {
-    if (nombre.trim() === '') {
-      this.getUsuarios().subscribe((res: any) => {
-        this.usuarios = res.map((usuario: any) => {
-          // Para ver si el usuario está en la lista de seguidos
-          usuario.seguido = this.seguidos.some(
-            (seguido: any) => seguido.usuarioSeguido.nombre === usuario.nombre
-          );
-
-          return usuario;
-        });
-        console.log(this.usuarios);
-      });
-    } else {
-      this.http
-        .get(`${this.apiUrl}/usuarios/${nombre}`)
-        .pipe(
-          catchError((error) => {
-            if (error.status === 404) {
-              this.getUsuarios();
-            }
-            return of();
-          })
-        )
-        .subscribe((res: any) => {
-          this.usuarios = res.map((usuario: any) => {
-            // Para ver si el usuario está en la lista de seguidos
-            usuario.seguido = this.seguidos.some(
-              (seguido: any) => seguido.usuarioSeguido.nombre === usuario.nombre
+  setupBuscador(): void {
+    this.nombreControl.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((nombre) => {
+          if (nombre?.trim() === '') {
+            return of([]);
+          } else {
+            return this.findUsuarios(nombre ?? '').pipe(
+              catchError((error) => {
+                if (error.status === 404) {
+                  return of([]);
+                }
+                return of([]);
+              })
             );
-
-            return usuario;
-          });
-        });
-    }
+          }
+        })
+      )
+      .subscribe((usuarios: any) => {
+        this.usuarios = this.marcarUsuariosSeguidos(usuarios, this.seguidos);
+      });
+  }
+  findUsuarios(nombre: string) {
+    return this.http.get<any[]>(`${this.apiUrl}/usuarios/${nombre}`);
   }
 
   getSeguidos() {
-    return this.http.get(
+    return this.http.get<any[]>(
       `${this.apiUrl}/usuarios/seguidosPor/${this.username}`
     );
   }
 
-  ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      //this.username = params['username'];
-      console.log(this.username);
-
-      this.getSeguidos().subscribe((res: any) => {
-        this.seguidos = res;
-        console.log(this.seguidos);
-        this.getUsuarios().subscribe((res: any) => {
-          this.usuarios = res.map((usuario: any) => {
-            // Comprueba si el usuario está en la lista de seguidos
-            usuario.seguido = this.seguidos.some(
-              (seguido: any) => seguido.usuarioSeguido.nombre === usuario.nombre
-            );
-
-            return usuario;
-          });
-          console.log(this.usuarios);
-        });
-      });
+  marcarUsuariosSeguidos(usuarios: any[], seguidos: any[]): any[] {
+    return usuarios.map((usuario) => {
+      usuario.seguido = seguidos.some(
+        (seguido) => seguido.usuarioSeguido.nombre === usuario.nombre
+      );
+      return usuario;
     });
   }
 }

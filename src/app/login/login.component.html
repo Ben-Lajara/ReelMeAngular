@@ -2,14 +2,26 @@
   <div class="row justify-content-center">
     <div class="col-md-6">
       <h5 class="mb-3 text-center">Iniciar sesión</h5>
-      <form (ngSubmit)="onSubmit()" class="form-group">
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit()" novalidate [class.was-validated]="loginForm.submitted && loginForm.invalid">
         <div class="mb-3">
           <label for="nombre" class="form-label">Usuario o Email</label>
-          <input type="text" name="nombre" [(ngModel)]="nombre" class="form-control" id="nombre" placeholder="Usuario/Email" required [ngStyle]="{'border-color': error ? 'red' : null}">
+          <input type="text" name="nombre" [(ngModel)]="nombre" class="form-control" id="nombre" placeholder="Usuario/Email" required>
+          <div *ngIf="loginForm.submitted && loginForm.controls['nombre'].invalid && !nombreError" class="invalid-feedback">
+            Por favor, introduce tu usuario o email.
+          </div>
+          <div *ngIf="nombreError" class="invalid-feedback">
+            {{ nombreError }}
+          </div>
         </div>
         <div class="mb-3">
           <label for="pword" class="form-label">Contraseña</label>
-          <input type="password" name="pword" [(ngModel)]="pword" class="form-control" id="pword" placeholder="Contraseña" required [ngStyle]="{'border-color': error ? 'red' : null}">
+          <input type="password" name="pword" [(ngModel)]="pword" class="form-control" id="pword" placeholder="Contraseña" required>
+          <div *ngIf="loginForm.submitted && loginForm.controls['pword'].invalid && !pwordError" class="invalid-feedback">
+            Por favor, introduce tu contraseña.
+          </div>
+          <div *ngIf="loginForm.submitted && pwordError" class="invalid-feedback">
+            {{ pwordError }}
+          </div>
         </div>
         <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
         <div>

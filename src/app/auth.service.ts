@@ -1,7 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, BehaviorSubject, tap, map } from 'rxjs';
+import {
+  Observable,
+  BehaviorSubject,
+  tap,
+  map,
+  catchError,
+  throwError,
+} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -52,6 +59,9 @@ export class AuthService {
     fd.append('nombreEmail', nombreEmail);
     fd.append('pword', pword);
     return this.http.post(`${this.apiUrl}/usuario/loginNombreEmail`, fd).pipe(
+      catchError((error) => {
+        return throwError(error); // Propagar el error para que se maneje en el componente LoginComponent
+      }),
       tap((data: any) => {
         if (data.status === 'success') {
           this.loggedIn.next(true);

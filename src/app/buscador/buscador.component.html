@@ -1,5 +1,5 @@
 <div class="container">
-  <input class="form-control" id="exampleDataList" [(ngModel)]="pelis" [(ngModel)]="id" (keyup)="busqueda()"
+  <input class="form-control" id="buscadorPelis" [formControl]="pelisControl"
     placeholder="Busca una película...">
   <div class="d-flex flex-wrap justify-content-start mt-2">
     <div *ngFor="let peli of peliculas()" class="card-container">

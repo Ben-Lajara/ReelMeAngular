@@ -3,10 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ReelMeService {
-
   urlBase = 'http://www.omdbapi.com/?apikey=495d7a25';
   pelis = new Array();
   peli: any;

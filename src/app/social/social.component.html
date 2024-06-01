@@ -1,13 +1,13 @@
 <div class="container">
     <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Buscar usuarios" aria-label="Buscar usuarios" aria-describedby="button-addon2" [(ngModel)]="nombre" (keyup)="findUsuarios(nombre)">
+      <input type="text" class="form-control" placeholder="Buscar usuarios" aria-label="Buscar usuarios" aria-describedby="button-addon2" [formControl]="nombreControl">
     </div>
-      
+    
     <div class="row row-cols-md-5 justify-content-center">
-        <ng-container *ngFor="let usuario of usuarios">
-            <ng-container *ngIf="usuario.nombre !== username">
-                <app-card-usuario [usuario]="usuario" [username]="username"></app-card-usuario>
-            </ng-container>
+      <ng-container *ngFor="let usuario of usuarios">
+        <ng-container *ngIf="usuario.nombre !== username">
+          <app-card-usuario [usuario]="usuario" [username]="username"></app-card-usuario>
         </ng-container>
+      </ng-container>
     </div>
-</div>
+  </div>

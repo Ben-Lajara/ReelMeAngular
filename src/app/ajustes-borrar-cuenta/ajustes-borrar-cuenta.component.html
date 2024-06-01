@@ -1,0 +1,9 @@
+<div class="mb-3">
+          <label for="pwordBorrar" class="form-label">Contraseña actual</label>
+          <input type="password" name="pwordBorrar" [(ngModel)]="pwordBorrar" class="form-control" id="pwordBorrar" placeholder="Contraseña actual" required>
+      </div>
+      <div class="mb-3">
+        <label for="pwordBorrar2" class="form-label">Contraseña actual</label>
+        <input type="password" name="pwordBorrar2" [(ngModel)]="pwordBorrar2" class="form-control" id="pwordBorrar2" placeholder="Contraseña actual" required>
+      </div>
+      <button type="submit" class="btn btn-danger" (click)="deleteUser()">Borrar cuenta</button>

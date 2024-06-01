@@ -2,3 +2,11 @@
   background-color: #343a40;
   color: white;
 }
+.fade-in {
+  opacity: 0;
+  transition: opacity 3s ease-in;
+}
+
+.fade-in.show {
+  opacity: 1;
+}

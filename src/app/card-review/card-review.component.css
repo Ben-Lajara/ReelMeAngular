@@ -31,3 +31,12 @@ i.iconos-estrellas {
 i.icono-corazon {
   font-size: calc(min(1vw + 1vh + 1vmin, 24px));
 }
+
+i.bi-repeat {
+  position: absolute;
+  bottom: 0;
+}
+
+span {
+  font-weight: bold;
+}

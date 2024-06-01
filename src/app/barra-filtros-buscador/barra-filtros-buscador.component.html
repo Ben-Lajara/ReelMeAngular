@@ -1,5 +1,5 @@
 <!-- Sirve para elegir entre buscar películas o usuarios -->
-<div class="container mt-3">
+<div *ngIf="!isLoading; else loading" [@fadeIn] [ngClass]="{'fade-in': true, 'show': !isLoading}" class="container mt-3">
 
     <ul class="nav nav-underline justify-content-center" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
@@ -14,3 +14,11 @@
     <app-buscador *ngIf="searchType === 'pelicula'"></app-buscador>
     <app-social *ngIf="searchType === 'usuario'"></app-social>
 </div>
+
+<ng-template #loading>
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+      <div class="spinner-grow" role="status">
+        <!--<span class="sr-only">Loading...</span>-->
+      </div>
+    </div>
+  </ng-template>

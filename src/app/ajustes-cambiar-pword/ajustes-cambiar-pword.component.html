@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-md-6">
+      <div *ngIf="exito !== ''" class="alert alert-success" role="alert">
+        {{exito}}
+      </div>
+      
+      <div class="mb-3">
+          <label for="pword" class="form-label">Contraseña actual</label>
+          <input type="password" name="pword" [(ngModel)]="pword" class="form-control" id="pword" placeholder="Contraseña actual" required>
+      </div>
+      <div class="mb-3">
+          <label for="pword2" class="form-label">Nueva contraseña</label>
+          <input type="password" name="pword2" [(ngModel)]="pword2" class="form-control" id="pword2" placeholder="Nueva contraseña" required>
+      </div>
+      <button type="submit" class="btn btn-primary" (click)="setNewPword()">Cambiar contraseña</button>
+    </div>
+    <div class="col-md-6">
+      <!--Aquí irá una imagen -->
+    </div>
+    
+  </div>

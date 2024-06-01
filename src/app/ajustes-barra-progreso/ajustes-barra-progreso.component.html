@@ -1,0 +1,5 @@
+<div class="progress" style="width: 50%;">
+    <div class="progress-bar" role="progressbar" [style.width]="getProgreso() + '%'" aria-valuenow="getProgreso()" aria-valuemin="0" aria-valuemax="100">
+      {{  numResenas - getRangoActual() }}/{{ getTotalToNextRank() }}
+    </div>
+  </div>

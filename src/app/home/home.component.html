@@ -1,35 +1,43 @@
-<!--
-    La idea para este componente es que se muestre una landing page para usuarios no registrados y una página de inicio para usuarios registrados.
--->
-<div *ngIf="username == ''" class="container mt-3">
+  <div *ngIf="username == ''" [@fadeIn] class="container mt-3">
     <h3>Te damos la bienvenida a ReelMe</h3>
     <p>
         En ReelMe podrás llevar un seguimiento de las películas que ves y reseñarlas.
         Sigue a tus amigos para descubrir nuevos horizontes.
     </p>
-</div>
-
-<div *ngIf="username != ''" class="container mt-3">
-  <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ffffff;">
-    <h5 >Actividad reciente de las cuentas que sigues</h5>
-    <h6 *ngIf="seguidos.length > 4" (click)="toggleShowAll()" class="text-primary" style="cursor: pointer; margin-bottom: 0;">
-      {{ showAll ? 'Mostrar menos' : 'Ver todos' }}
-    </h6>
   </div>
-  <div class="d-flex flex-wrap justify-content-start">
-    <div *ngFor="let seguido of visibleSeguidos" class="card-container">
-        <app-card-review-seguido [seguido]="seguido"></app-card-review-seguido>
+  
+  <div *ngIf="!isLoading; else loading" [@fadeIn] (@fadeIn.done)="onFadeInDone()">
+    
+
+    <div *ngIf="username != ''" class="container mt-3" >
+      <div class="mb-3">
+        <h5 >Actividad reciente de las cuentas que sigues</h5>
+        <h6 id="mostrar" *ngIf="seguidos.length > 4" (click)="toggleShowAll()" class="text-warning">
+          {{ showAll ? 'Mostrar menos' : 'Ver todos' }}
+        </h6>
+      </div>
+      <div class="d-flex flex-wrap justify-content-start" *ngIf="fadeInDone" [@listAnimation]="visibleSeguidos.length">
+        <div *ngFor="let seguido of visibleSeguidos" class="card-container">
+            <app-card-review-seguido [seguido]="seguido"></app-card-review-seguido>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <h5 >Películas más reseñadas</h5>
+      </div>
+      <div class="d-flex flex-wrap justify-content-start" *ngIf="fadeInDone" [@listAnimation]="top4Peliculas.length">
+        <div *ngFor="let pelicula of top4Peliculas" class="card-container">
+          <app-card-peli-bd [peli]="pelicula"></app-card-peli-bd>
+        </div>
+      </div>
+
+    </div>
+</div>
+<ng-template #loading>
+  <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="spinner-grow" role="status">
+      <!--<span class="sr-only">Loading...</span>-->
     </div>
   </div>
-
-  <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ffffff;">
-    <h5 >Películas más reseñadas</h5>
-  </div>
-  <div class="d-flex flex-wrap justify-content-start">
-    <div *ngFor="let pelicula of top4Peliculas" class="card-container">
-      <app-card-peli-bd [peli]="pelicula"></app-card-peli-bd>
-    </div>
-  </div>
-
-</div>
+</ng-template>
 

@@ -1,0 +1,12 @@
+img:hover {
+  box-shadow: 0 0 5px white;
+}
+.profile-img-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px; /* Espacio entre la imagen y el input */
+}
+
+.profile-input {
+  display: block; /* Asegura que el input ocupe toda la anchura disponible */
+}

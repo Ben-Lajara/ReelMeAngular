@@ -2,11 +2,20 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-ajustes',
   templateUrl: './ajustes.component.html',
   styleUrls: ['./ajustes.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('600ms', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class AjustesComponent implements OnInit {
   fotoSeleccionada: File | null = null;
@@ -18,6 +27,7 @@ export class AjustesComponent implements OnInit {
   pwordBorrar2 = '';
   exito = '';
   numResenas = 0;
+  isLoading = true;
   apiUrl = 'http://localhost:8080/api';
   constructor(
     private http: HttpClient,
@@ -30,20 +40,16 @@ export class AjustesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      //this.username = params['username'];
-      this.getUsuario().subscribe((res: any) => {
-        this.usuario = res;
-        console.log(this.usuario);
-        this.getNumResenas().subscribe((res: any) => {
-          this.numResenas = res;
-        });
-      });
-    });
+    this.getUsuario();
+    this.getNumResenas();
   }
 
   getUsuario() {
-    return this.http.get(`${this.apiUrl}/usuario/${this.username}`);
+    this.http
+      .get(`${this.apiUrl}/usuario/${this.username}`)
+      .subscribe((res: any) => {
+        this.usuario = res;
+      });
   }
 
   setNewPword() {
@@ -80,7 +86,12 @@ export class AjustesComponent implements OnInit {
   }
 
   getNumResenas() {
-    return this.http.get(`${this.apiUrl}/usuario/numResenas/${this.username}`);
+    this.http
+      .get(`${this.apiUrl}/usuario/numResenas/${this.username}`)
+      .subscribe((res: any) => {
+        this.numResenas = res;
+        this.isLoading = false;
+      });
   }
 
   getProgreso() {

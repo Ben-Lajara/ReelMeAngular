@@ -1,11 +1,18 @@
-<div class="container mt-3">
+<div class="container mt-3" *ngIf="!isLoading; else loading" [@fadeIn]>
     <div class="row">
       <div class="col-2">
-        <img src="{{pelicula().Poster}}" class="rounded card-img-top img-fluid" style="max-width: 100%;">
+        <img src="{{(pelicula$ | async)?.Poster}}" class="rounded card-img-top img-fluid">
       </div>
       <div class="col-10">
         <form (ngSubmit)="onSubmit()">
-          <h2>{{pelicula().Title}}</h2>
+          <div class="d-flex align-items-center justify-content-between">
+            <h2>{{(pelicula$ | async)?.Title}}</h2>
+            <div *ngIf="existente">
+              <button type="button" class="btn btn-danger btn-sm" aria-label="Close" (click)="eliminarReview(username, id)">
+                <i class="bi bi-trash"></i> Eliminar reseña
+              </button>
+            </div>
+          </div>
           <div class="form-group">
             <label for="comentario">Reseña</label>
             <textarea class="form-control" id="comentario" rows="3" name="comentario" [(ngModel)]="comentario" [disabled]="hayVeto"></textarea>
@@ -28,6 +35,12 @@
               <label for="gustado">Gustado</label>
               <button type="button" class="btn btn-default" (click)="gustado = !gustado" id="gustado">
                 <i class="h3 bi" [ngClass]="{'bi-heart-fill': gustado, 'bi-heart': !gustado}"></i>
+              </button>
+            </div>
+            <div class="col-auto">
+              <label for="spoiler">Contiene spoilers</label>
+              <button type="button" class="btn btn-default" (click)="spoiler = !spoiler" id="spoiler">
+                <i class="h3 bi" [ngClass]="{'bi-exclamation-octagon-fill': spoiler, 'bi-exclamation-octagon': !spoiler}"></i>
               </button>
             </div>
             <div class="col">
@@ -63,10 +76,11 @@
           </div>
           <div *ngIf="mensajeError" class="alert alert-danger mt-3">{{ mensajeError }}</div>
 
-          <button type="button" class="btn btn-primary mt-3" (click)="agregarRevisionadoNuevo()" [disabled]="hayVeto">Añadir revisionado</button>
+          <button type="button" class="btn btn-primary btn-sm mt-3" (click)="agregarRevisionadoNuevo()" [disabled]="hayVeto"><i class="bi bi-repeat"></i> Añadir revisionado</button>
           <div>
-            <button type="submit" class="btn btn-success mt-3">Enviar</button>
+            <button type="submit" class="btn btn-success col-12 mt-3">Enviar</button>
           </div>
+          
         </form>
       </div>
     </div>
@@ -74,4 +88,12 @@
       Se han guardado los cambios.
     </div>
   </div>
+
+  <ng-template #loading>
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+      <div class="spinner-grow" role="status">
+        <!--<span class="sr-only">Loading...</span>-->
+      </div>
+    </div>
+  </ng-template>
   

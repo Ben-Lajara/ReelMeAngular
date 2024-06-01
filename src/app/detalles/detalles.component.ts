@@ -9,17 +9,26 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ReelMeService } from '../reel-me.service';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth.service';
-import { Observable, tap } from 'rxjs';
+import { Observable, first, tap } from 'rxjs';
 import { Chart } from 'chart.js';
 import 'chart.js/auto';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-detalles',
   templateUrl: './detalles.component.html',
   styleUrls: ['./detalles.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('600ms', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
-export class DetallesComponent implements OnInit, AfterViewInit {
+export class DetallesComponent implements OnInit {
   @ViewChild('myChart') myChart!: ElementRef<HTMLCanvasElement>;
   currentUsername = '';
   id = '';
@@ -32,6 +41,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
   vista = false;
   puntuacionMedia = '';
   apiUrl = 'http://localhost:8080/api';
+  imageUrl = '';
   frecuenciasDiccionario = {
     0.5: 0,
     1: 0,
@@ -44,6 +54,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
     4.5: 0,
     5: 0,
   };
+  chartOptions: any;
   frecuencias = new Map([
     [0.5, 0],
     [1, 0],
@@ -60,6 +71,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
   trailerUrl: SafeResourceUrl = '';
   peli: any;
   pelicula$: Observable<any> | undefined;
+  isLoading = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -74,62 +86,61 @@ export class DetallesComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.route.params.subscribe((params) => {
       this.id = params['id'];
-      this.busquedaID();
-      this.pelicula$ = this.reelme.busquedaId(this.id);
+      this.loadPelicula();
+      this.loadActividad();
+      this.loadReviews();
+      this.loadResenasSeguidos();
+      console.log('pelicula$ ', this.pelicula$);
+      console.log('calificacion ', this.calificacion.toString());
+    });
+  }
 
-      this.reelme.busquedaId(this.id).subscribe(() => {
-        this.peli = this.reelme.pelicula();
-        console.log(this.reelme.pelicula().Title);
-        this.getTrailer(
-          this.reelme.pelicula().Title + ' ' + this.reelme.pelicula().Year
-        );
-      });
-      this.getActividad(this.currentUsername, this.id).subscribe(() => {
-        console.log(this.vista);
-      });
-      this.getReviewsPelicula().subscribe((res: any) => {
-        console.log(res);
-        this.resenas = res;
-        console.log(this.resenas);
-        this.puntuacionMedia = this.getPuntuacionMedia();
-        console.log(this.frecuencias);
-        this.getResenasSeguidos(this.currentUsername, this.id).subscribe(
-          (res: any) => {
-            this.resenasSeguidos = res;
-            console.log(this.resenasSeguidos);
-            this.crearGrafico();
-          }
-        );
-        //this.crearGrafico();
+  loadPelicula(): void {
+    this.reelme.busquedaId(this.id).subscribe(() => {
+      this.peli = this.reelme.pelicula();
+      this.getTrailer(
+        `${this.reelme.pelicula().Title} ${this.reelme.pelicula().Year}`
+      );
+      this.pelicula$ = this.reelme.busquedaId(this.id);
+      this.pelicula$?.pipe(first()).subscribe(() => {
+        this.isLoading = false;
       });
     });
   }
 
-  ngAfterViewInit(): void {
-    console.log('AfterViewInit');
-    //this.crearGrafico();
+  loadActividad(): void {
+    this.getActividad(this.currentUsername, this.id).subscribe(() => {
+      console.log(this.vista);
+    });
   }
 
-  busquedaID() {
-    this.reelme.busquedaId(this.id);
+  loadReviews(): void {
+    this.getReviewsPelicula().subscribe((res: any) => {
+      this.resenas = res;
+      this.calculateFrequencies();
+      this.initializeChart();
+      console.log(this.frecuencias);
+    });
   }
 
-  pelicula() {
-    return this.reelme.pelicula();
+  loadResenasSeguidos(): void {
+    this.getResenasSeguidos(this.currentUsername, this.id).subscribe(
+      (res: any) => {
+        this.resenasSeguidos = res;
+        console.log(this.resenasSeguidos);
+      }
+    );
   }
 
-  getReviewsPelicula() {
+  getReviewsPelicula(): Observable<any> {
     console.log('getReviewsPelicula');
     return this.http.get(`${this.apiUrl}/reviewed/${this.id}`);
   }
 
-  getGustados() {
-    return this.resenas.filter((resena) => resena.gustado === true).length;
-  }
-
-  getActividad(usuario: string, id_pelicula: string) {
+  getActividad(usuario: string, id_pelicula: string): Observable<any> {
     console.log('Existente');
     return this.http
       .get(`${this.apiUrl}/review?usuario=${usuario}&idPelicula=${id_pelicula}`)
@@ -144,8 +155,11 @@ export class DetallesComponent implements OnInit, AfterViewInit {
         })
       );
   }
+  getGustados() {
+    return this.resenas.filter((resena) => resena.gustado === true).length;
+  }
 
-  getPuntuacionMedia() {
+  /*getPuntuacionMedia() {
     let suma = 0;
     this.resenas.forEach((resena) => {
       let calificacion = Number(resena.calificacion);
@@ -158,7 +172,7 @@ export class DetallesComponent implements OnInit, AfterViewInit {
       }
     });
     return (suma / this.resenas.length).toFixed(1);
-  }
+  }*/
 
   getStars(i: number): string {
     if (this.starsCache[i] !== undefined) {
@@ -187,77 +201,104 @@ export class DetallesComponent implements OnInit, AfterViewInit {
     );
   }
 
-  crearGrafico() {
-    const ctx = this.myChart.nativeElement.getContext('2d');
-    console.log(ctx);
-    if (ctx) {
-      this.chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['0.5', '1', '1.5', '2', '2.5', '3', '3.5', '4', '4.5', '5'],
-          datasets: [
-            {
-              data: Array.from(this.frecuencias.values()),
-              backgroundColor: ['rgb(255 255 255)'],
-              borderColor: ['rgb(255 255 255)'],
-              hoverBackgroundColor: ['rgb(133 133 133)'],
-              hoverBorderColor: ['rgb(133 133 133)'],
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-              display: false,
-              grid: {
-                display: false,
-              },
-            },
-            x: {
-              ticks: {
-                color: 'white',
-              },
-              grid: {
-                display: false,
-              },
-            },
-          },
-          responsive: true,
-          plugins: {
-            legend: {
-              display: false,
-            },
-            tooltip: {
-              displayColors: false,
-              callbacks: {
-                label: function (context) {
-                  let total = context.dataset.data.reduce(
-                    (a, b) => (a as number) + (b as number),
-                    0
-                  ) as number;
-                  let value = context.raw as number;
-                  let percentage = ((value / total) * 100).toFixed(2);
-                  return `${context.label}: ${value} (${percentage}%)`;
-                },
-              },
-            },
-          },
-        },
-      });
-    } else {
-      console.error('No se pudo obtener canvas');
-    }
+  calculateFrequencies() {
+    let suma = 0;
+    this.resenas.forEach((resena) => {
+      let calificacion = Number(resena.calificacion);
+      if (!isNaN(calificacion) && calificacion >= 0.5 && calificacion <= 5) {
+        suma += calificacion;
+        let frecuenciaActual = this.frecuencias.get(calificacion);
+        if (frecuenciaActual !== undefined) {
+          this.frecuencias.set(calificacion, frecuenciaActual + 1);
+        }
+      }
+    });
+    this.puntuacionMedia = (suma / this.resenas.length).toFixed(1);
   }
 
-  getNombrePelicula() {
-    return this.pelicula().Title;
+  initializeChart() {
+    let totalResenas = this.resenas.length;
+    this.chartOptions = {
+      xAxis: {
+        type: 'category',
+        data: ['0.5', '1', '1.5', '2', '2.5', '3', '3.5', '4', '4.5', '5'],
+        axisLabel: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+      },
+      yAxis: {
+        type: 'value',
+        axisLabel: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+      },
+      series: [
+        {
+          data: Array.from(this.frecuencias.values()),
+          type: 'bar',
+          barWidth: '85%', // Ancho de las barras
+          barCategoryGap: '10%', // Espacio entre las barras
+          itemStyle: {
+            color: 'rgba(59, 89, 152, 0.8)',
+            barBorderRadius: [5, 5, 0, 0], // Bordes redondeados, [arriba izquierda, arriba derecha, abajo derecha, abajo izquierda]
+            emphasis: {
+              color: 'rgba(119, 147, 209, 0.8)', // Color de la barra cuando se pasa el cursor sobre ella
+            },
+          },
+        },
+      ],
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true,
+      },
+      tooltip: {
+        trigger: 'axis',
+        position: function (point: any, params: any) {
+          return [point[0], 'top'];
+        },
+        formatter: function (params: any) {
+          console.log('Total reseñas: ' + totalResenas);
+          let calificacion = params[0].axisValue;
+          console.log('Calificación: ' + calificacion);
+          let frecuencia = params[0].data;
+          console.log('Frecuencia: ' + frecuencia);
+          let porcentaje = Math.round((frecuencia / totalResenas) * 100);
+
+          let calificacionStars = '';
+          for (let i = 1; i <= 5; i++) {
+            if (i <= calificacion) {
+              calificacionStars += '★';
+            } else if (i - calificacion < 1) {
+              calificacionStars += '½';
+            }
+          }
+
+          return `${frecuencia} usuarios (${porcentaje}%) han puntuado ${calificacionStars}`;
+        },
+        textStyle: {
+          fontSize: 12, // Cambia esto al tamaño de letra que prefieras
+        },
+      },
+    };
   }
 
   getTrailer(nombre: string) {
-    //const apiKey = 'AIzaSyDGIswB-EArefbRs6cdzWa_fRjq_NXhfZI';
-    const apiKey = 'AIzaSyDR-mngrtrilvHbvrvrmqmJGWnRODRPDw0';
+    const apiKey = 'AIzaSyDGIswB-EArefbRs6cdzWa_fRjq_NXhfZI';
+    //const apiKey = 'AIzaSyDR-mngrtrilvHbvrvrmqmJGWnRODRPDw0';
     const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${nombre} official trailer&key=${apiKey}`;
     this.http.get<YoutubeResponse>(searchUrl).subscribe((response) => {
       const videoId = response.items[0].id.videoId;

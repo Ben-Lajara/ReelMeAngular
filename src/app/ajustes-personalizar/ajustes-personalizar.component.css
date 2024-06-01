@@ -1,0 +1,21 @@
+.btn-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.btn-green {
+  background-color: green;
+}
+
+.btn-orange {
+  background-color: orange;
+}
+
+.btn-purple {
+  background-color: purple;
+}
+
+.btn-circle:disabled {
+  opacity: 0.5;
+}

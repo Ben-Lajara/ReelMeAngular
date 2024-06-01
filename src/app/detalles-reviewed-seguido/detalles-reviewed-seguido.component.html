@@ -1,0 +1,18 @@
+<ng-container>
+    <table style="margin-right: 10px;">
+        <tr>
+            <td class="text-center">
+                <img id="seguidoResena" [src]="'http://localhost:8080/uploads/' + resena.perfil" alt="" height="40px" width="40px" class="rounded-circle" [routerLink]="['/reviewed', resena.usuario, idPeli]" style="border: 2px solid" [style.borderColor]="resena.color" >
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center">
+                <span class="col-auto" *ngFor="let i of [1, 2, 3, 4, 5]">
+                    <i *ngIf="resena.calificacion % 1 == 0" style="font-size: x-small;" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
+                    <i *ngIf="resena.calificacion % 1 != 0" style="font-size: x-small;" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
+                    <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" style="font-size: x-small;" class="text-warning fw-bold">&#189;</span>
+                </span>
+            </td>
+        </tr>
+    </table>
+</ng-container>

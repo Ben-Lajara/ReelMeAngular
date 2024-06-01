@@ -12,6 +12,7 @@
 
 #resenaUsuario {
   color: rgb(186, 186, 186);
+  text-decoration: none;
 }
 #resenaUsuario:hover {
   color: orange;
@@ -33,4 +34,112 @@ i {
 i.bi-heart-fill,
 i.bi-heart {
   color: rgb(195, 57, 57);
+}
+
+.img-fluid {
+  max-width: 100%;
+}
+
+#contenedorTrailer {
+  position: relative;
+  overflow: hidden;
+  padding-top: 56.25%;
+}
+
+.iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+li {
+  list-style-type: none;
+}
+
+#lineaDivisoria {
+  border-bottom: 1px solid #ffffff;
+  margin-bottom: 10px;
+}
+
+.resenaContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.resenaContainer img {
+  margin-right: 10px;
+}
+
+.resena-usuario-link {
+  margin-right: 5px;
+}
+
+.usuario-link {
+  margin-right: 5px;
+}
+
+.estrellas {
+  margin-right: 8px;
+}
+
+#perfilUsuario {
+  border: 2px solid;
+}
+
+#alertaSpoiler {
+  cursor: pointer;
+}
+
+#contenedorStats {
+  display: flex;
+  align-items: center;
+}
+
+.chartContainer {
+  height: 20vh;
+  width: 13vw;
+}
+
+#puntuacionMedia {
+  margin-left: 20px;
+}
+
+.comentario-container {
+  width: 100%;
+}
+
+.comentario {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  width: 100%;
+}
+
+.alert {
+  display: flex;
+  align-items: center;
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.alert .bi-exclamation-triangle {
+  margin-right: 0.5rem;
+}
+
+#loading {
+  height: 100vh;
+}
+
+.tooltip-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }

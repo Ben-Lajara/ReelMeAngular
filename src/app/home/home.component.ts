@@ -1,17 +1,47 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { AuthService } from '../auth.service';
+import {
+  animate,
+  query,
+  stagger,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms', style({ opacity: 1 })),
+      ]),
+    ]),
+    trigger('listAnimation', [
+      transition('* <=> *', [
+        query(
+          ':enter',
+          [
+            style({ opacity: 0 }),
+            stagger('100ms', [animate('500ms', style({ opacity: 1 }))]),
+          ],
+          { optional: true }
+        ),
+      ]),
+    ]),
+  ],
 })
 export class HomeComponent implements OnInit {
   username = '';
   apiUrl = 'http://localhost:8080/api';
+  isLoading = true;
+  fadeInDone = false;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -30,28 +60,28 @@ export class HomeComponent implements OnInit {
   top4Peliculas: any[] = [];
 
   ngOnInit(): void {
-    this.route.params.subscribe(async (params) => {
+    this.route.params.subscribe((params) => {
       //this.username = params['username'];
-      this.seguidos = await this.getSeguidos(this.username);
-      this.top4Peliculas = await this.getTop4Peliculas();
-      this.updateVisibleSeguidos();
-      console.log(this.seguidos);
+
+      forkJoin({
+        seguidos: this.getSeguidos(this.username),
+        top4Peliculas: this.getTop4Peliculas(),
+      }).subscribe(({ seguidos, top4Peliculas }) => {
+        this.seguidos = seguidos;
+        this.top4Peliculas = top4Peliculas;
+        this.updateVisibleSeguidos();
+        console.log(this.seguidos);
+        this.isLoading = false;
+      });
     });
   }
 
-  async getSeguidos(nombre: string): Promise<any> {
-    const response = await this.http
-      .get(`${this.apiUrl}/usuario/${nombre}/seguidos/reviewed`)
-      .toPromise();
-    //await this.getPeliculas();
-    return response;
+  getSeguidos(nombre: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/usuario/${nombre}/seguidos/reviewed`);
   }
 
-  async getTop4Peliculas(): Promise<any> {
-    const response = await this.http
-      .get(`${this.apiUrl}/reviewed/top4`)
-      .toPromise();
-    return response;
+  getTop4Peliculas(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/reviewed/top4`);
   }
 
   updateVisibleSeguidos() {
@@ -63,5 +93,9 @@ export class HomeComponent implements OnInit {
   toggleShowAll() {
     this.showAll = !this.showAll;
     this.updateVisibleSeguidos();
+  }
+
+  onFadeInDone() {
+    this.fadeInDone = true;
   }
 }

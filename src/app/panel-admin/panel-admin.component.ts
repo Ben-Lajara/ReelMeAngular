@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
@@ -5,6 +6,14 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-panel-admin',
   templateUrl: './panel-admin.component.html',
   styleUrls: ['./panel-admin.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('600ms', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class PanelAdminComponent implements OnInit {
   denuncias: any;
@@ -16,6 +25,7 @@ export class PanelAdminComponent implements OnInit {
   denunciado: string = '';
   idResena: string = '';
   motivo: string = '';
+  isLoading = true;
   apiUrl = 'http://localhost:8080/api';
   constructor(private http: HttpClient) {}
 
@@ -30,6 +40,7 @@ export class PanelAdminComponent implements OnInit {
       });
       this.getDenunciasRechazadas().subscribe((res: any) => {
         this.denunciasRechazadas = res;
+        this.isLoading = false;
       });
     });
   }

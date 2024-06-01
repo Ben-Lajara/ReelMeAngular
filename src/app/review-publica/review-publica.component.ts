@@ -17,6 +17,7 @@ export class ReviewPublicaComponent implements OnInit {
   motivo = '';
   denunciaEnviada = false;
   denunciaExistente: any;
+  mostrarSpoiler = false;
   apiUrl = 'http://localhost:8080/api';
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
