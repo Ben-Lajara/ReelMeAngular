@@ -3,6 +3,13 @@
   height: 50px;
   border-radius: 50%;
 }
+.btn-circle i {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .btn-green {
   background-color: green;
@@ -18,4 +25,13 @@
 
 .btn-circle:disabled {
   opacity: 0.5;
+}
+
+.btn-no-color {
+  background-color: white;
+}
+
+.btn-no-color i {
+  color: red;
+  font-size: 2rem;
 }

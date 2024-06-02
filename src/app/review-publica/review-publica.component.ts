@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs';
+import { CONFIG } from 'config';
 
 @Component({
   selector: 'app-review-publica',
@@ -18,7 +19,7 @@ export class ReviewPublicaComponent implements OnInit {
   denunciaEnviada = false;
   denunciaExistente: any;
   mostrarSpoiler = false;
-  apiUrl = 'http://localhost:8080/api';
+  apiUrl = CONFIG.apiUrl;
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit(): void {

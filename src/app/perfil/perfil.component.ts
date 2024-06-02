@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
+import { CONFIG } from 'config';
 
 @Component({
   selector: 'app-perfil',
@@ -11,7 +12,7 @@ import { AuthService } from '../auth.service';
 })
 export class PerfilComponent implements OnInit {
   username = '';
-  apiUrl = 'http://localhost:8080/api';
+  apiUrl = CONFIG.apiUrl;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,

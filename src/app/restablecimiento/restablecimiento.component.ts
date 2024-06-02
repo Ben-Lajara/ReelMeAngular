@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CONFIG } from 'config';
 
 @Component({
   selector: 'app-restablecimiento',
@@ -14,7 +15,7 @@ export class RestablecimientoComponent implements OnInit {
   pword2 = '';
   usuario: any;
   exito = false;
-  apiUrl = 'http://localhost:8080/api';
+  apiUrl = CONFIG.apiUrl;
 
   ngOnInit(): void {
     this.route.params.subscribe(async (params) => {

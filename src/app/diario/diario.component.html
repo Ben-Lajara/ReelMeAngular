@@ -1,4 +1,4 @@
-<div *ngIf="!isLoading" [@fadeIn] [ngClass]="{'fade-in': true, 'show': !isLoading}" class="container mt-3">
+<div *ngIf="!isLoading; else loading" [@fadeIn] [ngClass]="{'fade-in': true, 'show': !isLoading}" class="container mt-3">
   <table class="table table-dark">
       <ng-container *ngFor="let monthYear of reviews | keys">
         <thead>
@@ -16,3 +16,10 @@
       </ng-container>      
   </table>
 </div>
+<ng-template #loading>
+  <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="spinner-grow" role="status">
+      <!--<span class="sr-only">Loading...</span>-->
+    </div>
+  </div>
+</ng-template>

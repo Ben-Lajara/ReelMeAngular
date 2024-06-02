@@ -10,6 +10,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { CONFIG } from 'config';
 
 @Component({
   selector: 'app-review',
@@ -28,7 +29,7 @@ export class ReviewComponent implements OnInit {
   @Input() username: string = '';
   @Input() peli: any;
   cambiosGuardados = false;
-  private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = CONFIG.apiUrl;
   isLoading = true;
   pelicula$: Observable<any> | undefined;
   existente = false;

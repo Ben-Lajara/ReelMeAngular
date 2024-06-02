@@ -2,32 +2,28 @@
   <div class="row justify-content-center">
     <div class="col-md-6">
       <h5 class="mb-3 text-center">Iniciar sesión</h5>
-      <form #loginForm="ngForm" (ngSubmit)="onSubmit()" novalidate [class.was-validated]="loginForm.submitted && loginForm.invalid">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-group">
         <div class="mb-3">
           <label for="nombre" class="form-label">Usuario o Email</label>
-          <input type="text" name="nombre" [(ngModel)]="nombre" class="form-control" id="nombre" placeholder="Usuario/Email" required>
-          <div *ngIf="loginForm.submitted && loginForm.controls['nombre'].invalid && !nombreError" class="invalid-feedback">
+          <input type="text" formControlName="nombre" class="form-control" id="nombre" placeholder="Usuario/Email" required>
+          <div *ngIf="loginForm.get('nombre')?.touched && loginForm.get('nombre')?.hasError('required')" class="text-danger">
             Por favor, introduce tu usuario o email.
           </div>
-          <div *ngIf="nombreError" class="invalid-feedback">
-            {{ nombreError }}
+          <div *ngIf="loginForm.get('nombre')?.hasError('exists')" class="text-danger">
+            Usuario no encontrado.
           </div>
         </div>
         <div class="mb-3">
           <label for="pword" class="form-label">Contraseña</label>
-          <input type="password" name="pword" [(ngModel)]="pword" class="form-control" id="pword" placeholder="Contraseña" required>
-          <div *ngIf="loginForm.submitted && loginForm.controls['pword'].invalid && !pwordError" class="invalid-feedback">
+          <input type="password" formControlName="pword" class="form-control" id="pword" placeholder="Contraseña" required>
+          <div *ngIf="loginForm.get('pword')?.touched && loginForm.get('pword')?.hasError('required')" class="text-danger">
             Por favor, introduce tu contraseña.
           </div>
-          <div *ngIf="loginForm.submitted && pwordError" class="invalid-feedback">
-            {{ pwordError }}
+          <div *ngIf="loginForm.get('pword')?.hasError('incorrect')" class="text-danger">
+            Contraseña incorrecta.
           </div>
         </div>
         <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
-        <div>
-          <p>¿No tienes cuenta? <a routerLink="/register">Regístrate</a></p>
-          <p><a routerLink="/reset">He olvidado mi contraseña</a></p>
-        </div>
       </form>
     </div>
   </div>

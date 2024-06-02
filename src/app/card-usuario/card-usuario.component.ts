@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { CONFIG } from 'config';
 
 @Component({
   selector: 'app-card-usuario',
@@ -9,7 +10,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CardUsuarioComponent implements OnInit {
   @Input() usuario: any;
   @Input() username: string = '';
-  apiUrl = 'http://localhost:8080/api';
+  apiUrl = CONFIG.apiUrl;
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {}

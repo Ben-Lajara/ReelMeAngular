@@ -1,16 +1,4 @@
-<!-- Placeholder card -->
-<div class="card text-center bg-secondary text-white mb-2 mr-2 rounded" *ngIf="!isLoaded">
-  <div class="embed-responsive">
-    <div class="card-img-top img-fluid placeholder"></div>
-  </div>
-  <div class="card-body">
-    <h4 class="card-text">Loading...</h4>
-    <p class="card-text year">...</p>
-  </div>
-</div>
-
-<!-- Actual card -->
-<div class="card text-center bg-success text-white mb-2 mr-2 rounded" *ngIf="isLoaded">
+<div [@fadeIn] [ngClass]="{'fade-in': true, 'show': !isLoading}" class="card text-center bg-success text-white mb-2 mr-2 rounded" *ngIf="!isLoading; else loading">
   <div class="embed-responsive">
     <a>
       <img src="{{peli.Poster}}" class="card-img-top img-fluid" routerLink="/details/{{peli.imdbID}}">
@@ -24,3 +12,12 @@
     <p class="card-text year">{{peli.Year}}</p>
   </div>
 </div>
+
+<ng-template #loading>
+  <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="spinner-grow" role="status">
+      <!--<span class="sr-only">Loading...</span>-->
+    </div>
+  </div>
+</ng-template>
+

@@ -4,10 +4,8 @@
     </div>
     
     <div class="row row-cols-md-5 justify-content-center">
-      <ng-container *ngFor="let usuario of usuarios">
-        <ng-container *ngIf="usuario.nombre !== username">
+      <div *ngFor="let usuario of usuarios" class="card-container">
           <app-card-usuario [usuario]="usuario" [username]="username"></app-card-usuario>
-        </ng-container>
-      </ng-container>
+      </div>
     </div>
   </div>

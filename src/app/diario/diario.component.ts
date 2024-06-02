@@ -5,6 +5,7 @@ import { ReelMeService } from '../reel-me.service';
 import { Observable } from 'rxjs';
 import { ParamsFiltrosService } from '../params-filtros.service';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { CONFIG } from 'config';
 
 @Component({
   selector: 'app-diario',
@@ -28,7 +29,7 @@ export class DiarioComponent implements OnInit {
   ids: any[] = [];
   peli: any;
   private loading: boolean = true;
-  apiUrl = 'http://localhost:8080/api';
+  apiUrl = CONFIG.apiUrl;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,

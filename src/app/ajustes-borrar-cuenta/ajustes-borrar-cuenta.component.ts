@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { CONFIG } from 'config';
 
 @Component({
   selector: 'app-ajustes-borrar-cuenta',
@@ -14,7 +15,7 @@ export class AjustesBorrarCuentaComponent {
   currentUsername: Observable<string>;
   pwordBorrar = '';
   pwordBorrar2 = '';
-  apiUrl = 'http://localhost:8080/api';
+  apiUrl = CONFIG.apiUrl;
   constructor(private authService: AuthService, private http: HttpClient) {
     this.isLoggedIn = this.authService.isLoggedIn;
     this.currentUsername = this.authService.currentUsername;

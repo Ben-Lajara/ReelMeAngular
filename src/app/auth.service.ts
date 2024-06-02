@@ -9,12 +9,13 @@ import {
   catchError,
   throwError,
 } from 'rxjs';
+import { CONFIG } from 'config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  apiUrl = 'http://localhost:8080/api';
+  apiUrl = CONFIG.apiUrl;
   private loggedIn = new BehaviorSubject<boolean>(false);
   private username = new BehaviorSubject<string>('');
   private roles = new BehaviorSubject<string[]>([]);
@@ -94,6 +95,7 @@ export class AuthService {
           console.log('Logged in');
           localStorage.setItem('isAuthenticated', 'true');
           localStorage.setItem('authToken', data.token);
+          console.log('Token: ', data.token);
           localStorage.setItem('roles', JSON.stringify(rolesArray));
           console.log(JSON.stringify(rolesArray));
           console.log(data.token);

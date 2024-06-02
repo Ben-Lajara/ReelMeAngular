@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { CONFIG } from 'config';
 
 @Component({
   selector: 'app-restablecer',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RestablecerComponent implements OnInit {
   email = '';
-  apiUrl = 'http://localhost:8080/api';
+  apiUrl = CONFIG.apiUrl;
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {}

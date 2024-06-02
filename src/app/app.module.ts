@@ -47,6 +47,7 @@ import { AjustesBarraProgresoComponent } from './ajustes-barra-progreso/ajustes-
 import { AjustesFotoPerfilComponent } from './ajustes-foto-perfil/ajustes-foto-perfil.component';
 import { AjustesCambiarPwordComponent } from './ajustes-cambiar-pword/ajustes-cambiar-pword.component';
 import { AjustesBorrarCuentaComponent } from './ajustes-borrar-cuenta/ajustes-borrar-cuenta.component';
+import { PanelAdminPendienteComponent } from './panel-admin-pendiente/panel-admin-pendiente.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { AjustesBorrarCuentaComponent } from './ajustes-borrar-cuenta/ajustes-bo
     CardPeliBdComponent,
     AjustesCambiarPwordComponent,
     AjustesBorrarCuentaComponent,
+    PanelAdminPendienteComponent,
   ],
   imports: [
     BrowserModule,

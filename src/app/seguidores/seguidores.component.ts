@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { CONFIG } from 'config';
 
 @Component({
   selector: 'app-seguidores',
@@ -13,7 +14,7 @@ export class SeguidoresComponent implements OnInit {
   seguidores: any;
   seguidos: any;
   currentUser = '';
-  apiUrl = 'http://localhost:8080/api';
+  apiUrl = CONFIG.apiUrl;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,

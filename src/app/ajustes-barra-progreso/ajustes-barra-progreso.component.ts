@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { HttpClient } from '@angular/common/http';
+import { CONFIG } from 'config';
 
 @Component({
   selector: 'app-ajustes-barra-progreso',
@@ -13,7 +14,7 @@ export class AjustesBarraProgresoComponent {
   @Input() numResenas: any;
   isLoggedIn: Observable<boolean>;
   currentUsername: Observable<string>;
-  apiUrl = 'http://localhost:8080/api';
+  apiUrl = CONFIG.apiUrl;
   constructor(private authService: AuthService, private http: HttpClient) {
     this.isLoggedIn = this.authService.isLoggedIn;
     this.currentUsername = this.authService.currentUsername;

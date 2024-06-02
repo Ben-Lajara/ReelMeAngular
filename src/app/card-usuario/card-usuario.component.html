@@ -2,7 +2,8 @@
     <img *ngIf="usuario.perfil" [src]="'http://localhost:8080/uploads/' + usuario.perfil" class="card-img-top" alt="Perfil">   
     <div class="card-body">
       <a [routerLink]="['/about', usuario.nombre]"><h4 class="card-text">{{usuario.nombre}}</h4></a>
-      <button type="button" *ngIf="!usuario.seguido" class="btn btn-primary rounded-pill w-100" (click)="seguir(username, usuario.nombre)">Seguir</button>
-      <button type="button" *ngIf="usuario.seguido" class="btn btn-danger rounded-pill w-100" (click)="dejarDeSeguir(username, usuario.nombre)">Siguiendo</button>
+      <button type="button" *ngIf="!usuario.seguido && usuario.nombre != username" class="btn btn-primary rounded-pill w-100" (click)="seguir(username, usuario.nombre)"><span>Seguir</span></button>
+      <button type="button" *ngIf="usuario.nombre == username" class="btn btn-primary rounded-pill disabled w-100"><span>Tu cuenta</span></button>
+      <button type="button" *ngIf="usuario.seguido" class="btn btn-danger rounded-pill w-100" (click)="dejarDeSeguir(username, usuario.nombre)"><span>Siguiendo</span></button>
     </div>
 </div>

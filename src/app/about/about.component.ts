@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, forkJoin } from 'rxjs';
+import { CONFIG } from 'config';
 
 @Component({
   selector: 'app-about',
@@ -40,7 +41,7 @@ export class AboutComponent implements OnInit {
   username = '';
   datos: any;
   isLoading = false;
-  apiUrl = 'http://localhost:8080/api';
+  apiUrl = CONFIG.apiUrl;
   actividadReciente: any;
   resenasUsuario: any;
   diario: any;

@@ -1,18 +1,87 @@
 .card:hover {
-  border: 2px solid white;
+  transform: translateY(-0.5rem);
 }
 
 .card {
-  height: 310px;
-  width: 200px;
+  height: auto; /* Cambio a auto para que la altura se ajuste al contenido */
+  width: 100%;
+  max-width: 12.5rem;
+  transition: transform 0.3s ease;
+}
+
+@media (max-width: 576px) {
+  .card-container {
+    flex: 0 1 calc(33.33% - 1rem); /* Tres tarjetas por fila en dispositivos muy pequeños */
+    max-width: calc(33.33% - 1rem);
+  }
+
+  .card .card-body {
+    margin-bottom: 0.3rem;
+    margin-top: 0.1rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+    padding-bottom: 0.2rem;
+    padding-top: 0.1rem;
+  }
+
+  .tooltip-title,
+  .tooltip-text,
+  .card-text {
+    font-size: 0.8rem; /* Aumento el tamaño de la fuente para que no se reduzca tanto */
+    margin-top: 0.5rem; /* Añado margen superior para dar más distancia con la imagen */
+  }
+
+  .btn {
+    font-size: 0.8rem; /* Reduzco el tamaño de la fuente del botón */
+    padding: 0.25rem 0.5rem; /* Reduzco el padding para disminuir la altura del botón */
+  }
+
+  span {
+    font-size: 0.5rem; /* Aumento el tamaño de la fuente para que no se reduzca tanto */
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .card-container {
+    flex: 0 1 calc(33.33% - 1rem); /* Tres tarjetas por fila en dispositivos pequeños */
+    max-width: calc(33.33% - 1rem);
+  }
+
+  .tooltip-title,
+  .tooltip-text,
+  .card-text,
+  .btn {
+    font-size: 0.9rem; /* Aumento el tamaño de la fuente para que no se reduzca tanto */
+  }
+
+  span {
+    font-size: 0.6rem; /* Aumento el tamaño de la fuente para que no se reduzca tanto */
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .card-container {
+    flex: 0 1 calc(33.33% - 1rem); /* Tres tarjetas por fila en dispositivos medianos */
+    max-width: calc(33.33% - 1rem);
+  }
+
+  .btn {
+    font-size: 0.9rem; /* Aumento el tamaño de la fuente para que no se reduzca tanto */
+  }
+}
+
+@media (min-width: 992px) {
+  .btn {
+    font-size: 1rem; /* Aumento el tamaño de la fuente para que no se reduzca tanto */
+  }
 }
 
 a {
   text-decoration: none;
   color: white;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
 }
 
 .btn {
-  margin-top: 10px;
+  margin-top: 0.625rem;
 }

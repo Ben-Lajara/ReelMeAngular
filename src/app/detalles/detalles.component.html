@@ -1,11 +1,15 @@
 <div *ngIf="!isLoading; else loading" [@fadeIn] class="container mt-3">
-  <div class="row">
-    <div class="col-3 d-none d-md-block">
+  <div class="row" id="contenedor-principal">
+    <div id="backdrop" class="col-12">
+      <div class="blur-edge">
+        <img [src]="'https://image.tmdb.org/t/p/original' + (peliculaTMDB$ | async)?.backdrop_path" class="img-fluid backdrop-image" alt="">
+      </div>
+    </div>
+    <div class="col-3 d-none d-md-block" id="izq">
       <img src="{{(pelicula$ | async)?.Poster}}" class="rounded card-img-top img-fluid">
       <!-- <p class="text-center"><i class="bi bi-eye-fill text-info"></i> {{resenas.length}}  <i class="bi bi-heart-fill text-danger"></i> {{getGustados()}}</p>-->
-      
     </div>
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-6" id="centro">
       <dl>
         <dt><h2 class="text-success">{{(pelicula$ | async)?.Title}} ({{(pelicula$ | async)?.Year}})</h2>
           <h3>{{(pelicula$ | async)?.Director}}</h3>
@@ -15,6 +19,7 @@
         <dd>{{(pelicula$ | async)?.Runtime}}</dd>
       </dl>
       <dl>
+        <h5 class="uppercase">{{(peliculaTMDB$ | async)?.tagline}}</h5>
         <dd>{{(pelicula$ | async)?.Plot}}</dd>
       </dl>
       <dl>
@@ -116,7 +121,7 @@
       </dl>
       
     </div>
-    <div class="col-12 col-md-3">
+    <div class="col-12 col-md-3" id="dcha">
       <dt id="lineaDivisoria">Estadísticas</dt>
       <div id="contenedorStats" class="container" style="display: flex; align-items: center;">
         <div echarts [options]="chartOptions" class="chart-container" style="height:20vh; width:13vw;"></div>
@@ -129,6 +134,15 @@
           <dd *ngIf="(pelicula$ | async)?.Awards.startsWith('Won')"><i class="bi bi-award-fill text-info"></i> {{(pelicula$ | async)?.Awards.substring(0, (pelicula$ | async)?.Awards.indexOf('Oscars') + 'Oscars'.length)}}</dd>
           <dd><i class="bi bi-coin text-info"></i> {{(pelicula$ | async)?.BoxOffice}} recaudados</dd>
         </dl>
+      </div>
+      <div *ngIf="servicios" class="card text-bg-success">
+        <div class="card-header">Disponible en</div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" *ngFor="let servicio of servicios.flatrate">
+            <img class="rounded" [src]="'https://image.tmdb.org/t/p/w45' + servicio.logo_path" alt="{{servicio.provider_name}}">
+             {{servicio.provider_name}}
+          </li>
+        </ul>
       </div>
     </div>
     

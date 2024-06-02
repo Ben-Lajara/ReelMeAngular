@@ -2,6 +2,7 @@
   flex: 0 1 100%; /* Full width by default for small devices */
   max-width: 100%;
   margin: 0.5rem;
+  position: aboslute;
 }
 
 .card {
@@ -11,15 +12,16 @@
   margin-right: 0;
   border: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
+  transition: transform 0.2s ease;
   flex: 0 0 auto;
 }
 .card:hover {
-  box-shadow: 0 0 5px white;
+  transform: translateY(-5px);
 }
 
 .card-title {
   font-size: 1.25rem;
+  position: absolute;
 }
 
 .embed-responsive .card-img-top {

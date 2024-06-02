@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { CONFIG } from 'config';
 
 @Component({
   selector: 'app-ajustes',
@@ -28,7 +29,7 @@ export class AjustesComponent implements OnInit {
   exito = '';
   numResenas = 0;
   isLoading = true;
-  apiUrl = 'http://localhost:8080/api';
+  apiUrl = CONFIG.apiUrl;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,

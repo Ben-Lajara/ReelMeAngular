@@ -1,6 +1,21 @@
 <div class="d-flex justify-content-around">
-    <button type="button" class="btn btn-circle btn-no-color" (click)="setColor('')"><i class="bi bi-slash-circle h3 text-white"></i></button>
-      <button type="button" class="btn btn-circle btn-green" [disabled]="usuario.rango == null" (click)="setColor('green')"></button>
-      <button type="button" class="btn btn-circle btn-orange" [disabled]="usuario.rango == 'BRONCE' || usuario.rango == null" (click)="setColor('orange')"></button>
-      <button type="button" class="btn btn-circle btn-purple" [disabled]="usuario.rango != 'ORO' || usuario.rango == null" (click)="setColor('purple')"></button>
-  </div>
+  <button type="button" class="btn btn-circle btn-no-color">
+    <i class="bi bi-slash-lg text-danger"></i>
+  </button>
+  <button type="button" class="btn btn-circle btn-green" 
+          [disabled]="usuario.rango == null" 
+          (click)="setColor('green')" 
+          [attr.data-bs-toggle]="usuario.rango == null ? 'tooltip' : null" 
+          title="Sube de rango para desbloquear"></button>
+  <button type="button" class="btn btn-circle btn-orange" 
+          [disabled]="usuario.rango == 'BRONCE' || usuario.rango == null" 
+          (click)="setColor('orange')" 
+          [attr.data-bs-toggle]="usuario.rango == 'BRONCE' || usuario.rango == null ? 'tooltip' : null" 
+          title="Sube de rango para desbloquear"></button>
+  <button type="button" class="btn btn-circle btn-purple" 
+          [disabled]="usuario.rango != 'ORO' || usuario.rango == null" 
+          (click)="setColor('purple')" 
+          [attr.data-bs-toggle]="usuario.rango != 'ORO' || usuario.rango == null ? 'tooltip' : null" 
+          title="Sube de rango para desbloquear"></button>
+</div>
+

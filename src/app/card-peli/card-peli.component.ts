@@ -1,16 +1,26 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-card-peli',
   templateUrl: './card-peli.component.html',
   styleUrls: ['./card-peli.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('600ms', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class CardPeliComponent implements OnInit {
   @Input() mostrar: boolean = true;
   @Input() peli: any;
-  isLoaded = false;
+  isLoading = true;
+  placeholder = false;
 
   isLoggedIn: Observable<boolean>;
   currentUsername: Observable<string>;
@@ -21,7 +31,7 @@ export class CardPeliComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isLoaded = false;
+    this.isLoading = true;
     this.resizeImage();
   }
 
@@ -44,10 +54,12 @@ export class CardPeliComponent implements OnInit {
       } else {
         console.error('No se pudo obtener el contexto del canvas');
       }
-      this.isLoaded = true;
+      this.isLoading = false;
     };
     img.onerror = (error) => {
       console.error('Error al cargar la imagen', error);
+      img.src = '../../assets/images/No-Image-Placeholder.svg';
+      this.isLoading = false;
     };
     img.src = this.peli.Poster;
   }

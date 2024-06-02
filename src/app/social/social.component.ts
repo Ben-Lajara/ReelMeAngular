@@ -10,6 +10,7 @@ import {
 } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { FormControl } from '@angular/forms';
+import { CONFIG } from 'config';
 
 @Component({
   selector: 'app-social',
@@ -21,7 +22,7 @@ export class SocialComponent implements OnInit {
   username = '';
   seguidos: any[] = [];
   nombreControl = new FormControl('');
-  apiUrl = 'http://localhost:8080/api';
+  apiUrl = CONFIG.apiUrl;
 
   constructor(
     private http: HttpClient,

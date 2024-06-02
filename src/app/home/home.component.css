@@ -11,13 +11,29 @@ a:hover {
   color: rgb(189, 189, 189);
 }*/
 
+body {
+  font-family: "Roboto", sans-serif;
+}
+
 a {
   text-decoration: none;
-  color: white;
+  color: #f5a623;
 }
 
 a:hover {
-  color: rgb(189, 189, 189);
+  color: #ffcc00;
+}
+
+.welcome-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.welcome-text {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 .mb-3 {
@@ -25,6 +41,91 @@ a:hover {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #ffffff;
+  padding-bottom: 0.5rem;
+}
+
+.carousel-caption {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  background-color: rgba(77, 77, 77, 0.6);
+  text-align: center;
+  width: 50%;
+  padding: 1rem;
+}
+
+.carousel-caption h4,
+.carousel-caption h5 {
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+  font-weight: bold !important;
+}
+
+/*.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  padding: 10px;
+}*/
+
+.carousel-indicators button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #fff !important;
+}
+
+.carousel-indicators .active {
+  background-color: #007bff;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(100%);
+}
+.testimonials {
+  flex: 0 1 100%; /* Full width by default for small devices */
+  max-width: 100%;
+  margin: none;
+}
+
+.testimonial {
+  box-sizing: border-box;
+  background-color: #343a40; /* Color de fondo de las tarjetas para el tema oscuro */
+  border-radius: 10px;
+  padding: 1rem;
+  margin: none;
+  width: calc(48% - 1rem); /* Las tarjetas ocupan la mitad del contenedor */
+  max-width: 300px; /* Máximo ancho de las tarjetas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  text-align: center;
+  flex: 1 1 calc(48% - 1rem); /* Ocupan la mitad del espacio */
+}
+
+.testimonial:hover {
+  transform: scale(1.05);
+}
+
+.testimonial-img {
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+}
+
+.testimonial h5 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #ffcc00;
+}
+
+.testimonial p {
+  font-size: 0.9rem;
+  color: #adb5bd;
+}
+
+.testimonial-text {
+  font-style: italic;
+  color: #ced4da;
+  margin-top: 0.5rem;
 }
 
 #mostrar {

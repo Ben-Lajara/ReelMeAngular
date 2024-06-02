@@ -14,6 +14,7 @@ import { Chart } from 'chart.js';
 import 'chart.js/auto';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { CONFIG } from 'config';
 
 @Component({
   selector: 'app-detalles',
@@ -40,8 +41,9 @@ export class DetallesComponent implements OnInit {
   gustado = false;
   vista = false;
   puntuacionMedia = '';
-  apiUrl = 'http://localhost:8080/api';
+  apiUrl = CONFIG.apiUrl;
   imageUrl = '';
+
   frecuenciasDiccionario = {
     0.5: 0,
     1: 0,
@@ -71,7 +73,10 @@ export class DetallesComponent implements OnInit {
   trailerUrl: SafeResourceUrl = '';
   peli: any;
   pelicula$: Observable<any> | undefined;
+  peliTMDB: any;
+  peliculaTMDB$: Observable<any> | undefined;
   isLoading = true;
+  servicios: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -90,6 +95,8 @@ export class DetallesComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.loadPelicula();
+      this.loadPeliculaTMDB();
+      this.loadServiciosTMDB();
       this.loadActividad();
       this.loadReviews();
       this.loadResenasSeguidos();
@@ -101,13 +108,28 @@ export class DetallesComponent implements OnInit {
   loadPelicula(): void {
     this.reelme.busquedaId(this.id).subscribe(() => {
       this.peli = this.reelme.pelicula();
-      this.getTrailer(
+      /*this.getTrailer(
         `${this.reelme.pelicula().Title} ${this.reelme.pelicula().Year}`
-      );
+      );*/
       this.pelicula$ = this.reelme.busquedaId(this.id);
       this.pelicula$?.pipe(first()).subscribe(() => {
         this.isLoading = false;
       });
+    });
+  }
+
+  loadPeliculaTMDB(): void {
+    this.reelme.busquedaIdTMDB(this.id).subscribe(() => {
+      this.peliTMDB = this.reelme.peliculaTMDB();
+      this.peliculaTMDB$ = this.reelme.busquedaIdTMDB(this.id);
+    });
+  }
+
+  loadServiciosTMDB(): void {
+    this.reelme.serviciosTMDB(this.id).subscribe((data) => {
+      if (data.results && data.results.ES) {
+        this.servicios = data.results.ES;
+      }
     });
   }
 

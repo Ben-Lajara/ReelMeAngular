@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { CONFIG } from 'config';
 
 @Component({
   selector: 'app-panel-admin',
@@ -26,7 +27,7 @@ export class PanelAdminComponent implements OnInit {
   idResena: string = '';
   motivo: string = '';
   isLoading = true;
-  apiUrl = 'http://localhost:8080/api';
+  apiUrl = CONFIG.apiUrl;
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {

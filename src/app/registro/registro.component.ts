@@ -9,6 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Observable, catchError, map, of } from 'rxjs';
+import { CONFIG } from 'config';
 
 @Component({
   selector: 'app-registro',
@@ -18,7 +19,7 @@ import { Observable, catchError, map, of } from 'rxjs';
 export class RegistroComponent {
   registroForm!: UntypedFormGroup;
   existe = false;
-  apiUrl = 'http://localhost:8080/api';
+  apiUrl = CONFIG.apiUrl;
 
   constructor(
     private fb: UntypedFormBuilder,

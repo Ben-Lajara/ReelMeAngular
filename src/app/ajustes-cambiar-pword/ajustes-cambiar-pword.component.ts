@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { HttpClient } from '@angular/common/http';
+import { CONFIG } from 'config';
 
 @Component({
   selector: 'app-ajustes-cambiar-pword',
@@ -14,7 +15,7 @@ export class AjustesCambiarPwordComponent {
   exito = '';
   pword = '';
   pword2 = '';
-  apiUrl = 'http://localhost:8080/api';
+  apiUrl = CONFIG.apiUrl;
   isLoggedIn: Observable<boolean>;
   currentUsername: Observable<string>;
 
