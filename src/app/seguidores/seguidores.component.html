@@ -1,5 +1,5 @@
 <div class="container mt-3">
-    <h4>Seguidores de {{username}}</h4>
+    <h4>{{'seguidores' | translate}} {{username}}</h4>
     <div class="row row-cols-md-5">
         <ng-container *ngFor="let seguidor of seguidores">
             <ng-container *ngIf="seguidor.nombreUsuario.nombre !== username">

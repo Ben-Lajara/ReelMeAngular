@@ -2,6 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CONFIG } from 'config';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-panel-admin',
@@ -31,18 +32,17 @@ export class PanelAdminComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.getDenuncias().subscribe((res: any) => {
-      this.denuncias = res;
-      this.getDenunciasPendientes().subscribe((res: any) => {
-        this.denunciasPendientes = res;
-      });
-      this.getDenunciasAceptadas().subscribe((res: any) => {
-        this.denunciasAceptadas = res;
-      });
-      this.getDenunciasRechazadas().subscribe((res: any) => {
-        this.denunciasRechazadas = res;
-        this.isLoading = false;
-      });
+    forkJoin({
+      denuncias: this.getDenuncias(),
+      denunciasPendientes: this.getDenunciasPendientes(),
+      denunciasAceptadas: this.getDenunciasAceptadas(),
+      denunciasRechazadas: this.getDenunciasRechazadas(),
+    }).subscribe((res: any) => {
+      this.denuncias = res.denuncias;
+      this.denunciasPendientes = res.denunciasPendientes;
+      this.denunciasAceptadas = res.denunciasAceptadas;
+      this.denunciasRechazadas = res.denunciasRechazadas;
+      this.isLoading = false;
     });
   }
 
@@ -85,6 +85,7 @@ export class PanelAdminComponent implements OnInit {
       )
       .subscribe((res: any) => {
         console.log(res);
+        this.actualizarDenuncias();
       });
 
     this.aceptarDenuncia(
@@ -118,6 +119,7 @@ export class PanelAdminComponent implements OnInit {
       )
       .subscribe((res: any) => {
         console.log(res);
+        this.actualizarDenuncias();
       });
   }
 
@@ -136,6 +138,23 @@ export class PanelAdminComponent implements OnInit {
       )
       .subscribe((res: any) => {
         console.log(res);
+        this.actualizarDenuncias();
       });
+  }
+
+  actualizarDenuncias() {
+    this.isLoading = true;
+    forkJoin({
+      denuncias: this.getDenuncias(),
+      denunciasPendientes: this.getDenunciasPendientes(),
+      denunciasAceptadas: this.getDenunciasAceptadas(),
+      denunciasRechazadas: this.getDenunciasRechazadas(),
+    }).subscribe((res: any) => {
+      this.denuncias = res.denuncias;
+      this.denunciasPendientes = res.denunciasPendientes;
+      this.denunciasAceptadas = res.denunciasAceptadas;
+      this.denunciasRechazadas = res.denunciasRechazadas;
+      this.isLoading = false;
+    });
   }
 }

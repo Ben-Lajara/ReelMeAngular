@@ -1,29 +1,32 @@
 <div class="container d-flex justify-content-center align-items-center">
-    <img [src]="'http://localhost:8080/uploads/' + usuario.perfil" alt="" class="rounded-circle" data-bs-toggle="modal" data-bs-target="#perfilModal" style="border: 6px solid" [style.borderColor]="usuario.color">        
+  <img [src]="'http://localhost:8080/uploads/' + perfil + '?_=' + timestamp" alt="" class="rounded-circle profile-img" data-bs-toggle="modal" data-bs-target="#perfilModal" [style.borderColor]="usuario.color">        
 </div>
 
 <div class="modal fade" id="perfilModal" tabindex="-1" aria-labelledby="perfilModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content bg-dark text-light rounded shadow">
-        <div class="modal-header">
-            <h5 class="modal-title" id="perfilModalLabel">Actualizar foto de perfil</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <div class="profile-img-container">
-                <img src="#" id="previewFotoPerfil" alt="Preview" class="img-fluid mt-3 d-none rounded-circle">
-              </div>
-              <label for="inputFotoPerfil" class="form-label visually-hidden">Selecciona una nueva foto de perfil:</label>
-              <input type="file" class="form-control profile-input" id="inputFotoPerfil" accept="image/*" (change)="previewProfileImage($event)">
-            </div>
-          </form> 
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" (click)="onUpload()">Guardar cambios</button>
-        </div>
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-dark text-light rounded shadow-lg p-3">
+          <div class="modal-header border-0">
+              <h5 class="modal-title" id="perfilModalLabel">{{'ajustesFotoPerfilActualizar' | translate}}</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form>
+                  <div class="mb-3">
+                      <div class="profile-img-container text-center">
+                          <img [src]="'http://localhost:8080/uploads/' + perfil+ '?_=' + timestamp" alt="Current Profile" id="currentProfileImg" class="img-fluid rounded-circle mb-3">
+                          <div class="cropper-container">
+                              <img src="#" id="previewFotoPerfil" alt="Preview" class="img-fluid d-none rounded">
+                          </div>
+                      </div>
+                      <label for="inputFotoPerfil" class="form-label visually-hidden">{{'ajustesFotoPerfilSeleccionar' | translate}}</label>
+                      <input type="file" class="form-control profile-input" id="inputFotoPerfil" accept="image/*" (change)="previewProfileImage($event)">
+                  </div>
+              </form> 
+          </div>
+          <div class="modal-footer border-0">
+              <button type="button" class="btn btn-secondary btn-modern" data-bs-dismiss="modal">{{'ajustesFotoPerfilCancelar' | translate}}</button>
+              <button type="button" class="btn btn-primary btn-modern" (click)="onUpload()">{{'ajustesFotoPerfilGuardar' | translate}}</button>
+          </div>
       </div>
-    </div>
   </div>
+</div>

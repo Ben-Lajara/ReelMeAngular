@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { HttpClient } from '@angular/common/http';
 import { CONFIG } from 'config';
+import { ActualizarImgService } from '../actualizar-img.service';
+import Cropper from 'cropperjs';
 
 @Component({
   selector: 'app-ajustes-foto-perfil',
@@ -12,11 +14,19 @@ import { CONFIG } from 'config';
 export class AjustesFotoPerfilComponent {
   @Input() usuario: any;
   @Input() username: any;
+  @Input() perfil: any;
   fotoSeleccionada: File | null = null;
   isLoggedIn: Observable<boolean>;
   currentUsername: Observable<string>;
+  cropper: any;
   apiUrl = CONFIG.apiUrl;
-  constructor(private authService: AuthService, private http: HttpClient) {
+
+  timestamp = new Date().getTime();
+  constructor(
+    private authService: AuthService,
+    private http: HttpClient,
+    private actualizarImgService: ActualizarImgService
+  ) {
     this.isLoggedIn = this.authService.isLoggedIn;
     this.currentUsername = this.authService.currentUsername;
   }
@@ -27,7 +37,13 @@ export class AjustesFotoPerfilComponent {
       fd.append('file', this.fotoSeleccionada, this.fotoSeleccionada.name);
       fd.append('nombre', this.username);
       this.http.post(`${this.apiUrl}/usuario/upload`, fd).subscribe(
-        (success) => console.log('Upload Success'),
+        (success) => {
+          console.log('Upload Success');
+          this.perfil = this.fotoSeleccionada?.name;
+          this.timestamp = new Date().getTime();
+          this.actualizarImgService.imgActualizada();
+          console.log(this.actualizarImgService.imgActualizada());
+        },
         (error) => console.log('Upload Error', error.error)
       );
     }
@@ -48,6 +64,7 @@ export class AjustesFotoPerfilComponent {
         }
       };
       reader.readAsDataURL(input.files[0]);
+      this.fotoSeleccionada = input.files[0]; // Guarda la imagen seleccionada
     } else {
       preview.src = '#';
       preview.classList.add('d-none');

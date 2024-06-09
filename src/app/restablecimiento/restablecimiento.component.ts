@@ -1,6 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CONFIG } from 'config';
 
 @Component({
@@ -9,13 +14,19 @@ import { CONFIG } from 'config';
   styleUrls: ['./restablecimiento.component.css'],
 })
 export class RestablecimientoComponent implements OnInit {
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
   token = '';
   pword1 = '';
   pword2 = '';
   usuario: any;
   exito = false;
   apiUrl = CONFIG.apiUrl;
+  restablecimientoForm!: UntypedFormGroup;
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private http: HttpClient,
+    private fb: UntypedFormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(async (params) => {
@@ -24,9 +35,27 @@ export class RestablecimientoComponent implements OnInit {
         this.usuario = res;
       });
     });
+    this.restablecimientoForm = this.fb.group(
+      {
+        pword1: ['', [Validators.required]],
+        pword2: ['', [Validators.required]],
+      },
+      { validator: this.checkPasswords }
+    );
+  }
+
+  checkPasswords(group: UntypedFormGroup) {
+    const pass = group.get('pword1')?.value;
+    const confirmPass = group.get('pword2')?.value;
+    return pass === confirmPass ? null : { notSame: true };
   }
 
   onSubmit(): void {
+    if (this.restablecimientoForm.invalid) {
+      console.log('Formulario inválido');
+      return;
+    }
+
     this.restablecerPword();
   }
 
@@ -37,21 +66,17 @@ export class RestablecimientoComponent implements OnInit {
   }
 
   restablecerPword() {
-    if (this.pword1 !== this.pword2) {
-      console.log('Contraseña incorrecta');
-    } else {
-      this.usuario.pword = this.pword2;
-      this.http
-        .put(`${this.apiUrl}/usuario/cambiarPword`, this.usuario)
-        .subscribe(
-          (success) => {
-            console.log('Password Updated');
-            this.pword1 = '';
-            this.pword2 = '';
-            this.exito = true;
-          },
-          (error) => console.log('Password Update Error', error.error)
-        );
-    }
+    const pword = this.restablecimientoForm.get('pword2')?.value;
+    this.usuario.pword = pword;
+    this.http
+      .put(`${this.apiUrl}/usuario/cambiarPword`, this.usuario)
+      .subscribe(
+        (success) => {
+          console.log('Password Updated');
+          this.exito = true;
+          this.router.navigate(['/login']);
+        },
+        (error) => console.log('Password Update Error', error.error)
+      );
   }
 }

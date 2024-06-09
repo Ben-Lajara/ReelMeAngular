@@ -10,3 +10,23 @@
 .fade-in.show {
   opacity: 1;
 }
+
+.toggle-sort-button {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.toggle-sort-button i {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.toggle-sort-button:hover {
+  background-color: #e2e6ea;
+  color: #495057;
+}
+
+th {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -1,5 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import {
+  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { CONFIG } from 'config';
 
 @Component({
@@ -8,20 +14,31 @@ import { CONFIG } from 'config';
   styleUrls: ['./restablecer.component.css'],
 })
 export class RestablecerComponent implements OnInit {
-  email = '';
+  restablecerForm!: UntypedFormGroup;
   apiUrl = CONFIG.apiUrl;
-  constructor(private http: HttpClient) {}
+  mensajeEnviado = false;
+  tiempoRestante = 3600;
+  private intervalId: any;
+  constructor(private http: HttpClient, private fb: UntypedFormBuilder) {
+    this.restablecerForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+    });
+  }
 
   ngOnInit(): void {}
 
   onSubmit(): void {
-    console.log('Enviando solicitud de restablecimiento de contraseña');
-    this.enviarSolicitud().subscribe(
-      (data) => {
-        console.log('Solicitud enviada', data);
-      },
-      (error) => console.log('Error al enviar la solicitud', error.error)
-    );
+    if (this.restablecerForm.valid) {
+      console.log('Enviando solicitud de restablecimiento de contraseña');
+      this.enviarSolicitud().subscribe(
+        (data) => {
+          console.log('Solicitud enviada', data);
+          this.mensajeEnviado = true;
+          this.iniciarContador();
+        },
+        (error) => console.log('Error al enviar la solicitud', error.error)
+      );
+    }
   }
 
   enviarSolicitud() {
@@ -29,8 +46,34 @@ export class RestablecerComponent implements OnInit {
       `${this.apiUrl}/usuario/restablecerPword`,
       {},
       {
-        params: { email: this.email },
+        params: { email: this.restablecerForm.get('email')?.value },
       }
     );
+  }
+
+  iniciarContador() {
+    this.intervalId = setInterval(() => {
+      this.tiempoRestante--;
+      if (this.tiempoRestante === 0) {
+        clearInterval(this.intervalId);
+        this.mensajeEnviado = false; // Opcional: Ocultar el mensaje cuando el contador llegue a 0
+      }
+    }, 1000);
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+
+  // Opcional: Formatear el tiempo restante en un formato más legible
+  get tiempoFormateado(): string {
+    const horas = Math.floor(this.tiempoRestante / 3600);
+    const minutos = Math.floor((this.tiempoRestante % 3600) / 60);
+    const segundos = Math.floor(this.tiempoRestante % 60);
+    return `${horas}:${minutos < 10 ? '0' : ''}${minutos}:${
+      segundos < 10 ? '0' : ''
+    }${segundos}`;
   }
 }

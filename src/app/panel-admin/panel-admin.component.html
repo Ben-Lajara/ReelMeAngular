@@ -3,13 +3,13 @@
   <div class="container mt-3 ">
     <ul class="nav nav-underline mb-3">
       <li class="nav-item">
-        <a class="nav-link active" data-bs-toggle="tab" href="#pendientes">Pendientes</a>
+        <a class="nav-link active" data-bs-toggle="tab" href="#pendientes">{{ 'panelAdminTabsPendientes' | translate }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#aceptadas">Aceptadas</a>
+        <a class="nav-link" data-bs-toggle="tab" href="#aceptadas">{{ 'panelAdminTabsAceptadas' | translate }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#rechazadas">Rechazadas</a>
+        <a class="nav-link" data-bs-toggle="tab" href="#rechazadas">{{ 'panelAdminTabsRechazadas' | translate }}</a>
       </li>
     </ul>
   
@@ -19,11 +19,11 @@
           <table class="table table-hover table-dark table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Denunciante</th>
-                    <th scope="col">Denunciado</th>
-                    <th scope="col">Reseña</th>
-                    <th scope="col">Motivo</th>
-                    <th scope="col">Acciones</th>
+                    <th scope="col">{{ 'panelAdminDenunciante' | translate }}</th>
+                    <th scope="col">{{ 'panelAdminDenunciado' | translate }}</th>
+                    <th scope="col">{{ 'panelAdminResena' | translate }}</th>
+                    <th scope="col">{{ 'panelAdminMotivo' | translate }}</th>
+                    <th scope="col">{{ 'panelAdminAcciones' | translate }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,7 +32,7 @@
                     <td><a [routerLink]="['/about', denuncia.denunciado]">{{denuncia.denunciado}}</a></td>
                     <td id="textoDenuncia">{{denuncia.comentarioResena}}</td>
                     <td id="textoDenuncia"><a data-bs-toggle="modal" data-bs-target="#motivoModal" (click)="motivo = denuncia.motivo">{{denuncia.motivo}}</a></td>
-                    <td><button type="button" class="btn btn-warning" (click)="rechazarDenuncia(denuncia.denunciante, denuncia.denunciado, denuncia.idResena)">Rechazar</button> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#banModal" (click)="denunciado=denuncia.denunciado; denunciante=denuncia.denunciante; idResena = denuncia.idResena">Aceptar</button></td>
+                    <td><button type="button" class="btn btn-warning" (click)="rechazarDenuncia(denuncia.denunciante, denuncia.denunciado, denuncia.idResena)">{{ 'panelAdminBotonRechazar' | translate }}</button> <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#banModal" (click)="denunciado=denuncia.denunciado; denunciante=denuncia.denunciante; idResena = denuncia.idResena">{{ 'panelAdminBotonAceptar' | translate }}</button></td>
                 </tr>
             </tbody>
           </table>
@@ -40,17 +40,17 @@
       </div>
       <div class="tab-pane fade" id="aceptadas">
         <div class="table-responsive">
-          <table class="table table-dark table-striped">
+          <table class="table table-hover table-dark table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Denunciante</th>
-                    <th scope="col">Denunciado</th>
-                    <th scope="col">Reseña</th>
-                    <th scope="col">Motivo</th>
+                    <th scope="col">{{ 'panelAdminDenunciante' | translate }}</th>
+                    <th scope="col">{{ 'panelAdminDenunciado' | translate }}</th>
+                    <th scope="col">{{ 'panelAdminResena' | translate }}</th>
+                    <th scope="col">{{ 'panelAdminMotivo' | translate }}</th>
                 </tr>
             </thead>
-            <tbody *ngFor="let denuncia of denunciasAceptadas">
-                <tr>
+            <tbody>
+                <tr *ngFor="let denuncia of denunciasAceptadas">
                     <td>{{denuncia.denunciante}}</td>
                     <td><a [routerLink]="['/about', denuncia.denunciado]">{{denuncia.denunciado}}</a></td>
                     <td>{{denuncia.comentarioResena}}</td>
@@ -62,17 +62,17 @@
       </div>
       <div class="tab-pane fade" id="rechazadas">
         <div class="table-responsive">
-          <table class="table table-dark table-striped">
+          <table class="table table-hover table-dark table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Denunciante</th>
-                    <th scope="col">Denunciado</th>
-                    <th scope="col">Reseña</th>
-                    <th scope="col">Motivo</th>
+                    <th scope="col">{{ 'panelAdminDenunciante' | translate }}</th>
+                    <th scope="col">{{ 'panelAdminDenunciado' | translate }}</th>
+                    <th scope="col">{{ 'panelAdminResena' | translate }}</th>
+                    <th scope="col">{{ 'panelAdminMotivo' | translate }}</th>
                 </tr>
             </thead>
-            <tbody *ngFor="let denuncia of denunciasRechazadas">
-                <tr>
+            <tbody>
+                <tr *ngFor="let denuncia of denunciasRechazadas">
                     <td>{{denuncia.denunciante}}</td>
                     <td><a [routerLink]="['/about', denuncia.denunciado]">{{denuncia.denunciado}}</a></td>
                     <td>{{denuncia.comentarioResena}}</td>
@@ -89,7 +89,7 @@
       <div class="modal-dialog">
         <div class="modal-content bg-dark text-white">
           <div class="modal-header">
-            <h5 class="modal-title" id="motivoModalLabel">Motivo de la denuncia</h5>
+            <h5 class="modal-title" id="motivoModalLabel">{{ 'panelAdminMotivo' | translate }}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BuscadorComponent } from './buscador/buscador.component';
@@ -48,6 +48,22 @@ import { AjustesFotoPerfilComponent } from './ajustes-foto-perfil/ajustes-foto-p
 import { AjustesCambiarPwordComponent } from './ajustes-cambiar-pword/ajustes-cambiar-pword.component';
 import { AjustesBorrarCuentaComponent } from './ajustes-borrar-cuenta/ajustes-borrar-cuenta.component';
 import { PanelAdminPendienteComponent } from './panel-admin-pendiente/panel-admin-pendiente.component';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { AngularCropperjsModule } from 'angular-cropperjs';
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+import localeEn from '@angular/common/locales/en';
+import { TraduccionService } from './traduccion.service';
+import { QuillModule } from 'ngx-quill';
+
+registerLocaleData(localeEs);
+registerLocaleData(localeEn);
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -95,16 +111,31 @@ import { PanelAdminPendienteComponent } from './panel-admin-pendiente/panel-admi
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
     FormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),
+    AngularCropperjsModule,
+    QuillModule.forRoot(),
   ],
   providers: [
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {
+      provide: LOCALE_ID,
+      deps: [TraduccionService], // depend on TraduccionService
+      useFactory: (traduccionService: TraduccionService) =>
+        traduccionService.getDefaultLanguage(),
+    },
   ],
   bootstrap: [AppComponent],
 })

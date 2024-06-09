@@ -1,5 +1,17 @@
-<div class="progress" style="width: 50%;">
-    <div class="progress-bar" role="progressbar" [style.width]="getProgreso() + '%'" aria-valuenow="getProgreso()" aria-valuemin="0" aria-valuemax="100">
-      {{  numResenas - getRangoActual() }}/{{ getTotalToNextRank() }}
+<div class="progress-container">
+  <div class="progress bg-dark">
+    <div class="progress-bar" role="progressbar" 
+         [style.width.%]="getProgreso()" 
+         [attr.aria-valuenow]="getProgreso()" 
+         aria-valuemin="0" aria-valuemax="100">
     </div>
   </div>
+  <div class="progress-info">
+    <span class="current-progress">{{ numResenas - getRangoActual() }}</span>
+    /
+    <span class="total-progress">{{ getTotalToNextRank() }}</span>
+  </div>
+  <div *ngIf="numResenas==0">
+    Aún no tienes reseñas. ¡Anímate a escribir una!
+  </div>
+</div>

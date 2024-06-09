@@ -1,20 +1,28 @@
-<div class="container">
-    <form (ngSubmit)="onSubmit()" class="form-group">
-        <div class="mb-3">
-            <label for="pword1">Tu nueva contraseña</label>
-            <input type="password" name="pword1" [(ngModel)]="pword1" class="form-control" id="pword1" placeholder="Contraseña nueva" required [disabled]="exito">
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h5 class="mb-3 text-center">{{ 'restablecimientoTitulo' | translate }}</h5>
+            <form [formGroup]="restablecimientoForm" (ngSubmit)="onSubmit()" class="form-group">
+                <div class="mb-3">
+                    <label for="pword1">{{ 'restablecimientoPword1' | translate }}</label>
+                    <input type="password" formControlName="pword1" class="form-control" id="pword1" placeholder="{{ 'restablecimientoPword1Placeholder' | translate }}" required [disabled]="exito">
+                    <div *ngIf="restablecimientoForm.get('pword1')?.touched && restablecimientoForm.get('pword1')?.hasError('required')" class="text-danger">{{ 'restablecimientoPword1Required' | translate }}</div>
+                </div>
+                <div class="mb-3">
+                    <label for="pword2">{{ 'restablecimientoPword2' | translate }}</label>
+                    <input type="password" formControlName="pword2" class="form-control" id="pword2" placeholder="{{ 'restablecimientoPword2Placeholder' | translate }}" required [disabled]="exito">
+                    <div *ngIf="restablecimientoForm.get('pword2')?.touched && restablecimientoForm.get('pword2')?.hasError('required')" class="text-danger">{{ 'restablecimientoPword2Required' | translate }}</div>
+                    <div *ngIf="restablecimientoForm.hasError('notSame') && (restablecimientoForm.get('pword2')?.touched || restablecimientoForm.get('pword1')?.touched)" class="text-danger">{{ 'restablecimientoPwordNoCoinciden' | translate }}</div>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary w-100" [disabled]="restablecimientoForm.invalid">{{ 'restablecimientoBoton' | translate }}</button>
+                </div>
+                <div class="mb-3">
+                    <div *ngIf="exito" class="alert alert-success" role="alert">
+                        <p>{{ 'restablecimientoExito' | translate }}</p>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="mb-3">
-            <label for="pword2">Repite tu nueva contraseña</label>
-            <input type="password" name="pword2" [(ngModel)]="pword2" class="form-control" id="pword2" placeholder="Repite tu contraseña" required [disabled]="exito">
-        </div>
-        <div class="mb-3">
-            <button type="submit" class="btn btn-primary w-100">Restablecer contraseña</button>
-        </div>
-        <div class="mb-3">
-            <div *ngIf="exito" class="alert alert-success" role="alert">
-                <p>Tu contraseña se ha restablecido correctamente</p>
-            </div>
-        </div>
-    </form>
+    </div>
 </div>

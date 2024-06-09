@@ -1,8 +1,7 @@
   <div *ngIf="username == ''" [@fadeIn] class="container mt-3">
-    <h3 class="welcome-title">TE DAMOS LA BIENVENIDA A REELME</h3>
+    <h3 class="welcome-title">{{'homeTitulo' | translate}}</h3>
     <p class="welcome-text">
-        En ReelMe podrás llevar un seguimiento de las películas que ves y reseñarlas.
-        Sigue a tus amigos para descubrir nuevos horizontes.
+        {{'homeBienvenida' | translate}}
     </p>
     <div id="carouselExampleCaptions" class="carousel slide">
       <div class="carousel-indicators">
@@ -15,29 +14,29 @@
         <div class="carousel-item active">
           <img src="../../assets/images/american-psychoLandingRecortada.png" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block rounded">
-            <h4 class="text-primary-emphasis">REGÍSTRATE</h4>
-            <h5 class="text-primary-emphasis">Recomienda películas con ReelMe</h5>
+            <h4 class="text-primary-emphasis">{{'homeCarouselTitulo1' | translate}}</h4>
+            <h5 class="text-primary-emphasis">{{'homeCarouselTexto1' | translate}}</h5>
           </div>
         </div>
         <div class="carousel-item">
           <img src="../../assets/images/tar-landing.png" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block rounded">
-            <h4 class="text-primary-emphasis">¿AÚN NO ESTÁS EN REELME?</h4>
-            <h5 class="text-primary-emphasis">Descubre qué películas están triunfando entre tus amigos</h5>
+            <h4 class="text-primary-emphasis">{{'homeCarouselTitulo2' | translate}}</h4>
+            <h5 class="text-primary-emphasis">{{'homeCarouselTexto2' | translate}}</h5>
           </div>
         </div>
         <div class="carousel-item">
           <img src="../../assets/images/octopus-landing.png" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block rounded">
-            <h4 class="text-primary-emphasis">REGÍSTRATE YA</h4>
-            <h5 class="text-primary-emphasis">ReelMe te abrirá los ojos a nuevas películas</h5>
+            <h4 class="text-primary-emphasis">{{'homeCarouselTitulo3' | translate}}</h4>
+            <h5 class="text-primary-emphasis">{{'homeCarouselTexto3' | translate}}</h5>
           </div>
         </div>
         <div class="carousel-item">
           <img src="../../assets/images/otra-ronda-landing-recortada.png" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block rounded">
-            <h4 class="text-primary-emphasis">EN SERIO, REGÍSTRATE</h4>
-            <h5 class="text-primary-emphasis">Ya no hay más imágenes</h5>
+            <h4 class="text-primary-emphasis">{{'homeCarouselTitulo4' | translate}}</h4>
+            <h5 class="text-primary-emphasis">{{'homeCarouselTexto4' | translate}}</h5>
           </div>
         </div>
       </div>
@@ -50,16 +49,16 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-    <h2 class="mt-5">Un pequeño vistazo a ReelMe</h2>
+    <h2 class="mt-5">{{'homeVistazo' | translate}}</h2>
     <div class="mb-3">
-      <h5>Películas más reseñadas</h5>
+      <h5>{{'masPopulares' | translate}}</h5>
     </div>
     <div class="d-flex flex-wrap justify-content-start" *ngIf="fadeInDone" [@listAnimation]="top4Peliculas.length">
       <div *ngFor="let pelicula of top4Peliculas" class="card-container">
         <app-card-peli-bd [peli]="pelicula"></app-card-peli-bd>
       </div>
     </div>
-    <h2 class="mt-5">Lo que dicen nuestros usuarios</h2>
+    <h2 class="mt-5">{{'homeOpiniones' | translate}}</h2>
     <div class="testimonials mt-4 d-flex flex-wrap justify-content-center">
       <div class="testimonial card m-3 p-3 bg-black" *ngFor="let testimonial of testimonials">
         <img [src]="testimonial.image" class="testimonial-img mx-auto mb-3 rounded-circle" alt="{{testimonial.name}}">
@@ -74,20 +73,26 @@
     
 
     <div *ngIf="username != ''" class="container mt-3" >
+      
+
+      
       <div class="mb-3">
-        <h5 >Actividad reciente de las cuentas que sigues</h5>
+        <h5 >{{ 'actividadReciente' | translate}}</h5>
         <h6 id="mostrar" *ngIf="seguidos.length > 4" (click)="toggleShowAll()" class="text-warning">
-          {{ showAll ? 'Mostrar menos' : 'Ver todos' }}
+          {{ showAll ? ('mostrarMenos' | translate) : ('verTodos' | translate) }}
         </h6>
       </div>
-      <div class="d-flex flex-wrap justify-content-start" *ngIf="fadeInDone" [@listAnimation]="visibleSeguidos.length">
+      <div *ngIf="seguidos.length === 0" class="alert alert-info" role="alert">
+        {{'homeSinSeguir' | translate}}
+      </div>
+      <div class="d-flex flex-wrap justify-content-start" *ngIf="fadeInDone && seguidos.length > 0" [@listAnimation]="visibleSeguidos.length">
         <div *ngFor="let seguido of visibleSeguidos" class="card-container">
             <app-card-review-seguido [seguido]="seguido"></app-card-review-seguido>
         </div>
       </div>
 
       <div class="mb-3">
-        <h5 >Películas más reseñadas</h5>
+        <h5 >{{'masPopulares' | translate}}</h5>
       </div>
       <div class="d-flex flex-wrap justify-content-start" *ngIf="fadeInDone" [@listAnimation]="top4Peliculas.length">
         <div *ngFor="let pelicula of top4Peliculas" class="card-container">

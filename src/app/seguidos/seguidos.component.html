@@ -2,7 +2,7 @@
     Por ahora se muestran como tarjetas, pero se podría cambiar a lista como muchas redes sociales.
 -->
 <div class="container mt-3">
-    <h4>Seguidos por {{username}}</h4>
+    <h4>{{'seguidos' | translate}} {{username}}</h4>
     <div class="row row-cols-md-5">
         <ng-container *ngFor="let seguido of seguidos">
             <ng-container *ngIf="seguido.usuarioSeguido.nombre !== username">

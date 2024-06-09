@@ -46,3 +46,36 @@ a:hover {
 .profile-input {
   display: block; /* Asegura que el input ocupe toda la anchura disponible */
 }
+
+.nav-link {
+  color: #adb5bd;
+  transition: color 0.3s ease-in-out;
+}
+
+.nav-link.active {
+  color: #0d6efd;
+}
+
+.nav-link:hover {
+  color: #6610f2;
+}
+
+.btn {
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.progress-bar {
+  background: linear-gradient(
+    90deg,
+    #0d6efd,
+    #6610f2
+  ); /* Degradado de azul a púrpura */
+}
+
+.card:hover {
+  box-shadow: 0 0 10px #6610f2;
+}

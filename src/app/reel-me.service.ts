@@ -11,7 +11,12 @@ export class ReelMeService {
   pelis = new Array();
   peli: any;
   peliTMDB: any;
+  trailerUrl: any;
   constructor(private http: HttpClient) {}
+
+  getTmdbLanguage() {
+    return localStorage.getItem('tmdbLanguage') || 'en-US';
+  }
 
   busqueda(mensaje: string) {
     this.http
@@ -29,7 +34,7 @@ export class ReelMeService {
         this.urlTMDB +
           '/movie/' +
           id +
-          '?api_key=2663bd6e5dd4ea342aa1f60dd1d669f9&external_source=imdb_id'
+          `?api_key=2663bd6e5dd4ea342aa1f60dd1d669f9&language=${this.getTmdbLanguage()}&external_source=imdb_id`
       )
       .pipe(
         tap((response) => {
@@ -44,11 +49,29 @@ export class ReelMeService {
         this.urlTMDB +
           '/movie/' +
           id +
-          '/watch/providers?api_key=2663bd6e5dd4ea342aa1f60dd1d669f9&external_source=imdb_id'
+          `/watch/providers?api_key=2663bd6e5dd4ea342aa1f60dd1d669f9&language=${this.getTmdbLanguage()}&external_source=imdb_id`
       )
       .pipe(
         tap((response) => {
           this.peli = response;
+        })
+      );
+  }
+
+  sagaTMDB(id: string) {
+    return this.http.get(
+      `https://api.themoviedb.org/3/collection/${id}?api_key=2663bd6e5dd4ea342aa1f60dd1d669f9&external_source=imdb_id`
+    );
+  }
+
+  trailerTMDB(id: string) {
+    return this.http
+      .get<any>(
+        `https://api.themoviedb.org/3/movie/${id}/videos?api_key=2663bd6e5dd4ea342aa1f60dd1d669f9&language=en-US&external_source=imdb_id`
+      )
+      .pipe(
+        tap((response) => {
+          this.trailerUrl = response.results[0].key;
         })
       );
   }
@@ -71,5 +94,9 @@ export class ReelMeService {
 
   peliculaTMDB() {
     return this.peliTMDB;
+  }
+
+  trailerUrlTMDB() {
+    return this.trailerUrl;
   }
 }

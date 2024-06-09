@@ -22,7 +22,7 @@ import { CONFIG } from 'config';
 })
 export class DiarioComponent implements OnInit {
   isLoading = true;
-  sortOrder = 'asc';
+  sortOrder = 'desc';
   @Input() username: string = '';
   reviews: any;
   peliculas: { [key: string]: any } = {};
@@ -50,12 +50,22 @@ export class DiarioComponent implements OnInit {
     });
   }
 
+  toggleSortOrder() {
+    // Agregar este método
+    this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+    if (this.reviews) {
+      this.reviews = this.groupReviewsByMonth(
+        Object.values(this.reviews).flat()
+      );
+      this.cdr.detectChanges();
+    }
+  }
+
   groupReviewsByMonth(reviews: any[]): any {
     const groups: { [key: string]: any[] } = {};
 
     reviews.forEach((review) => {
       this.ids.push(review.idPelicula.id);
-      console.log(this.ids);
       const date = new Date(review.fecha);
       const monthYear = `${date.getFullYear()}-${date.getMonth() + 1}`;
       if (!groups[monthYear]) {
@@ -64,22 +74,30 @@ export class DiarioComponent implements OnInit {
       groups[monthYear].push(review);
     });
 
-    // Ordena los grupos por mes y año descendientemente
     const sortedGroups: { [key: string]: any[] } = {};
     Object.keys(groups)
       .sort((a, b) => {
         const [yearA, monthA] = a.split('-').map(Number);
         const [yearB, monthB] = b.split('-').map(Number);
 
-        // Siempre ordenar de forma descendente
         return yearB - yearA || monthB - monthA;
       })
       .forEach((key) => {
-        // Ordenar las reviews dentro de cada grupo por fecha en orden descendente
         sortedGroups[key] = groups[key].sort((a, b) => {
           const dateA = new Date(a.fecha);
           const dateB = new Date(b.fecha);
-          return dateB.getTime() - dateA.getTime();
+
+          // Ordenar por fecha primero
+          if (dateA.getTime() !== dateB.getTime()) {
+            return dateB.getTime() - dateA.getTime();
+          }
+
+          // Si las fechas son iguales, ordenar por esRevisionado
+          return a.esRevisionado === b.esRevisionado
+            ? 0
+            : a.esRevisionado
+            ? -1
+            : 1;
         });
       });
 

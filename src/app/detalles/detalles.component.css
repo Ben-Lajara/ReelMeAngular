@@ -160,7 +160,7 @@ i.bi-heart {
   padding-top: 56.25%;
 }
 
-.iframe {
+iframe {
   position: absolute;
   top: 0;
   left: 0;
@@ -181,6 +181,15 @@ li {
   display: flex;
   align-items: center;
   margin-top: 10px;
+  padding: 0.5rem;
+}
+
+.resenaContainer:hover {
+  background-color: #343a40;
+}
+
+.resenaContainer:last-child {
+  border-bottom: none;
 }
 
 .resenaContainer img {

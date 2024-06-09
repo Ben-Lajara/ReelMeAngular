@@ -1,26 +1,26 @@
 <div class="container mt-3" *ngIf="!isLoading; else loading" [@fadeIn]>
     <div class="row">
-      <div class="col-2">
+      <div class="col-2 d-none d-md-block">
         <img src="{{(pelicula$ | async)?.Poster}}" class="rounded card-img-top img-fluid">
       </div>
-      <div class="col-10">
+      <div class="col-sm-12 col-md-10">
         <form (ngSubmit)="onSubmit()">
           <div class="d-flex align-items-center justify-content-between">
             <h2>{{(pelicula$ | async)?.Title}}</h2>
             <div *ngIf="existente">
               <button type="button" class="btn btn-danger btn-sm" aria-label="Close" (click)="eliminarReview(username, id)">
-                <i class="bi bi-trash"></i> Eliminar reseña
+                <i class="bi bi-trash"></i> {{'reviewEliminarResena' | translate}}
               </button>
             </div>
           </div>
           <div class="form-group">
-            <label for="comentario">Reseña</label>
+            <label for="comentario">{{'reviewComentario' | translate}}</label>
             <textarea class="form-control" id="comentario" rows="3" name="comentario" [(ngModel)]="comentario" [disabled]="hayVeto"></textarea>
           </div>
           <br>
           <div class="row mb-3">
             <div class="col-auto">
-              <label for="calificacion">Calificación</label>
+              <label for="calificacion">{{'reviewCalificacion' | translate}}</label>
               <span *ngFor="let star of [1, 2, 3, 4, 5]; let i = index" id="calificacion">
                 <button type="button" id="estrella" class="btn btn-default mr-1"
                         (mouseover)="hoverState = i + 1"
@@ -32,60 +32,60 @@
               </span>
             </div>
             <div class="col-auto">
-              <label for="gustado">Gustado</label>
+              <label for="gustado">{{'reviewGustado' | translate}}</label>
               <button type="button" class="btn btn-default" (click)="gustado = !gustado" id="gustado">
                 <i class="h3 bi" [ngClass]="{'bi-heart-fill': gustado, 'bi-heart': !gustado}"></i>
               </button>
             </div>
             <div class="col-auto">
-              <label for="spoiler">Contiene spoilers</label>
+              <label for="spoiler">{{'reviewSpoiler' | translate}}</label>
               <button type="button" class="btn btn-default" (click)="spoiler = !spoiler" id="spoiler">
                 <i class="h3 bi" [ngClass]="{'bi-exclamation-octagon-fill': spoiler, 'bi-exclamation-octagon': !spoiler}"></i>
               </button>
             </div>
             <div class="col">
-              <label for="fecha" class="mr-2">Vista el</label>
-              <input type="date" id="fecha" class="form-control form-control-sm" name="fecha" [ngModel]="fecha | date:'yyyy-MM-dd'" (ngModelChange)="fecha = $event">
+              <label for="fecha" class="mr-2">{{'reviewFechaVista' | translate}}</label>
+              <input type="date" id="fecha" class="form-control form-control-sm" name="fecha" [ngModel]="fecha | date:'yyyy-MM-dd'" (ngModelChange)="fecha = $event" [max]="hoy | date:'yyyy-MM-dd'">
             </div>
           </div>
           <div *ngFor="let revisionadoExistente of revisionados; let i = index" class="row mb-3">
             <div class="col-auto">
-              <label [for]="'fechaRevisionado' + i" class="mr-2">Fecha revisionado</label>
-              <input type="date" [id]="'fechaRevisionado' + i" class="form-control form-control-md" [name]="'fechaRevisionado' + i" [ngModel]="revisionadoExistente.fechaRevisionado | date:'yyyy-MM-dd'" (ngModelChange)="revisionadoExistente.fechaRevisionado = $event">
+              <label [for]="'fechaRevisionado' + i" class="mr-2">{{'reviewFechaRevisionado' | translate}}</label>
+              <input type="date" [id]="'fechaRevisionado' + i" class="form-control form-control-md" [name]="'fechaRevisionado' + i" [ngModel]="revisionadoExistente.fechaRevisionado | date:'yyyy-MM-dd'" (ngModelChange)="revisionadoExistente.fechaRevisionado = $event" [min]="fecha | date:'yyyy-MM-dd'"  [max]="hoy | date:'yyyy-MM-dd'">
             </div>
             <div class="col">
-              <label [for]="'comentarioRevisionado' + i" class="mr-2">Comentario</label>
+              <label [for]="'comentarioRevisionado' + i" class="mr-2">{{'reviewComentarioRevisionado' | translate}}</label>
               <textarea [id]="'comentarioRevisionado' + i" class="form-control form-control-md" [name]="'comentarioRevisionado' + i" [(ngModel)]="revisionadoExistente.comentarioRevisionado" rows="1" style="overflow-y: auto;"></textarea>
             </div>
             <div class="col-auto d-flex align-items-center">
-              <button class="btn btn-danger" (click)="confirmarEliminacion(i, revisionadoExistente.id)">Eliminar</button>
+              <button class="btn btn-danger" (click)="confirmarEliminacion(i, revisionadoExistente.id)">{{'reviewEliminarRevisionado' | translate}}</button>
             </div>
           </div>
           <div *ngFor="let revisionadoNuevo of revisionadosNuevos; let i = index" class="row mb-3">
             <div class="col-auto">
-              <label [for]="'fechaRevisionadoNuevo' + i" class="mr-2">Fecha revisionado</label>
-              <input type="date" [id]="'fechaRevisionadoNuevo' + i" class="form-control form-control-md" [name]="'fechaRevisionadoNuevo' + i" [ngModel]="revisionadoNuevo.fechaRevisionado | date:'yyyy-MM-dd'" (ngModelChange)="revisionadoNuevo.fechaRevisionado = $event">
+              <label [for]="'fechaRevisionadoNuevo' + i" class="mr-2">{{'reviewFechaRevisionado' | translate}}</label>
+              <input type="date" [id]="'fechaRevisionadoNuevo' + i" class="form-control form-control-md" [name]="'fechaRevisionadoNuevo' + i" [ngModel]="revisionadoNuevo.fechaRevisionado | date:'yyyy-MM-dd'" (ngModelChange)="revisionadoNuevo.fechaRevisionado = $event" [min]="fecha | date:'yyyy-MM-dd'" [max]="hoy | date:'yyyy-MM-dd'">
             </div>
             <div class="col">
-              <label [for]="'comentarioRevisionadoNuevo' + i" class="mr-2">Comentario</label>
+              <label [for]="'comentarioRevisionadoNuevo' + i" class="mr-2">{{'reviewComentarioRevisionado' | translate}}</label>
               <textarea [id]="'comentarioRevisionadoNuevo' + i" class="form-control form-control-md" [name]="'comentarioRevisionadoNuevo' + i" [(ngModel)]="revisionadoNuevo.comentarioRevisionado" rows="1" style="overflow-y: auto;"></textarea>
             </div>
             <div class="col-auto d-flex align-items-center">
-                <button class="btn btn-danger" (click)="eliminarRevisionadoNuevo(i)">Eliminar</button>
+                <button class="btn btn-danger" (click)="eliminarRevisionadoNuevo(i)">{{'reviewEliminarRevisionado' | translate}}</button>
             </div>
           </div>
           <div *ngIf="mensajeError" class="alert alert-danger mt-3">{{ mensajeError }}</div>
 
-          <button type="button" class="btn btn-primary btn-sm mt-3" (click)="agregarRevisionadoNuevo()" [disabled]="hayVeto"><i class="bi bi-repeat"></i> Añadir revisionado</button>
+          <button type="button" class="btn btn-primary btn-sm mt-3" (click)="agregarRevisionadoNuevo()" [disabled]="hayVeto"><i class="bi bi-repeat"></i> {{'reviewAgregarRevisionado' | translate}}</button>
           <div>
-            <button type="submit" class="btn btn-success col-12 mt-3">Enviar</button>
+            <button type="submit" class="btn btn-success col-12 mt-3">{{'reviewEnviar' | translate}}</button>
           </div>
           
+        <div [@fade]="cambiosGuardados ? 'visible' : 'hidden'" class="alert alert-success" role="alert">
+          {{'reviewMensajeExito' | translate}}
+        </div>
         </form>
       </div>
-    </div>
-    <div *ngIf="cambiosGuardados" [@fade]="cambiosGuardados ? 'visible' : 'hidden'" class="alert alert-success" role="alert">
-      Se han guardado los cambios.
     </div>
   </div>
 

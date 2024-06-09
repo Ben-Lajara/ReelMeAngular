@@ -1,6 +1,6 @@
 <div class="container">
   <input class="form-control" id="buscadorPelis" [formControl]="pelisControl"
-    placeholder="Busca una película...">
+    [placeholder]="'buscadorPeliculas' | translate">
   <div class="d-flex flex-wrap justify-content-start mt-2">
     <div *ngFor="let peli of peliculas()" class="card-container">
         <app-card-peli [peli]="peli"></app-card-peli>

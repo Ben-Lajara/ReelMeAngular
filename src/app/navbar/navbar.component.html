@@ -13,46 +13,59 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" aria-current="home" href="#">Inicio</a>
+            <a class="nav-link" aria-current="home" href="#">{{'navbarInicio' | translate}}</a>
           </li>
           <!-- <li class="nav-item">
             <a *ngIf="(isLoggedIn | async)" [routerLink]="['/profile', currentUsername | async]" class="nav-link">Inicio</a>
           </li> -->
           <li class="nav-item">
-            <a *ngIf="!(isLoggedIn | async)" routerLink="query" class="nav-link">Buscar</a>
+            <a *ngIf="!(isLoggedIn | async)" routerLink="query" class="nav-link">{{'navbarBuscar' | translate}}</a>
           </li>
           <li class="nav-item">
-            <a *ngIf="(isLoggedIn | async)" routerLink="search" class="nav-link">Buscar</a>
+            <a *ngIf="(isLoggedIn | async)" routerLink="search" class="nav-link">{{'navbarBuscar' | translate}}</a>
           </li>
           <!--<li class="nav-item">
             <a *ngIf="!(isLoggedIn | async)" routerLink="register" class="nav-link">Registrarse</a>
           </li>-->
           <li class="nav-item">
-            <a *ngIf="!(isLoggedIn | async)" routerLink="login"  class="nav-link">Iniciar sesión</a>
+            <a *ngIf="!(isLoggedIn | async)" routerLink="login"  class="nav-link">{{'navbarLogin' | translate}}</a>
           </li>
           
           <li class="nav-item">
-            <a *ngIf="(isLoggedIn | async)" [routerLink]="['/journal', currentUsername | async]" class="nav-link">Diario</a>
+            <a *ngIf="(isLoggedIn | async)" [routerLink]="['/journal', currentUsername | async]" class="nav-link">{{'navbarDiario' | translate}}</a>
           </li>
           <li class="nav-item">
-            <a *ngIf="(isLoggedIn | async)" routerLink="settings" class="nav-link">Ajustes</a>
+            <a *ngIf="(isLoggedIn | async)" routerLink="settings" class="nav-link">{{'navbarAjustes' | translate}}</a>
           </li>
           <li class="nav-item">
-            <a *ngIf="(isLoggedIn | async)" [routerLink]="['/about', currentUsername | async]" class="nav-link">Perfil</a>
+            <a *ngIf="(isLoggedIn | async)" [routerLink]="['/about', currentUsername | async]" class="nav-link">{{'navbarPerfil' | translate}}</a>
           </li>
           <li class="nav-item">
-            <a *ngIf="(isLoggedIn | async) && (isAdmin$ | async)" routerLink="admin" class="nav-link">Panel de administrador</a>
+            <a *ngIf="(isLoggedIn | async) && (isAdmin$ | async)" routerLink="admin" class="nav-link">{{'navbarPanelAdmin' | translate}}</a>
           </li>
           <li class="nav-item">
-            <a *ngIf="(isLoggedIn | async)" (click)="logout()" class="nav-link">Cerrar sesión</a>
+            <a *ngIf="(isLoggedIn | async)" (click)="logout()" class="nav-link">{{'navbarCerrarSesion' | translate}}</a>
           </li>
         </ul>
+        <div class="d-flex align-items-center">
+          <!-- Dropdown para cambiar el idioma -->
+          <div class="nav-item dropdown me-3">
+            <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-globe"></i> {{ 'LANGUAGE' | translate }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
+              <li><a class="dropdown-item" href="#" (click)="switchLanguage('en')">English</a></li>
+              <li><a class="dropdown-item" href="#" (click)="switchLanguage('es')">Español</a></li>
+            </ul>
+          </div>
+          
         <div class="d-flex" *ngIf="(isLoggedIn | async)">
           <a routerLink="/settings" class="nav-link">
-            <img [src]="'http://localhost:8080/uploads/PruebaPerfil.jpg'" alt="" height="30px" width="30px" class="rounded-circle">
+            <img [src]="'http://localhost:8080/uploads/' + perfil" alt="" height="30px" width="30px" class="rounded-circle">
           </a>
         </div>
       </div>
     </div>
   </div>
+</div>
 </nav>

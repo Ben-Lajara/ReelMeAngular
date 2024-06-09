@@ -1,11 +1,20 @@
-<div class="container">
-    <form (ngSubmit)="onSubmit()" class="form-group">
-        <div class="mb-3">
-            <label for="email">Email</label>
-            <input type="email" name="email" [(ngModel)]="email" class="form-control" id="email" placeholder="Email" required>
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h5 class="mb-3 text-center">{{'restablecerTitulo' | translate}}</h5>
+            <form [formGroup]="restablecerForm" (ngSubmit)="onSubmit()" class="form-group">
+                <div class="mb-3">
+                    <label for="email">{{'restablecerCorreo' | translate}}</label>
+                    <input type="email" formControlName="email" class="form-control" id="email" [placeholder]="'restablecerCorreoPlaceholder' | translate" required>
+                    <div *ngIf="restablecerForm.get('email')?.touched && restablecerForm.get('email')?.hasError('required')" class="text-danger">{{'restablecerCorreoRequired' | translate}}</div>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary w-100">{{'restablecerBoton' | translate}}</button>
+                </div>
+            </form>
+            <div *ngIf="mensajeEnviado" class="alert alert-success mt-3" role="alert">
+                {{'restablecerAlerta' | translate}} {{ tiempoFormateado }}.
+            </div>
         </div>
-        <div class="mb-3">
-            <button type="submit" class="btn btn-primary w-100">Restablecer contraseña</button>
-        </div>
-    </form>
+    </div>
 </div>

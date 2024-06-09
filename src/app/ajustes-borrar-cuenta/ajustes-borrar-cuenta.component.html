@@ -1,9 +1,21 @@
-<div class="mb-3">
-          <label for="pwordBorrar" class="form-label">Contraseña actual</label>
-          <input type="password" name="pwordBorrar" [(ngModel)]="pwordBorrar" class="form-control" id="pwordBorrar" placeholder="Contraseña actual" required>
+ <form [formGroup]="eliminarForm" (ngSubmit)="deleteUser()">
+ <div class="mb-3">
+  
+          <label for="pwordBorrar" class="form-label">{{'ajustesBorrarCuentaPwordActual' | translate}}</label>
+          <input type="password" formControlName="pwordBorrar" class="form-control" id="pwordBorrar" [placeholder]="'ajustesBorrarCuentaPlaceholder' | translate" required>
+          <div *ngIf="eliminarForm.get('pwordBorrar')?.touched && eliminarForm.get('pwordBorrar')?.hasError('required')" class="text-danger">
+            {{'ajustesBorrarCuentaRequiredPword' | translate}}
+          </div>
       </div>
       <div class="mb-3">
-        <label for="pwordBorrar2" class="form-label">Contraseña actual</label>
-        <input type="password" name="pwordBorrar2" [(ngModel)]="pwordBorrar2" class="form-control" id="pwordBorrar2" placeholder="Contraseña actual" required>
+        <label for="pwordBorrar2" class="form-label">{{'ajustesBorrarCuentaPwordConfirmar' | translate}}</label>
+        <input type="password" formControlName="pwordBorrar2" class="form-control" id="pwordBorrar2" [placeholder]="'ajustesBorrarCuentaPlaceholderConfirmar' | translate" required>
+        <div *ngIf="eliminarForm.get('pwordBorrar2')?.touched && eliminarForm.get('pwordBorrar2')?.hasError('required')" class="text-danger">
+          {{'ajustesBorrarCuentaRequiredConfirmar' | translate}}
+        </div>
+        <div *ngIf="eliminarForm.hasError('notSame') && (eliminarForm.get('pwordBorrar2')?.touched || eliminarForm.get('pwordBorrar')?.touched)" class="text-danger">
+          {{'ajustesBorrarCuentaNotSame' | translate}}
+        </div>
       </div>
-      <button type="submit" class="btn btn-danger" (click)="deleteUser()">Borrar cuenta</button>
+      <button type="submit" class="btn btn-danger w-100" [disabled]="eliminarForm.invalid">{{'ajustesBorrarCuentaBotonBorrar' | translate}}</button>
+    </form>

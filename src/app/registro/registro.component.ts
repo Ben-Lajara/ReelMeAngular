@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { Observable, catchError, map, of } from 'rxjs';
 import { CONFIG } from 'config';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro',
@@ -20,11 +21,12 @@ export class RegistroComponent {
   registroForm!: UntypedFormGroup;
   existe = false;
   apiUrl = CONFIG.apiUrl;
-
+  hayError = false;
   constructor(
     private fb: UntypedFormBuilder,
     private authService: AuthService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -53,8 +55,14 @@ export class RegistroComponent {
 
     const { nombre, email, pword } = this.registroForm.value;
 
-    this.authService.register(nombre, pword).subscribe(
-      (success) => console.log('Registration Success'),
+    this.authService.register(nombre, email, pword).subscribe(
+      (success) => {
+        console.log('Registration Success');
+        this.authService.login(nombre, pword).subscribe(
+          (success) => this.router.navigate(['/settings']),
+          (error) => console.log('Login Error', error.error)
+        );
+      },
       (error) => console.log('Registration Error', error.error)
     );
   }

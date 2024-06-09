@@ -1,29 +1,33 @@
 <div class="container mt-3">
   <div class="row justify-content-center">
     <div class="col-md-6">
-      <h5 class="mb-3 text-center">Iniciar sesión</h5>
+      <h5 class="mb-3 text-center">{{'loginTitulo' | translate}}</h5>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-group">
         <div class="mb-3">
-          <label for="nombre" class="form-label">Usuario o Email</label>
-          <input type="text" formControlName="nombre" class="form-control" id="nombre" placeholder="Usuario/Email" required>
+          <label for="nombre" class="form-label">{{'loginNombreEmail' | translate}}</label>
+          <input type="text" formControlName="nombre" class="form-control" id="nombre" [placeholder]="'loginNombreEmailPlaceholder' | translate" required>
           <div *ngIf="loginForm.get('nombre')?.touched && loginForm.get('nombre')?.hasError('required')" class="text-danger">
-            Por favor, introduce tu usuario o email.
+            {{'loginNombreEmailRequired' | translate}}
           </div>
           <div *ngIf="loginForm.get('nombre')?.hasError('exists')" class="text-danger">
-            Usuario no encontrado.
+            {{'loginNombreEmailError' | translate}}
           </div>
         </div>
         <div class="mb-3">
-          <label for="pword" class="form-label">Contraseña</label>
-          <input type="password" formControlName="pword" class="form-control" id="pword" placeholder="Contraseña" required>
+          <label for="pword" class="form-label">{{'loginPword' | translate}}</label>
+          <input type="password" formControlName="pword" class="form-control" id="pword" [placeholder]="'loginPwordPlaceholder' | translate" required>
           <div *ngIf="loginForm.get('pword')?.touched && loginForm.get('pword')?.hasError('required')" class="text-danger">
-            Por favor, introduce tu contraseña.
+            {{'loginPwordRequired' | translate}}
           </div>
           <div *ngIf="loginForm.get('pword')?.hasError('incorrect')" class="text-danger">
-            Contraseña incorrecta.
+            {{'loginPwordError' | translate}}
           </div>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
+        <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">{{'loginBoton' | translate}}</button>
+        <div class="mt-2">
+          <p>{{'loginSinCuenta' | translate}} <a routerLink="/register">{{'loginRegistrarse' | translate}}</a></p>
+          <p><a routerLink="/reset">{{'loginOlvido' | translate}}</a></p>
+        </div>
       </form>
     </div>
   </div>

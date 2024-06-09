@@ -11,32 +11,32 @@
     </div>
     <div class="col-12 col-md-6" id="centro">
       <dl>
-        <dt><h2 class="text-success">{{(pelicula$ | async)?.Title}} ({{(pelicula$ | async)?.Year}})</h2>
-          <h3>{{(pelicula$ | async)?.Director}}</h3>
+        <dt><h2 class="text-success fw-bold">{{(peliculaTMDB$ | async)?.title}} <span class="fw-lighter">({{(pelicula$ | async)?.Year}})</span></h2>
+          <h4> {{'detallesDirigida' | translate}} {{(pelicula$ | async)?.Director}}</h4>
         </dt>
       </dl>
       <dl>
         <dd>{{(pelicula$ | async)?.Runtime}}</dd>
       </dl>
       <dl>
-        <h5 class="uppercase">{{(peliculaTMDB$ | async)?.tagline}}</h5>
-        <dd>{{(pelicula$ | async)?.Plot}}</dd>
+        <h5 class="uppercase fst-italic">{{(peliculaTMDB$ | async)?.tagline}}</h5>
+        <dd>{{(peliculaTMDB$ | async)?.overview}}</dd>
       </dl>
       <dl>
         <div id="contenedorTrailer">
-          <!-- <iframe [src]="trailerUrl" frameborder="0"></iframe>-->
+           <iframe [src]="trailerUrl" frameborder="0"></iframe>
         </div>
       </dl>
   
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-          <button class="nav-link active text-decoration-none" id="generos-tab" data-bs-toggle="tab" data-bs-target="#generos" type="button" role="tab" aria-controls="generos" aria-selected="true">Géneros</button>
+          <button class="nav-link active text-decoration-none" id="generos-tab" data-bs-toggle="tab" data-bs-target="#generos" type="button" role="tab" aria-controls="generos" aria-selected="true">{{'detallesTabsGeneros' | translate}}</button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link text-decoration-none" id="reparto-tab" data-bs-toggle="tab" data-bs-target="#reparto" type="button" role="tab" aria-controls="reparto" aria-selected="false">Reparto</button>
+          <button class="nav-link text-decoration-none" id="reparto-tab" data-bs-toggle="tab" data-bs-target="#reparto" type="button" role="tab" aria-controls="reparto" aria-selected="false">{{'detallesTabsReparto' | translate}}</button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link text-decoration-none" id="pais-tab" data-bs-toggle="tab" data-bs-target="#pais" type="button" role="tab" aria-controls="pais" aria-selected="false">Países</button>
+          <button class="nav-link text-decoration-none" id="pais-tab" data-bs-toggle="tab" data-bs-target="#pais" type="button" role="tab" aria-controls="pais" aria-selected="false">{{'detallesTabsPaises' | translate}}</button>
         </li>
       </ul>
       <div class="tab-content mt-2" id="myTabContent">
@@ -56,28 +56,31 @@
           </ul>
         </div>
       </div>
+
+      <div *ngIf="(peliculaTMDB$ | async)?.belongs_to_collection != null">
+      </div>
       
       
       <div *ngIf="currentUsername!=''" class="card text-bg-secondary mt-3">
         <div class="card-body">
           <div class="row align-items-center">
             <div class="col-auto">
-              <img src="http://localhost:8080/uploads/PruebaPerfil.jpg" alt="Foto de perfil" class="rounded-circle" width="50" height="50">
+              <img [src]="'http://localhost:8080/uploads/'+ perfil" alt="Foto de perfil" class="rounded-circle" width="50" height="50">
             </div>
             <div class="col">
-              <p *ngIf="calificacion!=0" class="mb-0">Tu calificación: 
+              <p *ngIf="calificacion!=0" class="mb-0">{{'detallesUsuarioCalificacion' | translate}} 
                 <span *ngFor="let i of [1, 2, 3, 4, 5]">
                   <i class="text-warning bi" [ngClass]="{'bi-star-fill': i <= calificacion}"></i>
                   <span *ngIf="calificacion % 1 != 0 && i == (calificacion - calificacion % 1) + 1" class="text-warning fw-bold">&#189;</span>
                 </span>
               </p>
-              <p *ngIf="calificacion==0" class="mb-0">No has reseñado esta película</p>
+              <p *ngIf="calificacion==0" class="mb-0">{{'detallesUsuarioSinResena' | translate}}</p>
             </div>
             <div class="col-auto">
-              <button class="btn btn-success" [routerLink]="['/review', currentUsername, (pelicula$ | async)?.imdbID]">
+              <button class="btn btn-success shadow-sm" [routerLink]="['/review', currentUsername, (pelicula$ | async)?.imdbID]">
                 <i class="bi bi-pencil-square mr-2"></i>
-                <span *ngIf="calificacion!=0"> Editar reseña</span>
-                <span *ngIf="calificacion==0"> Escribir reseña</span>
+                <span *ngIf="calificacion!=0"> {{'detallesUsuarioBotonEditar' | translate}}</span>
+                <span *ngIf="calificacion==0"> {{'detallesUsuarioBotonEscribir' | translate}}</span>
               </button>
             </div>
           </div>
@@ -85,7 +88,7 @@
       </div>
       
       <dl class="mt-3" *ngIf="resenasSeguidos.length > 0">
-        <dt id="lineaDivisoria">Vista por</dt>
+        <dt id="lineaDivisoria">{{'detallesSeguidos' | translate}}</dt>
         <dd class="d-flex flex-row flex-wrap">
           <ng-container *ngFor="let resena of resenasSeguidos">
             <app-detalles-reviewed-seguido [resena]="resena" [idPeli]="(pelicula$ | async)?.imdbID"></app-detalles-reviewed-seguido>
@@ -95,11 +98,10 @@
       </dl>
 
       <dl class="mt-3">
-        <dt id="lineaDivisoria">Reseñas</dt>
-        <dd *ngFor="let resena of resenas" class="resenaContainer">
-          <img id="perfilUsuario" [src]="'http://localhost:8080/uploads/' + resena.nomUsuario.perfil" alt="" height="40px" width="40px" class="rounded-circle" [style.borderColor]="resena.nomUsuario.color">
-          <a id="resenaUsuario" class="col-auto resena-usuario-link" [routerLink]="['/reviewed', resena.nomUsuario.nombre, (pelicula$ | async)?.imdbID]">Reseña de</a>
-          <a id="usuario" class="col-auto usuario-link" [routerLink]="['/about', resena.nomUsuario.nombre]">{{resena.nomUsuario.nombre}}:</a>
+        <dt id="lineaDivisoria">{{'detallesResenas' | translate}}</dt>
+        <dd [routerLink]="['/reviewed', resena.nomUsuario.nombre, (pelicula$ | async)?.imdbID]" *ngFor="let resena of resenas" class="resenaContainer rounded">
+          <img id="perfilUsuario" [src]="'http://localhost:8080/uploads/' + resena.nomUsuario.perfil" alt="" height="40px" width="40px" class="rounded-circle" [style.borderColor]="resena.nomUsuario.color" [routerLink]="['/about', resena.nomUsuario.nombre]">
+          {{'detallesResenaDe' | translate}} {{resena.nomUsuario.nombre}}:&nbsp;
           <span class="col-auto estrellas">
             <ng-container *ngFor="let i of [1, 2, 3, 4, 5]">
               <i *ngIf="resena.calificacion % 1 == 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
@@ -113,7 +115,7 @@
             </span>
             <div id="alertaSpoiler" *ngIf="resena.spoiler" role="alert">
               <i class="bi bi-exclamation-triangle me-2"></i> 
-              <span>Este comentario contiene spoilers.</span>
+              <span>{{'detallesAdvertencia' | translate}}</span>
               <!--<p *ngIf="mostrarSpoiler">{{resena.comentario}}</p>-->
           </div>
           </div>
@@ -122,21 +124,21 @@
       
     </div>
     <div class="col-12 col-md-3" id="dcha">
-      <dt id="lineaDivisoria">Estadísticas</dt>
+      <dt id="lineaDivisoria">{{'detallesEstadisticas' | translate}}</dt>
       <div id="contenedorStats" class="container" style="display: flex; align-items: center;">
         <div echarts [options]="chartOptions" class="chart-container" style="height:20vh; width:13vw;"></div>
         <h4 style="margin-left: 20px">{{puntuacionMedia}}</h4>
       </div>
       <div class="container">
         <dl>
-          <dd><i class="bi bi-eye-fill text-info"></i> Vista por {{resenas.length}} usuarios</dd>
-          <dd><i class="bi bi-heart-fill text-info"></i> Le gusta a {{getGustados()}} usuarios </dd>
-          <dd *ngIf="(pelicula$ | async)?.Awards.startsWith('Won')"><i class="bi bi-award-fill text-info"></i> {{(pelicula$ | async)?.Awards.substring(0, (pelicula$ | async)?.Awards.indexOf('Oscars') + 'Oscars'.length)}}</dd>
-          <dd><i class="bi bi-coin text-info"></i> {{(pelicula$ | async)?.BoxOffice}} recaudados</dd>
+          <dd><i class="bi bi-eye-fill text-info"></i> {{'detallesEstadisticasVistaPor' | translate}} {{resenas.length}} {{'detallesEstadisticasUsuarios' | translate}}</dd>
+          <dd><i class="bi bi-heart-fill text-info"></i> {{'detallesEstadisticasLeGusta' | translate}} {{getGustados()}} {{'detallesEstadisticasUsuarios' | translate}} </dd>
+          <!-- <dd *ngIf="(pelicula$ | async)?.Awards.startsWith('Won')"><i class="bi bi-award-fill text-info"></i> {{(pelicula$ | async)?.Awards.substring(0, (pelicula$ | async)?.Awards.indexOf('Oscars') + 'Oscars'.length)}}</dd>-->
+          <dd><i class="bi bi-coin text-info"></i> {{(pelicula$ | async)?.BoxOffice}} {{'detallesEstadisticasRecaudacion' | translate}}</dd>
         </dl>
       </div>
       <div *ngIf="servicios" class="card text-bg-success">
-        <div class="card-header">Disponible en</div>
+        <div class="card-header">{{'detallesEstadisticasPlataformas' | translate}}</div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item" *ngFor="let servicio of servicios.flatrate">
             <img class="rounded" [src]="'https://image.tmdb.org/t/p/w45' + servicio.logo_path" alt="{{servicio.provider_name}}">

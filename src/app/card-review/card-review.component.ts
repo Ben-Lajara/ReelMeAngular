@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card-review',
@@ -17,7 +18,7 @@ export class CardReviewComponent implements OnInit {
   currentUsername = '';
   starsCache: { [key: number]: string } = {};
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
     this.isLoggedIn = this.authService.isLoggedIn;
     authService.currentUsername.subscribe((username) => {
       this.currentUsername = username;
@@ -29,6 +30,12 @@ export class CardReviewComponent implements OnInit {
     console.log(this.currentUsername);
     console.log(this.review);
     console.log(this.peli.id);
+  }
+
+  redirigir() {
+    if (this.usuarioRuta === this.currentUsername) {
+      this.router.navigate(['/review', this.currentUsername, this.peli.id]);
+    }
   }
 
   getStars(i: number): string {

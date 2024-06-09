@@ -133,35 +133,27 @@ i.bi-heart-fill {
 
 @media (max-width: 576px) {
   .card-container {
-    flex: 0 1 calc(25% - 1rem); /* Cuatro tarjetas por fila en dispositivos muy pequeños */
-    max-width: calc(25% - 1rem);
+    flex: 0 1 calc(50% - 1rem); /* Dos tarjetas por fila en dispositivos muy pequeños */
+    max-width: calc(50% - 1rem);
   }
 
   .card .card-body {
-    margin-bottom: 0.3rem; /* Ajusta el margen superior e inferior según sea necesario */
-    margin-top: 0px;
-    margin-left: 0.1rem;
-    margin-right: 0.1rem;
-    padding-left: 0.1rem; /* Ajusta el padding si es necesario para mantener el contenido bien espaciado */
-    padding-right: 0.1rem;
-    padding-bottom: 0.2rem;
-    padding-top: 0px;
+    margin: 0; /* Ajusta el margen superior e inferior según sea necesario */
+    padding: 0.5rem; /* Ajusta el padding si es necesario para mantener el contenido bien espaciado */
   }
+
   .card-title {
     display: none;
-    padding: 0px;
-    margin: 0px;
   }
+
   .rating .bi,
   .rating span,
   .actions .bi {
-    font-size: 0.45rem; /* Ajusta este valor según lo pequeño que quieras que sean */
+    font-size: 0.75rem; /* Ajusta este valor según lo pequeño que quieras que sean */
   }
 
   .username {
-    font-size: 0.62rem;
-    margin-top: 0;
-    padding-top: 0;
+    font-size: 0.8rem; /* Ajusta el tamaño del nombre de usuario */
   }
 }
 

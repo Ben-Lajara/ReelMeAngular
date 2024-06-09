@@ -4,15 +4,33 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { CONFIG } from 'config';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.css'],
+  animations: [
+    trigger('fade', [
+      state('hidden', style({ opacity: 0 })),
+      state('visible', style({ opacity: 1 })),
+      transition('hidden => visible', [animate('300ms ease-in')]),
+      transition('visible => hidden', [animate('300ms ease-out')]),
+    ]),
+  ],
 })
 export class PerfilComponent implements OnInit {
   username = '';
   apiUrl = CONFIG.apiUrl;
+  exito = false;
+  error = false;
+  mensaje = '';
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -40,10 +58,10 @@ export class PerfilComponent implements OnInit {
   onSubmit() {
     this.http.put(`${this.apiUrl}/usuario`, this.usuario).subscribe(
       (success) => {
-        console.log('Usuario Actualizado');
+        this.mostrarExito();
       },
       (error) => {
-        console.log('Error al actualizar usuario', error.error);
+        this.mostrarError();
       }
     );
   }
@@ -66,5 +84,21 @@ export class PerfilComponent implements OnInit {
           console.log('Error al eliminar usuario', error.error);
         }
       );
+  }
+
+  mostrarExito() {
+    this.mensaje = 'Se han guardado los cambios correctamente';
+    this.exito = true;
+    setTimeout(() => {
+      this.exito = false;
+    }, 5000);
+  }
+
+  mostrarError() {
+    this.mensaje = 'Error al guardar los cambios';
+    this.error = true;
+    setTimeout(() => {
+      this.error = false;
+    }, 5000);
   }
 }

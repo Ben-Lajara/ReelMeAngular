@@ -40,3 +40,60 @@ i.bi-repeat {
 span {
   font-weight: bold;
 }
+
+@media (max-width: 576px) {
+  .dispositivos-grandes {
+    display: none;
+  }
+  i.bi-calendar2 {
+    font-size: 50px; /* Reducir el tamaño del ícono del calendario */
+  }
+  span {
+    font-size: 1rem; /* Ajustar el tamaño de la fuente de la fecha */
+  }
+
+  i.iconos-estrellas {
+    margin: 0.1rem; /* Reducir el espaciado entre los íconos de las estrellas */
+  }
+
+  i.iconos-estrellas {
+    font-size: 0.8rem;
+  }
+
+  i.bi-heart-fill {
+    font-size: 0.75rem;
+    margin: 0.4rem; /* Reducir el espaciado entre los íconos del corazón */
+  }
+
+  .col,
+  .col-auto {
+    margin-right: 0.1rem; /* Reducir el espacio entre las columnas */
+    padding-left: 5px; /* Reducir el padding izquierdo */
+    padding-right: 5px; /* Reducir el padding derecho */
+  }
+
+  .titulo {
+    text-align: left;
+    font-size: 1rem; /* Ajustar el tamaño de la fuente del título y el año */
+  }
+  span.year {
+    font-size: 0.8rem;
+    font-weight: normal;
+  }
+
+  .medio {
+    margin-left: -2px;
+    font-size: 0.8rem;
+  }
+
+  img.img-thumbnail {
+    width: 40px; /* Ajustar el tamaño de la imagen si es necesario */
+    border-width: 1px; /* Hacer el borde más fino */
+  }
+  .tooltip-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+  }
+}

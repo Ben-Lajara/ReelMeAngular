@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { CONFIG } from 'config';
@@ -6,14 +7,25 @@ import { CONFIG } from 'config';
   selector: 'app-card-usuario',
   templateUrl: './card-usuario.component.html',
   styleUrls: ['./card-usuario.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('600ms', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class CardUsuarioComponent implements OnInit {
   @Input() usuario: any;
   @Input() username: string = '';
+  isLoading = true;
   apiUrl = CONFIG.apiUrl;
   constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isLoading = false;
+  }
 
   seguir(nombreUsuario: string, usuarioSeguido: string) {
     const body = { nombreUsuario, usuarioSeguido };

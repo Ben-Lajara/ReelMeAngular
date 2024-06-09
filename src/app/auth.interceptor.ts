@@ -17,7 +17,14 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     const authToken = localStorage.getItem('authToken');
 
-    if (authToken && request.url.startsWith('http://localhost:8080')) {
+    if (
+      authToken &&
+      request.url.startsWith(
+        'http://localhost:8080' ||
+          'http://192.168.1.29:8080' ||
+          'https://192.168.1.29:8443'
+      )
+    ) {
       const cloned = request.clone({
         headers: request.headers.set('Authorization', 'Bearer ' + authToken),
       });

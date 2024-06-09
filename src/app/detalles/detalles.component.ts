@@ -32,6 +32,7 @@ import { CONFIG } from 'config';
 export class DetallesComponent implements OnInit {
   @ViewChild('myChart') myChart!: ElementRef<HTMLCanvasElement>;
   currentUsername = '';
+  perfil = '';
   id = '';
   resenas: any[] = [];
   resenasSeguidos: any[] = [];
@@ -75,6 +76,9 @@ export class DetallesComponent implements OnInit {
   pelicula$: Observable<any> | undefined;
   peliTMDB: any;
   peliculaTMDB$: Observable<any> | undefined;
+  sagaTMDB: any;
+  sagaTMDB$: Observable<any> | undefined;
+  trailerTMDB$: Observable<any> | undefined;
   isLoading = true;
   servicios: any;
 
@@ -97,20 +101,22 @@ export class DetallesComponent implements OnInit {
       this.loadPelicula();
       this.loadPeliculaTMDB();
       this.loadServiciosTMDB();
+      this.loadTrailerTMDB();
       this.loadActividad();
       this.loadReviews();
       this.loadResenasSeguidos();
       console.log('pelicula$ ', this.pelicula$);
       console.log('calificacion ', this.calificacion.toString());
+      this.perfil = localStorage.getItem('perfil') || '';
     });
   }
 
   loadPelicula(): void {
     this.reelme.busquedaId(this.id).subscribe(() => {
       this.peli = this.reelme.pelicula();
-      /*this.getTrailer(
+      this.getTrailer(
         `${this.reelme.pelicula().Title} ${this.reelme.pelicula().Year}`
-      );*/
+      );
       this.pelicula$ = this.reelme.busquedaId(this.id);
       this.pelicula$?.pipe(first()).subscribe(() => {
         this.isLoading = false;
@@ -130,6 +136,22 @@ export class DetallesComponent implements OnInit {
       if (data.results && data.results.ES) {
         this.servicios = data.results.ES;
       }
+    });
+  }
+
+  loadSagaTMDB(): void {
+    this.reelme.sagaTMDB(this.id).subscribe(() => {
+      this.sagaTMDB = this.reelme.sagaTMDB(this.id);
+      this.sagaTMDB$ = this.reelme.sagaTMDB(this.id);
+    });
+  }
+
+  loadTrailerTMDB(): void {
+    this.reelme.trailerTMDB(this.id).subscribe(() => {
+      this.trailerTMDB$ = this.reelme.trailerTMDB(this.id);
+      this.trailerUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+        `https://www.youtube.com/embed/${this.reelme.trailerUrlTMDB()}`
+      );
     });
   }
 
@@ -165,7 +187,15 @@ export class DetallesComponent implements OnInit {
   getActividad(usuario: string, id_pelicula: string): Observable<any> {
     console.log('Existente');
     return this.http
-      .get(`${this.apiUrl}/review?usuario=${usuario}&idPelicula=${id_pelicula}`)
+      .get(`${this.apiUrl}/review`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+        },
+        params: {
+          usuario: usuario,
+          idPelicula: id_pelicula,
+        },
+      })
       .pipe(
         tap((res) => {
           this.resena = res;

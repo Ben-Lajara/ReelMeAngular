@@ -101,10 +101,6 @@ a:hover {
   flex: 1 1 calc(48% - 1rem); /* Ocupan la mitad del espacio */
 }
 
-.testimonial:hover {
-  transform: scale(1.05);
-}
-
 .testimonial-img {
   border-radius: 50%;
   width: 70px;
@@ -245,25 +241,27 @@ i.bi-heart-fill {
 
 @media (max-width: 576px) {
   .card-container {
-    flex: 0 1 calc(25% - 1rem); /* Cuatro tarjetas por fila en dispositivos muy pequeños */
-    max-width: calc(25% - 1rem);
+    flex: 0 1 calc(50% - 1rem); /* Dos tarjetas por fila en dispositivos muy pequeños */
+    max-width: calc(50% - 1rem);
   }
 
   .card .card-body {
     margin: 0.5rem 0; /* Ajusta el margen superior e inferior según sea necesario */
     padding: 0.5rem; /* Ajusta el padding si es necesario para mantener el contenido bien espaciado */
   }
+
   .card-title {
     display: none;
   }
+
   .rating i,
   .rating span,
   .actions .bi {
-    font-size: 0.45rem; /* Ajusta este valor según lo pequeño que quieras que sean */
+    font-size: 0.75rem; /* Ajusta este valor según lo pequeño que quieras que sean */
   }
 
   .username {
-    font-size: 0.62rem;
+    font-size: 0.8rem; /* Ajusta el tamaño del nombre de usuario */
   }
 }
 

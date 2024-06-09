@@ -1,34 +1,33 @@
-
 <div class="container mt-3">
   <div class="row justify-content-center">
     <div class="col-md-6">
-      <h5 class="mb-3 text-center">Registrarse</h5>
+      <h5 class="mb-3 text-center">{{ 'registroTitulo' | translate }}</h5>
       <form [formGroup]="registroForm" (ngSubmit)="onSubmit()" class="form-group">
         <div class="mb-3">
-          <label for="nombre" class="form-label">Nombre</label>
-          <input type="text" formControlName="nombre" class="form-control" id="nombre" placeholder="Nombre">
-          <div *ngIf="registroForm.get('nombre')?.touched && registroForm.get('nombre')?.hasError('required')" class="text-danger">El nombre es obligatorio</div>
-          <div *ngIf="registroForm.get('nombre')?.touched && registroForm.get('nombre')?.hasError('exists')" class="text-danger">El usuario ya existe</div>
+          <label for="nombre" class="form-label">{{ 'registroNombre' | translate }}</label>
+          <input type="text" formControlName="nombre" class="form-control" id="nombre" placeholder="{{ 'registroNombrePlaceholder' | translate }}">
+          <div *ngIf="registroForm.get('nombre')?.touched && registroForm.get('nombre')?.hasError('required')" class="text-danger">{{ 'registroNombreRequired' | translate }}</div>
+          <div *ngIf="registroForm.get('nombre')?.touched && registroForm.get('nombre')?.hasError('exists')" class="text-danger">{{ 'registroNombreExisteUsuario' | translate }}</div>
         </div>
         <div class="mb-3">
-          <label for="email" class="form-label">Correo electrónico</label>
-          <input type="email" formControlName="email" class="form-control" id="email" placeholder="Correo electrónico">
-          <div *ngIf="registroForm.get('email')?.touched && registroForm.get('email')?.hasError('required')" class="text-danger">El correo es obligatorio</div>
-          <div *ngIf="registroForm.get('email')?.hasError('email')" class="text-danger">Correo no válido</div>
+          <label for="email" class="form-label">{{ 'registroEmail' | translate }}</label>
+          <input type="email" formControlName="email" class="form-control" id="email" placeholder="{{ 'registroEmailPlaceholder' | translate }}">
+          <div *ngIf="registroForm.get('email')?.touched && registroForm.get('email')?.hasError('required')" class="text-danger">{{ 'registroEmailRequired' | translate }}</div>
+          <div *ngIf="registroForm.get('email')?.hasError('email')" class="text-danger">{{ 'registroEmailInvalido' | translate }}</div>
         </div>
         <div class="mb-3">
-          <label for="pword" class="form-label">Contraseña</label>
-          <input type="password" formControlName="pword" class="form-control" id="pword" placeholder="Contraseña">
-          <div *ngIf="registroForm.get('pword')?.touched && registroForm.get('pword')?.hasError('required')" class="text-danger">La contraseña es obligatoria</div>
+          <label for="pword" class="form-label">{{ 'registroPword' | translate }}</label>
+          <input type="password" formControlName="pword" class="form-control" id="pword" placeholder="{{ 'registroPwordPlaceholder' | translate }}">
+          <div *ngIf="registroForm.get('pword')?.touched && registroForm.get('pword')?.hasError('required')" class="text-danger">{{ 'registroPwordRequired' | translate }}</div>
         </div>
         <div class="mb-3">
-          <label for="pword2" class="form-label">Repite contraseña</label>
-          <input type="password" formControlName="pword2" class="form-control" id="pword2" placeholder="Repite contraseña">
-          <div *ngIf="registroForm.hasError('notSame') && (registroForm.get('pword2')?.touched || registroForm.get('pword')?.touched)" class="text-danger">Las contraseñas no coinciden</div>
+          <label for="pword2" class="form-label">{{ 'registroPwordConfirmar' | translate }}</label>
+          <input type="password" formControlName="pword2" class="form-control" id="pword2" placeholder="{{ 'registroPwordConfirmarPlaceholder' | translate }}">
+          <div *ngIf="registroForm.hasError('notSame') && (registroForm.get('pword2')?.touched || registroForm.get('pword')?.touched)" class="text-danger">{{ 'registroPwordNoCoinciden' | translate }}</div>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+        <button type="submit" class="btn btn-primary w-100" [disabled]="registroForm.invalid">{{ 'registroBoton' | translate }}</button>
       </form>
+      <div *ngIf="hayError" class="alert alert-danger" role="alert">{{ 'registroError' | translate }}</div>
     </div>
   </div>
 </div>
-

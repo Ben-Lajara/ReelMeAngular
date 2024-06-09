@@ -12,6 +12,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { CONFIG } from 'config';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -46,7 +47,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private translate: TranslateService
   ) {
     this.authService.currentUsername.subscribe((username) => {
       this.username = username;

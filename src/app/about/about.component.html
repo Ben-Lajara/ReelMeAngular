@@ -3,7 +3,7 @@
     <div *ngIf="!isLoading; else loading" [@fadeIn] (@fadeIn.done)="onFadeInDone()">
         <div class="profile-card bg-black">
             <div class="profile-header d-flex align-items-center">
-                <img [src]="'http://localhost:8080/uploads/' + datos.perfil" alt="" class="profile-image" [style.borderColor]="datos.color">
+                <img [src]="'http://192.168.1.29:8080/uploads/' + datos.perfil" alt="" class="profile-image" [style.borderColor]="datos.color">
                 <div class="profile-info">
                     <h3 *ngIf="datos.apodo; else nombreTemplate">
                         {{datos.apodo}} <i *ngIf="datos.rango" class="bi bi-patch-check-fill" [ngStyle]="{'color': getColor(datos.rango)}"></i>
@@ -16,24 +16,24 @@
                 </div>
             </div>
             <p class="profile-stats">
-                {{datos.vistas}} películas vistas
+                {{datos.vistas}} {{'perfilMoviesWatched' | translate}}
                 &nbsp;|&nbsp;
-                {{datos.vistasYear}} este año
+                {{datos.vistasYear}} {{'perfilThisYear' | translate}}
                 &nbsp;|&nbsp;
-                <a id="seguidores" [routerLink]="['/about', username, 'followers']">{{datos.seguidores}} seguidores</a>
+                <a id="seguidores" [routerLink]="['/about', username, 'followers']">{{datos.seguidores}} {{'perfilFollowers' | translate}}</a>
                 &nbsp;|&nbsp;
-                <a id="seguidos" [routerLink]="['/about', username, 'following']">{{datos.seguidos}} seguidos</a>
+                <a id="seguidos" [routerLink]="['/about', username, 'following']">{{datos.seguidos}} {{'perfilFollowing' | translate}}</a>
             </p>
         </div>
         <ul class="nav nav-underline" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-              <a class="nav-link active" id="actividad-tab" data-bs-toggle="tab" href="#actividad" role="tab" aria-controls="actividad" aria-selected="true">Actividad reciente</a>
+              <a class="nav-link active" id="actividad-tab" data-bs-toggle="tab" href="#actividad" role="tab" aria-controls="actividad" aria-selected="true">{{'tabsRecentActivity' | translate}}</a>
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link" id="resenas-tab" data-bs-toggle="tab" href="#resenas" role="tab" aria-controls="resenas" aria-selected="false">Reseñas</a>
+              <a class="nav-link" id="resenas-tab" data-bs-toggle="tab" href="#resenas" role="tab" aria-controls="resenas" aria-selected="false">{{'tabsReviews' | translate}}</a>
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link" id="diario-tab" data-bs-toggle="tab" href="#diario" role="tab" aria-controls="diario" aria-selected="false">Diario</a>
+              <a class="nav-link" id="diario-tab" data-bs-toggle="tab" href="#diario" role="tab" aria-controls="diario" aria-selected="false">{{'tabsDiary' | translate}}</a>
             </li>
           </ul>
         <div class="tab-content m-2" id="myTabContent">

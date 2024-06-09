@@ -1,21 +1,45 @@
 <div class="row">
-    <div class="col-md-6">
-      <div *ngIf="exito !== ''" class="alert alert-success" role="alert">
-        {{exito}}
+  <div class="col-md-6">
+   
+    <form [formGroup]="pwordForm" (ngSubmit)="setNewPword()">
+      <div class="mb-3">
+        <label for="pword" class="form-label">{{ 'ajustesCambiarPwordActual' | translate }}</label>
+        <input
+          type="password"
+          formControlName="pword"
+          class="form-control"
+          id="pword"
+          [placeholder]="'ajustesCambiarPwordPlaceholderActual' | translate"
+          required
+        />
+        <div *ngIf="pwordForm.get('pword')?.touched && pwordForm.get('pword')?.hasError('required')" class="text-danger">
+          {{ 'ajustesCambiarPwordRequiredActual' | translate }}
+        </div>
       </div>
+      <div class="mb-3">
+        <label for="pword2" class="form-label">{{ 'ajustesCambiarPwordNueva' | translate }}</label>
+        <input
+          type="password"
+          formControlName="pword2"
+          class="form-control"
+          id="pword2"
+          [placeholder]="'ajustesCambiarPwordPlaceholderNueva' | translate"
+          required
+        />
+        <div *ngIf="pwordForm.get('pword2')?.touched && pwordForm.get('pword2')?.hasError('required')" class="text-danger">
+          {{ 'ajustesCambiarPwordRequiredNueva' | translate }}
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary w-100" [disabled]="pwordForm.invalid">
+        {{ 'ajustesCambiarPwordBoton' | translate }}
+      </button>
       
-      <div class="mb-3">
-          <label for="pword" class="form-label">Contraseña actual</label>
-          <input type="password" name="pword" [(ngModel)]="pword" class="form-control" id="pword" placeholder="Contraseña actual" required>
-      </div>
-      <div class="mb-3">
-          <label for="pword2" class="form-label">Nueva contraseña</label>
-          <input type="password" name="pword2" [(ngModel)]="pword2" class="form-control" id="pword2" placeholder="Nueva contraseña" required>
-      </div>
-      <button type="submit" class="btn btn-primary" (click)="setNewPword()">Cambiar contraseña</button>
+    </form>
+    <div *ngIf="exito" class="alert alert-success mt-3" role="alert">
+      {{'ajustesCambiarPwordExito' | translate}}
     </div>
-    <div class="col-md-6">
-      <!--Aquí irá una imagen -->
+    <div *ngIf="hayError" class="alert alert-danger mt-3" role="alert">
+      {{'ajustesCambiarPwordError' | translate}}
     </div>
-    
   </div>
+</div>
