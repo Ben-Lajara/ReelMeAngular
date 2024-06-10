@@ -72,17 +72,14 @@ export class RegistroComponent {
   ) => Observable<ValidationErrors | null> {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       if (!control.value) {
-        // Si el campo está vacío, retorna null inmediatamente
         return of(null);
       }
       const nombre = control.value;
       return this.http.get(`${this.apiUrl}/usuario/${nombre}`).pipe(
         map((res) => {
-          // Si el usuario existe, retorna un objeto de error
           return { exists: true };
         }),
         catchError((error) => {
-          // Si ocurre un error (por ejemplo, el usuario no existe), retorna null
           return of(null);
         })
       );

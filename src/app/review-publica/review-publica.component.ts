@@ -29,6 +29,7 @@ export class ReviewPublicaComponent implements OnInit {
       this.usuarioActual = localStorage.getItem('username') || '';
       this.getResenaPublica(this.username, this.id).subscribe((res: any) => {
         this.resena = res;
+        console.log(this.resena);
         this.getDenuncia().subscribe((res: any) => {
           this.denunciaExistente = res;
         });
@@ -63,7 +64,7 @@ export class ReviewPublicaComponent implements OnInit {
         }
       )
       .subscribe((res: any) => {
-        console.log(res);
+        this.denunciaExistente = true;
       });
   }
 

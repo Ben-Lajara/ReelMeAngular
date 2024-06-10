@@ -101,7 +101,7 @@
         <dt id="lineaDivisoria">{{'detallesResenas' | translate}}</dt>
         <dd [routerLink]="['/reviewed', resena.nomUsuario.nombre, (pelicula$ | async)?.imdbID]" *ngFor="let resena of resenas" class="resenaContainer rounded">
           <img id="perfilUsuario" [src]="'http://localhost:8080/uploads/' + resena.nomUsuario.perfil" alt="" height="40px" width="40px" class="rounded-circle" [style.borderColor]="resena.nomUsuario.color" [routerLink]="['/about', resena.nomUsuario.nombre]">
-          {{'detallesResenaDe' | translate}} {{resena.nomUsuario.nombre}}:&nbsp;
+           {{resena.nomUsuario.nombre}}:&nbsp;
           <span class="col-auto estrellas">
             <ng-container *ngFor="let i of [1, 2, 3, 4, 5]">
               <i *ngIf="resena.calificacion % 1 == 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>

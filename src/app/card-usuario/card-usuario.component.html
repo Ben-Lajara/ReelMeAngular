@@ -1,7 +1,7 @@
 <div [@fadeIn] [ngClass]="{'fade-in': true, 'show': !isLoading}" class="card text-center bg-success text-white mb-2 mr-2 mt-2">
     <img *ngIf="usuario.perfil" [src]="'http://localhost:8080/uploads/' + usuario.perfil" class="card-img-top" alt="Perfil">   
     <div class="card-body">
-      <a [routerLink]="['/about', usuario.nombre]"><h4 class="card-text">{{usuario.nombre}}</h4></a>
+      <a [routerLink]="['/about', usuario.nombre]"><h4 class="tooltip-title">{{usuario.nombre}}</h4></a>
       <button type="button" *ngIf="!usuario.seguido && usuario.nombre != username" class="btn btn-primary rounded-pill w-100" (click)="seguir(username, usuario.nombre)"><span>{{'cardUsuarioSeguir' | translate}}</span></button>
       <button type="button" *ngIf="usuario.nombre == username" class="btn btn-primary rounded-pill disabled w-100"><span>{{'cardUsuarioTuCuenta' | translate}}</span></button>
       <button type="button" *ngIf="usuario.seguido" class="btn btn-danger rounded-pill w-100" (click)="dejarDeSeguir(username, usuario.nombre)"><span>{{'cardUsuarioDejarDeSeguir' | translate}}</span></button>

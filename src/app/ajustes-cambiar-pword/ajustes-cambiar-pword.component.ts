@@ -35,20 +35,11 @@ export class AjustesCambiarPwordComponent implements OnInit {
     this.currentUsername = this.authService.currentUsername;
   }
   ngOnInit(): void {
-    this.pwordForm = this.fb.group(
-      {
-        pword: ['', [Validators.required]],
-        pword2: ['', [Validators.required]],
-      }
-      //{ validator: this.checkPasswords }
-    );
+    this.pwordForm = this.fb.group({
+      pword: ['', [Validators.required]],
+      pword2: ['', [Validators.required]],
+    });
   }
-
-  /*checkPasswords(group: UntypedFormGroup) {
-    const pass = group.get('pword')?.value;
-    const confirmPass = group.get('pword2')?.value;
-    return pass === confirmPass ? null : { notSame: true };
-  }*/
 
   setNewPword() {
     if (this.pwordForm.invalid) {

@@ -4,7 +4,7 @@
             <img src="{{resena.foto}}" class="rounded card-img-top img-fluid" routerLink="/details/{{id}}">
         </td>
         <td class="col-6">
-            <h6 id='encabezado'>Reseña de <a [routerLink]="['/about', resena.usuario]" id="usuario">{{resena.usuario}}</a></h6>
+            <h6 id='encabezado'>{{'reviewPublicaTitulo' | translate}} <a [routerLink]="['/about', resena.usuario]" id="usuario">{{resena.usuario}}</a></h6>
             <h4>
                 {{resena.titulo}} ({{resena.year}}) 
             </h4>
@@ -17,7 +17,7 @@
                 <p *ngIf="resena.comentario != null && !resena.spoiler">{{resena.comentario}}</p>
                 <div *ngIf="resena.spoiler" (click)="mostrarSpoiler = true" [class.alert]="!mostrarSpoiler" [class.spoiler-revealed]="mostrarSpoiler" role="alert" style="cursor: pointer;">
                     <i class="bi bi-exclamation-triangle me-2" *ngIf="!mostrarSpoiler"></i> 
-                    <span *ngIf="!mostrarSpoiler">Este comentario contiene spoilers.</span>
+                    <span *ngIf="!mostrarSpoiler">{{'reviewPublicaSpoilers' | translate}}</span>
                     <p *ngIf="mostrarSpoiler">{{resena.comentario}}</p>
                 </div>
             </div>
@@ -31,22 +31,22 @@
                 </div>
             </div>
             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#denunciaModal" [disabled]="denunciaExistente!=null">
-                Denunciar
+                {{'reviewPublicaDenunciar' | translate}}
             </button>
               
             <div class="modal fade" id="denunciaModal" tabindex="-1" aria-labelledby="denunciaModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content bg-dark text-white">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="denunciaModalLabel">Motivo de la denuncia</h5>
+                            <h5 class="modal-title" id="denunciaModalLabel">{{'reviewPublicaMotivoDenuncia' | translate}}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <textarea name="motivo" [(ngModel)]="motivo" class="form-control mb-2" id="motivo" placeholder="Motivo de la denuncia" required [disabled]="denunciaEnviada"></textarea>
+                            <textarea name="motivo" [(ngModel)]="motivo" class="form-control mb-2" id="motivo" [placeholder]="'reviewPublicaMotivoDenuncia' | translate" required [disabled]="denunciaEnviada"></textarea>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-danger" (click)="denunciar(usuarioActual, resena.usuario, id, motivo)" data-bs-dismiss="modal">Enviar denuncia</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'reviewPublicaCancelar' | translate}}</button>
+                            <button type="submit" class="btn btn-danger" (click)="denunciar(usuarioActual, resena.usuario, id, motivo)" data-bs-dismiss="modal">{{'reviewPublicaEnviar' | translate}}</button>
                         </div>
                     </div>
                 </div>

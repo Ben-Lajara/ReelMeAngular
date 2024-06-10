@@ -75,11 +75,10 @@ export class AuthService {
       tap((data: any) => {
         if (data.status === 'success') {
           this.loggedIn.next(true);
-          this.username.next(data.usuario.nombre);
-          localStorage.setItem('username', data.usuario.nombre);
-          localStorage.setItem('veto', data.usuario.veto);
+          this.username.next(data.username);
+          localStorage.setItem('username', data.username);
+          localStorage.setItem('veto', data.veto);
           this.roles.next(data.roles);
-          console.log('Roles: ', data.roles);
           const rolesArray = Array.isArray(data.roles)
             ? data.roles
             : [data.roles];
@@ -87,13 +86,8 @@ export class AuthService {
           console.log('Logged in');
           localStorage.setItem('isAuthenticated', 'true');
           localStorage.setItem('authToken', data.token);
-          localStorage.setItem('perfil', data.usuario.perfil);
-          console.log('Perfil: ', data.usuario.perfil);
-          console.log('PerfilLocal: ', localStorage.getItem('perfil'));
-          console.log('Token: ', data.token);
+          localStorage.setItem('perfil', data.perfil);
           localStorage.setItem('roles', JSON.stringify(rolesArray));
-          console.log(JSON.stringify(rolesArray));
-          console.log(data.token);
         }
       })
     );

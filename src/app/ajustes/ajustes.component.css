@@ -40,11 +40,11 @@ a:hover {
 .profile-img-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 15px; /* Espacio entre la imagen y el input */
+  margin-bottom: 15px;
 }
 
 .profile-input {
-  display: block; /* Asegura que el input ocupe toda la anchura disponible */
+  display: block;
 }
 
 .nav-link {

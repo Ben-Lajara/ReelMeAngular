@@ -1,4 +1,6 @@
- <form [formGroup]="eliminarForm" (ngSubmit)="deleteUser()">
+<div class="row justify-content-center">
+  <div class="col-md-6">
+<form [formGroup]="eliminarForm" (ngSubmit)="deleteUser()">
  <div class="mb-3">
   
           <label for="pwordBorrar" class="form-label">{{'ajustesBorrarCuentaPwordActual' | translate}}</label>
@@ -19,3 +21,5 @@
       </div>
       <button type="submit" class="btn btn-danger w-100" [disabled]="eliminarForm.invalid">{{'ajustesBorrarCuentaBotonBorrar' | translate}}</button>
     </form>
+  </div>
+  </div>

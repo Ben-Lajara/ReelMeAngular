@@ -1,7 +1,7 @@
 <div *ngIf="!isLoading; else loading" [@fadeIn] [ngClass]="{'fade-in': true, 'show': !isLoading}" class="container mt-3">
 
   <div class="container mt-3 ">
-    <ul class="nav nav-underline mb-3">
+    <ul class="nav nav-underline mb-3 justify-content-center">
       <li class="nav-item">
         <a class="nav-link active" data-bs-toggle="tab" href="#pendientes">{{ 'panelAdminTabsPendientes' | translate }}</a>
       </li>
