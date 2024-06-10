@@ -1,4 +1,4 @@
-<!-- Navbar mejorada, aún queda mejorar el apartado de perfil -->
+
 <nav class="navbar sticky-top bg-secondary navbar-expand-lg" data-bs-theme="dark" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
   <div class="container">
     <a class="navbar-brand" href="#"><img src="../../assets/images/logoClaquetaAlargada.svg" height="16" class="d-inline-block align-text-top"> ReelMe</a>
@@ -15,18 +15,12 @@
           <li class="nav-item">
             <a class="nav-link" aria-current="home" href="#">{{'navbarInicio' | translate}}</a>
           </li>
-          <!-- <li class="nav-item">
-            <a *ngIf="(isLoggedIn | async)" [routerLink]="['/profile', currentUsername | async]" class="nav-link">Inicio</a>
-          </li> -->
           <li class="nav-item">
             <a *ngIf="!(isLoggedIn | async)" routerLink="query" class="nav-link">{{'navbarBuscar' | translate}}</a>
           </li>
           <li class="nav-item">
             <a *ngIf="(isLoggedIn | async)" routerLink="search" class="nav-link">{{'navbarBuscar' | translate}}</a>
           </li>
-          <!--<li class="nav-item">
-            <a *ngIf="!(isLoggedIn | async)" routerLink="register" class="nav-link">Registrarse</a>
-          </li>-->
           <li class="nav-item">
             <a *ngIf="!(isLoggedIn | async)" routerLink="login"  class="nav-link">{{'navbarLogin' | translate}}</a>
           </li>

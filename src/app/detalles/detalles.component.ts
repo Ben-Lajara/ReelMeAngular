@@ -10,7 +10,6 @@ import { ReelMeService } from '../reel-me.service';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { Observable, first, tap } from 'rxjs';
-import { Chart } from 'chart.js';
 import 'chart.js/auto';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { trigger, transition, style, animate } from '@angular/animations';
@@ -211,21 +210,6 @@ export class DetallesComponent implements OnInit {
     return this.resenas.filter((resena) => resena.gustado === true).length;
   }
 
-  /*getPuntuacionMedia() {
-    let suma = 0;
-    this.resenas.forEach((resena) => {
-      let calificacion = Number(resena.calificacion);
-      if (!isNaN(calificacion) && calificacion >= 1 && calificacion <= 5) {
-        suma += calificacion;
-        let frecuenciaActual = this.frecuencias.get(calificacion);
-        if (frecuenciaActual !== undefined) {
-          this.frecuencias.set(calificacion, frecuenciaActual + 1);
-        }
-      }
-    });
-    return (suma / this.resenas.length).toFixed(1);
-  }*/
-
   getStars(i: number): string {
     if (this.starsCache[i] !== undefined) {
       return this.starsCache[i];
@@ -342,7 +326,7 @@ export class DetallesComponent implements OnInit {
           return `${frecuencia} usuarios (${porcentaje}%) han puntuado ${calificacionStars}`;
         },
         textStyle: {
-          fontSize: 12, // Cambia esto al tamaño de letra que prefieras
+          fontSize: 12,
         },
       },
     };

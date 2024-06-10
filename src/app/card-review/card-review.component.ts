@@ -45,13 +45,10 @@ export class CardReviewComponent implements OnInit {
 
     let starClass: string;
     if (i <= this.review.calificacion) {
-      //console.log('Estrella llena');
       starClass = 'bi bi-star-fill'; // Estrella llena
     } else if (i - 0.5 == this.review.calificacion) {
-      //console.log('Mitad de estrella');
       starClass = 'bi bi-star-half'; // Mitad de estrella
     } else {
-      //console.log('Estrella vacía');
       starClass = 'bi bi-star d-none d-sm-inline-block'; // Estrella vacía
     }
 

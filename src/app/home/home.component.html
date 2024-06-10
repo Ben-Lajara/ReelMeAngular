@@ -60,12 +60,30 @@
     </div>
     <h2 class="mt-5">{{'homeOpiniones' | translate}}</h2>
     <div class="testimonials mt-4 d-flex flex-wrap justify-content-center">
-      <div class="testimonial card m-3 p-3 bg-black" *ngFor="let testimonial of testimonials">
-        <img [src]="testimonial.image" class="testimonial-img mx-auto mb-3 rounded-circle" alt="{{testimonial.name}}">
-        <h5 class="mb-1">{{testimonial.name}}</h5>
-        <p class="mb-2 text-muted">{{testimonial.role}}</p>
-        <p class="testimonial-text">"{{testimonial.text}}"</p>
+      <div class="testimonial card m-3 p-3 bg-black">
+        <img src="http://localhost:8080/uploads/claquetaPerfil.jpg" class="testimonial-img mx-auto mb-3 rounded-circle" alt="">
+        <h5 class="mb-1">{{'homeTestimonialAnaName' | translate}}</h5>
+        <p class="mb-2 text-muted">{{'homeTestimonialAnaRole' | translate}}</p>
+        <p class="testimonial-text">"{{'homeTestimonialAnaText' | translate}}"</p>
       </div>
+      <div class="testimonial card m-3 p-3 bg-black">
+        <img src="http://localhost:8080/uploads/palomitasPerfil.jpg" class="testimonial-img mx-auto mb-3 rounded-circle" alt="">
+        <h5 class="mb-1">{{'homeTestimonialCarlosName' | translate}}</h5>
+        <p class="mb-2 text-muted">{{'homeTestimonialCarlosRole' | translate}}</p>
+        <p class="testimonial-text">"{{'homeTestimonialCarlosText' | translate}}"</p>
+      </div>
+      <div class="testimonial card m-3 p-3 bg-black">
+        <img src="http://localhost:8080/uploads/carretePerfil.jpg" class="testimonial-img mx-auto mb-3 rounded-circle" alt="">
+        <h5 class="mb-1">{{'homeTestimonialMariaName' | translate}}</h5>
+        <p class="mb-2 text-muted">{{'homeTestimonialMariaRole' | translate}}</p>
+        <p class="testimonial-text">"{{'homeTestimonialMariaText' | translate}}"</p>
+      </div>
+      <div class="testimonial card m-3 p-3 bg-black">
+        <img src="http://localhost:8080/uploads/butacasPerfil.jpg" class="testimonial-img mx-auto mb-3 rounded-circle" alt="">
+        <h5 class="mb-1">{{'homeTestimonialJorgeName' | translate}}</h5>
+        <p class="mb-2 text-muted">{{'homeTestimonialJorgeRole' | translate}}</p>
+        <p class="testimonial-text">"{{'homeTestimonialJorgeText' | translate}}"</p>
+      </div>      
     </div>
   </div>
   

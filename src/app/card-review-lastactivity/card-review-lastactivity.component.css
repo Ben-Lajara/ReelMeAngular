@@ -32,13 +32,13 @@ i.bi-heart-fill {
 }
 
 .card-container {
-  flex: 0 1 100%; /* Full width by default for small devices */
+  flex: 0 1 100%;
   max-width: 100%;
   margin: 0.5rem;
 }
 
 .card {
-  height: auto; /* Adjust height to fit content */
+  height: auto;
   min-width: 40%;
   max-width: 100%;
   margin-right: 0;
@@ -59,11 +59,6 @@ i.bi-heart-fill {
 .embed-responsive .card-img-top {
   object-fit: cover;
 }
-
-/*.card-img-top {
-      height: 460px; 
-      object-fit: cover; 
-    }*/
 
 .rating {
   display: flex;
@@ -120,16 +115,16 @@ i.bi-heart-fill {
 
 @media (max-width: 576px) {
   .card-container {
-    flex: 0 1 calc(25% - 1rem); /* Cuatro tarjetas por fila en dispositivos muy pequeños */
+    flex: 0 1 calc(25% - 1rem);
     max-width: calc(25% - 1rem);
   }
 
   .card .card-body {
-    margin-bottom: 0.3rem; /* Ajusta el margen superior e inferior según sea necesario */
+    margin-bottom: 0.3rem;
     margin-top: 0px;
     margin-left: 0.1rem;
     margin-right: 0.1rem;
-    padding-left: 0.1rem; /* Ajusta el padding si es necesario para mantener el contenido bien espaciado */
+    padding-left: 0.1rem;
     padding-right: 0.1rem;
     padding-bottom: 0.2rem;
     padding-top: 0px;
@@ -142,7 +137,7 @@ i.bi-heart-fill {
   .rating .bi,
   .rating span,
   .actions .bi {
-    font-size: 0.45rem; /* Ajusta este valor según lo pequeño que quieras que sean */
+    font-size: 0.45rem;
   }
 
   .username {
@@ -154,7 +149,7 @@ i.bi-heart-fill {
 
 @media (min-width: 576px) and (max-width: 768px) {
   .card-container {
-    flex: 0 1 calc(25% - 1rem); /* Cuatro tarjetas por fila en dispositivos pequeños */
+    flex: 0 1 calc(25% - 1rem);
     max-width: calc(25% - 1rem);
   }
   .card-title {
@@ -167,28 +162,27 @@ i.bi-heart-fill {
 
   .rating .bi,
   .actions .bi {
-    font-size: 0.75rem; /* Ajusta este valor según lo pequeño que quieras que sean */
+    font-size: 0.75rem;
   }
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
   .card-container {
-    flex: 0 1 calc(25% - 1rem); /* Cuatro tarjetas por fila en dispositivos medianos */
-    max-width: calc(25% - 1rem);
+    flex: 0 1 calc(25% - 1rem);
   }
   .username,
   .rating .bi,
   .actions .bi {
-    font-size: 0.8rem; /* Ajusta el tamaño según necesites */
+    font-size: 0.8rem;
   }
 }
 
 @media (min-width: 992px) {
   .card-container {
-    flex: 0 1 calc(25% - 1rem); /* Cuatro tarjetas por fila en dispositivos grandes */
+    flex: 0 1 calc(25% - 1rem);
     max-width: calc(25% - 1rem);
   }
   .username {
-    font-size: 1.5rem; /* Ajusta este valor según lo grande que quieras que sea */
+    font-size: 1.5rem;
   }
 }

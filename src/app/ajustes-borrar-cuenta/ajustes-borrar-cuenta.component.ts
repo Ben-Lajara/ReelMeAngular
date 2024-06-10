@@ -51,6 +51,15 @@ export class AjustesBorrarCuentaComponent implements OnInit {
     if (this.eliminarForm.invalid) {
       return;
     }
+
+    if (
+      !confirm(
+        '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.'
+      )
+    ) {
+      return;
+    }
+
     console.log('Eliminando usuario');
     const { pwordBorrar, pwordBorrar2 } = this.eliminarForm.value;
     console.log(pwordBorrar, this.username);

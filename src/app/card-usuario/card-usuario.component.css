@@ -58,17 +58,17 @@
   .tooltip-title,
   .tooltip-text,
   .card-text {
-    font-size: 0.8rem; /* Aumento el tamaño de la fuente para que no se reduzca tanto */
-    margin-top: 0.5rem; /* Añado margen superior para dar más distancia con la imagen */
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
   }
 
   .btn {
-    font-size: 0.8rem; /* Reduzco el tamaño de la fuente del botón */
-    padding: 0.25rem 0.5rem; /* Reduzco el padding para disminuir la altura del botón */
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
   }
 
   span {
-    font-size: 0.5rem; /* Aumento el tamaño de la fuente para que no se reduzca tanto */
+    font-size: 0.5rem;
   }
 }
 
@@ -82,28 +82,28 @@
   .tooltip-text,
   .card-text,
   .btn {
-    font-size: 0.9rem; /* Aumento el tamaño de la fuente para que no se reduzca tanto */
+    font-size: 0.9rem;
   }
 
   span {
-    font-size: 0.6rem; /* Aumento el tamaño de la fuente para que no se reduzca tanto */
+    font-size: 0.6rem;
   }
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
   .card-container {
-    flex: 0 1 calc(33.33% - 1rem); /* Tres tarjetas por fila en dispositivos medianos */
+    flex: 0 1 calc(33.33% - 1rem);
     max-width: calc(33.33% - 1rem);
   }
 
   .btn {
-    font-size: 0.9rem; /* Aumento el tamaño de la fuente para que no se reduzca tanto */
+    font-size: 0.9rem;
   }
 }
 
 @media (min-width: 992px) {
   .btn {
-    font-size: 1rem; /* Aumento el tamaño de la fuente para que no se reduzca tanto */
+    font-size: 1rem;
   }
 }
 

@@ -19,11 +19,9 @@ import { CardReviewComponent } from './card-review/card-review.component';
 import { KeysPipe } from './keys.pipe';
 import { AuthGuard } from './auth-guard.service';
 import { OrdenPipe } from './orden.pipe';
-import { BarraFiltrosComponent } from './barra-filtros/barra-filtros.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { ReviewPublicaComponent } from './review-publica/review-publica.component';
 import { AboutComponent } from './about/about.component';
-import { BuzonComponent } from './buzon/buzon.component';
 import { SeguidoresComponent } from './seguidores/seguidores.component';
 import { SeguidosComponent } from './seguidos/seguidos.component';
 import { SocialComponent } from './social/social.component';
@@ -83,11 +81,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     CardReviewComponent,
     KeysPipe,
     OrdenPipe,
-    BarraFiltrosComponent,
     PerfilComponent,
     ReviewPublicaComponent,
     AboutComponent,
-    BuzonComponent,
     SeguidoresComponent,
     SeguidosComponent,
     SocialComponent,

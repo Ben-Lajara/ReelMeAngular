@@ -51,7 +51,6 @@ export class DiarioComponent implements OnInit {
   }
 
   toggleSortOrder() {
-    // Agregar este método
     this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
     if (this.reviews) {
       this.reviews = this.groupReviewsByMonth(
@@ -109,9 +108,7 @@ export class DiarioComponent implements OnInit {
       async (res: Object) => {
         console.log(res);
         this.reviews = this.groupReviewsByMonth(res as any[]);
-        console.log('Antes del await');
         await this.getPeliculas();
-        console.log('Despues del await');
         console.log(this.peliculas);
         this.isLoading = false;
         this.cdr.detectChanges();

@@ -1,33 +1,33 @@
 .card-container {
-  flex: 0 1 100%; /* Full width by default for small devices */
+  flex: 0 1 100%;
   max-width: 100%;
   margin: 0.5rem;
 }
 
 @media (max-width: 576px) {
   .card-container {
-    flex: 0 1 calc(33.33% - 1rem); /* Tres tarjetas por fila en dispositivos muy pequeños */
+    flex: 0 1 calc(33.33% - 1rem);
     max-width: calc(33.33% - 1rem);
   }
 }
 
 @media (min-width: 576px) and (max-width: 768px) {
   .card-container {
-    flex: 0 1 calc(33.33% - 1rem); /* Tres tarjetas por fila en dispositivos pequeños */
+    flex: 0 1 calc(33.33% - 1rem);
     max-width: calc(33.33% - 1rem);
   }
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
   .card-container {
-    flex: 0 1 calc(33.33% - 1rem); /* Tres tarjetas por fila en dispositivos medianos */
+    flex: 0 1 calc(33.33% - 1rem);
     max-width: calc(33.33% - 1rem);
   }
 }
 
 @media (min-width: 992px) {
   .card-container {
-    flex: 0 1 calc(20% - 1rem); /* Cinco tarjetas por fila en dispositivos grandes */
+    flex: 0 1 calc(20% - 1rem);
     max-width: calc(20% - 1rem);
   }
 }

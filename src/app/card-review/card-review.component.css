@@ -46,14 +46,14 @@ span {
     display: none;
   }
   i.bi-calendar2 {
-    font-size: 50px; /* Reducir el tamaño del ícono del calendario */
+    font-size: 50px;
   }
   span {
-    font-size: 1rem; /* Ajustar el tamaño de la fuente de la fecha */
+    font-size: 1rem;
   }
 
   i.iconos-estrellas {
-    margin: 0.1rem; /* Reducir el espaciado entre los íconos de las estrellas */
+    margin: 0.1rem;
   }
 
   i.iconos-estrellas {
@@ -62,19 +62,19 @@ span {
 
   i.bi-heart-fill {
     font-size: 0.75rem;
-    margin: 0.4rem; /* Reducir el espaciado entre los íconos del corazón */
+    margin: 0.4rem;
   }
 
   .col,
   .col-auto {
-    margin-right: 0.1rem; /* Reducir el espacio entre las columnas */
-    padding-left: 5px; /* Reducir el padding izquierdo */
-    padding-right: 5px; /* Reducir el padding derecho */
+    margin-right: 0.1rem;
+    padding-left: 5px;
+    padding-right: 5px;
   }
 
   .titulo {
     text-align: left;
-    font-size: 1rem; /* Ajustar el tamaño de la fuente del título y el año */
+    font-size: 1rem;
   }
   span.year {
     font-size: 0.8rem;
@@ -87,8 +87,8 @@ span {
   }
 
   img.img-thumbnail {
-    width: 40px; /* Ajustar el tamaño de la imagen si es necesario */
-    border-width: 1px; /* Hacer el borde más fino */
+    width: 40px;
+    border-width: 1px;
   }
   .tooltip-title {
     white-space: nowrap;

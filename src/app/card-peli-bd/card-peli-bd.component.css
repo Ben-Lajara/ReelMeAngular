@@ -1,12 +1,12 @@
 .card-container {
-  flex: 0 1 100%; /* Full width by default for small devices */
+  flex: 0 1 100%;
   max-width: 100%;
   margin: 0.5rem;
   position: aboslute;
 }
 
 .card {
-  height: auto; /* Adjust height to fit content */
+  height: auto;
   min-width: 40%;
   max-width: 100%;
   margin-right: 0;
@@ -60,14 +60,14 @@
 
 @media (max-width: 576px) {
   .card-container {
-    flex: 0 1 calc(25% - 1rem); /* Cuatro tarjetas por fila en dispositivos muy pequeños */
+    flex: 0 1 calc(25% - 1rem);
     max-width: calc(25% - 1rem);
   }
 
   .card .card-body {
-    margin-bottom: 0.3rem; /* Ajusta el margen superior e inferior según sea necesario */
+    margin-bottom: 0.3rem;
     margin-top: 0.1rem;
-    padding-left: 0.4rem; /* Ajusta el padding si es necesario para mantener el contenido bien espaciado */
+    padding-left: 0.4rem;
     padding-right: 0.4rem;
     padding-bottom: 0.2rem;
     padding-top: 0.1rem;
@@ -81,7 +81,7 @@
 
 @media (min-width: 576px) and (max-width: 768px) {
   .card-container {
-    flex: 0 1 calc(25% - 1rem); /* Cuatro tarjetas por fila en dispositivos pequeños */
+    flex: 0 1 calc(25% - 1rem);
     max-width: calc(25% - 1rem);
   }
   .tooltip-title,

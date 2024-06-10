@@ -56,7 +56,7 @@ export class RestablecerComponent implements OnInit {
       this.tiempoRestante--;
       if (this.tiempoRestante === 0) {
         clearInterval(this.intervalId);
-        this.mensajeEnviado = false; // Opcional: Ocultar el mensaje cuando el contador llegue a 0
+        this.mensajeEnviado = false;
       }
     }, 1000);
   }
@@ -67,7 +67,6 @@ export class RestablecerComponent implements OnInit {
     }
   }
 
-  // Opcional: Formatear el tiempo restante en un formato más legible
   get tiempoFormateado(): string {
     const horas = Math.floor(this.tiempoRestante / 3600);
     const minutos = Math.floor((this.tiempoRestante % 3600) / 60);

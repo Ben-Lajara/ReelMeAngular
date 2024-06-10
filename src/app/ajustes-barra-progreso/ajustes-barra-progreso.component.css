@@ -1,15 +1,14 @@
-/* estilos para ajustes-barra-progreso.component.css */
 .progress-container {
   width: 100%;
   margin: auto;
   padding: 20px;
   text-align: center;
-  color: #adb5bd; /* text-muted from Bootstrap */
+  color: #adb5bd;
 }
 
 .progress {
-  background-color: #343a40; /* bg-dark from Bootstrap */
-  border: 1px solid #495057; /* dark border to highlight the progress */
+  background-color: #343a40;
+  border: 1px solid #495057;
   border-radius: 0.25rem;
   overflow: hidden;
   height: 1.5rem;
@@ -18,11 +17,7 @@
 }
 
 .progress-bar {
-  background: linear-gradient(
-    90deg,
-    #0d6efd,
-    #6610f2
-  ); /* Primary to Purple gradient from Bootstrap */
+  background: linear-gradient(90deg, #0d6efd, #6610f2);
   height: 100%;
   text-align: center;
   white-space: nowrap;
@@ -44,13 +39,13 @@
 .current-progress,
 .total-progress {
   font-weight: bold;
-  font-size: 1.25rem; /* slightly larger font for better visibility */
+  font-size: 1.25rem;
 }
 
 .current-progress {
-  color: #0d6efd; /* Primary color from Bootstrap */
+  color: #0d6efd;
 }
 
 .total-progress {
-  color: #6610f2; /* Purple color from Bootstrap */
+  color: #6610f2;
 }

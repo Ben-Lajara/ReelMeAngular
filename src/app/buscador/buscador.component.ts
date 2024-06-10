@@ -17,7 +17,7 @@ export class BuscadorComponent implements OnInit {
     this.pelisControl.valueChanges
       .pipe(
         debounceTime(300), // Retraso de 300ms
-        distinctUntilChanged() // Sólo emitir si el valor es diferente
+        distinctUntilChanged()
       )
       .subscribe((value) => {
         if (value !== null && value.trim() !== '') {
