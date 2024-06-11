@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit {
   error = false;
   nombreError = '';
   pwordError = '';
-  //@ViewChild('loginForm') loginForm!: NgForm;
   loginForm!: FormGroup;
 
   constructor(

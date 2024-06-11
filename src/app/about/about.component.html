@@ -3,7 +3,7 @@
     <div *ngIf="!isLoading; else loading" [@fadeIn] (@fadeIn.done)="onFadeInDone()">
         <div class="profile-card bg-black">
             <div class="profile-header d-flex align-items-center">
-                <img [src]="'http://192.168.1.29:8080/uploads/' + datos.perfil" alt="" class="profile-image" [style.borderColor]="datos.color">
+                <img [src]="'http://localhost:8080/uploads/' + datos.perfil" alt="" class="profile-image" [style.borderColor]="datos.color">
                 <div class="profile-info">
                     <h3 *ngIf="datos.apodo; else nombreTemplate">
                         {{datos.apodo}} <i *ngIf="datos.rango" class="bi bi-patch-check-fill" [ngStyle]="{'color': getColor(datos.rango)}"></i>
