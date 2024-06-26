@@ -180,25 +180,27 @@ i.bi-heart-fill {
 
 @media (max-width: 576px) {
   .card-container {
-    flex: 0 1 calc(25% - 1rem); /* Cuatro tarjetas por fila en dispositivos muy pequeños */
-    max-width: calc(25% - 1rem);
+    flex: 0 1 calc(50% - 1rem);
+    max-width: calc(50% - 1rem);
   }
 
   .card .card-body {
-    margin: 0.5rem 0; /* Ajusta el margen superior e inferior según sea necesario */
-    padding: 0.5rem; /* Ajusta el padding si es necesario para mantener el contenido bien espaciado */
+    margin: 0.5rem 0;
+    padding: 0.5rem;
   }
+
   .card-title {
     display: none;
   }
+
   .rating i,
   .rating span,
   .actions .bi {
-    font-size: 0.45rem;
+    font-size: 0.75rem;
   }
 
   .username {
-    font-size: 0.62rem;
+    font-size: 0.8rem;
   }
 }
 
@@ -223,7 +225,7 @@ i.bi-heart-fill {
 
 @media (min-width: 768px) and (max-width: 992px) {
   .card-container {
-    flex: 0 1 calc(25% - 1rem); /* Cuatro tarjetas por fila en dispositivos medianos */
+    flex: 0 1 calc(25% - 1rem);
     max-width: calc(25% - 1rem);
   }
   .username,
@@ -235,7 +237,7 @@ i.bi-heart-fill {
 
 @media (min-width: 992px) {
   .card-container {
-    flex: 0 1 calc(25% - 1rem); /* Cuatro tarjetas por fila en dispositivos grandes */
+    flex: 0 1 calc(25% - 1rem);
     max-width: calc(25% - 1rem);
   }
   .username {

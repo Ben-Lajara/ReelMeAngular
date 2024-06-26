@@ -17,7 +17,7 @@
                 <p *ngIf="resena.comentario != null && !resena.spoiler">{{resena.comentario}}</p>
                 <div *ngIf="resena.spoiler" (click)="mostrarSpoiler = true" [class.alert]="!mostrarSpoiler" [class.spoiler-revealed]="mostrarSpoiler" role="alert" style="cursor: pointer;">
                     <i class="bi bi-exclamation-triangle me-2" *ngIf="!mostrarSpoiler"></i> 
-                    <span *ngIf="!mostrarSpoiler">{{'reviewPublicaSpoilers' | translate}}</span>
+                    <span *ngIf="!mostrarSpoiler">{{'reviewPublicaSpoiler' | translate}}</span>
                     <p *ngIf="mostrarSpoiler">{{resena.comentario}}</p>
                 </div>
             </div>
