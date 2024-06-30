@@ -1,0 +1,16 @@
+<div *ngIf="servicios" class="card text-bg-success mb-2 d-none d-md-block">
+    <div class="card-header">{{'detallesEstadisticasPlataformas' | translate}}</div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item" *ngFor="let servicio of servicios.flatrate">
+        <img class="rounded" [src]="'https://image.tmdb.org/t/p/w45' + servicio.logo_path" alt="{{servicio.provider_name}}">
+        {{servicio.provider_name}}
+      </li>
+    </ul>
+  </div>
+  
+  <div *ngIf="servicios" class="serviciosMovil d-block d-md-none">
+    <span>{{'detallesEstadisticasPlataformas' | translate}}</span>
+    <span class="iconosServiciosMovil" *ngFor="let servicio of servicios.flatrate">
+      <img class="rounded servicioMovil" [src]="'https://image.tmdb.org/t/p/w45' + servicio.logo_path" alt="{{servicio.provider_name}}">
+    </span>
+  </div>

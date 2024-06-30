@@ -86,9 +86,9 @@ span {
     font-size: 0.8rem;
   }
 
-  img.img-thumbnail {
+  .img-thumbnail {
     width: 40px;
-    border-width: 1px;
+    border-width: 0.1rem;
   }
   .tooltip-title {
     white-space: nowrap;

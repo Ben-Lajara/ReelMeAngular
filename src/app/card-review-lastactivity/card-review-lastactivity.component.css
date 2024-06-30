@@ -19,22 +19,8 @@ i.bi-heart-fill {
   color: rgb(195, 57, 57);
 }
 
-.apodo {
-  margin-bottom: 0;
-}
-
-.nombre {
-  margin-top: 0;
-}
-
 .nav-link.active {
   color: white;
-}
-
-.card-container {
-  flex: 0 1 100%;
-  max-width: 100%;
-  margin: 0.5rem;
 }
 
 .card {
@@ -119,11 +105,6 @@ i.bi-heart-fill {
 }
 
 @media (max-width: 576px) {
-  .card-container {
-    flex: 0 1 calc(50% - 1rem);
-    max-width: calc(50% - 1rem);
-  }
-
   .card .card-body {
     margin: 0;
     padding: 0.5rem;
@@ -138,23 +119,11 @@ i.bi-heart-fill {
   .actions .bi {
     font-size: 0.75rem;
   }
-
-  .username {
-    font-size: 0.8rem;
-  }
 }
 
 @media (min-width: 576px) and (max-width: 768px) {
-  .card-container {
-    flex: 0 1 calc(25% - 1rem);
-    max-width: calc(25% - 1rem);
-  }
   .card-title {
     display: none;
-  }
-
-  .username {
-    font-size: 0.5rem;
   }
 
   .rating .bi,
@@ -164,11 +133,6 @@ i.bi-heart-fill {
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
-  .card-container {
-    flex: 0 1 calc(25% - 1rem);
-    max-width: calc(25% - 1rem);
-  }
-  .username,
   .rating .bi,
   .actions .bi {
     font-size: 0.8rem;
@@ -176,11 +140,4 @@ i.bi-heart-fill {
 }
 
 @media (min-width: 992px) {
-  .card-container {
-    flex: 0 1 calc(25% - 1rem);
-    max-width: calc(25% - 1rem);
-  }
-  .username {
-    font-size: 1.5rem;
-  }
 }

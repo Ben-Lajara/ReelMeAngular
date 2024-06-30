@@ -1,1 +1,20 @@
-<!-- Causa problemas al modularizarlo-->
+<div class="container d-none d-md-flex">
+    <dl>
+      <dd><i class="bi bi-eye-fill text-info"></i> {{'detallesEstadisticasVistaPor' | translate}} {{resenas.length}} {{'detallesEstadisticasUsuarios' | translate}}</dd>
+      <dd><i class="bi bi-heart-fill text-info"></i> {{'detallesEstadisticasLeGusta' | translate}} {{gustados}} {{'detallesEstadisticasUsuarios' | translate}} </dd>
+      <!-- <dd *ngIf="(pelicula$ | async)?.Awards.startsWith('Won')"><i class="bi bi-award-fill text-info"></i> {{(pelicula$ | async)?.Awards.substring(0, (pelicula$ | async)?.Awards.indexOf('Oscars') + 'Oscars'.length)}}</dd>-->
+      <dd><i class="bi bi-coin text-info"></i> {{taquilla}} {{'detallesEstadisticasRecaudacion' | translate}}</dd>
+    </dl>
+  </div>
+  <div class="d-flex d-md-none card-container">
+    <div class="card tarjetaEstadisticasMovil text-bg-success">
+      <i class="bi bi-eye-fill icon-large"></i>
+      <span class="text-large">{{resenas.length}}</span>
+      <span>{{'detallesEstadisticasUsuarios' | translate}}</span>
+    </div>
+    <div class="card tarjetaEstadisticasMovil text-bg-danger">
+      <i class="bi bi-heart-fill text-white icon-large"></i>
+      <span class="text-large">{{gustados}}</span>
+      <span>{{'detallesEstadisticasUsuarios' | translate}}</span>
+    </div>
+  </div>

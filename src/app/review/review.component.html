@@ -44,11 +44,14 @@
               </button>
             </div>
             <div class="col">
-              <label for="fecha" class="mr-2">{{'reviewFechaVista' | translate}}</label>
-              <input type="date" id="fecha" class="form-control form-control-sm" name="fecha" [ngModel]="fecha | date:'yyyy-MM-dd'" (ngModelChange)="fecha = $event" [max]="hoy | date:'yyyy-MM-dd'">
+              <!--<label for="fecha">{{'reviewFechaVista' | translate}}</label>-->
+              <div class="input-group">
+                <div class="input-group-text">{{'reviewFechaVista' | translate}}</div>
+                <input type="date" id="fecha" class="form-control form-control-sm" name="fecha" [ngModel]="fecha | date:'yyyy-MM-dd'" (ngModelChange)="fecha = $event" [max]="hoy | date:'yyyy-MM-dd'">
+              </div>
             </div>
           </div>
-          <div *ngFor="let revisionadoExistente of revisionados; let i = index" class="row mb-3">
+          <div *ngFor="let revisionadoExistente of revisionados; let i = index" class="row mb-3 align-items-end">
             <div class="col-auto">
               <label [for]="'fechaRevisionado' + i" class="mr-2">{{'reviewFechaRevisionado' | translate}}</label>
               <input type="date" [id]="'fechaRevisionado' + i" class="form-control form-control-md" [name]="'fechaRevisionado' + i" [ngModel]="revisionadoExistente.fechaRevisionado | date:'yyyy-MM-dd'" (ngModelChange)="revisionadoExistente.fechaRevisionado = $event" [min]="fecha | date:'yyyy-MM-dd'"  [max]="hoy | date:'yyyy-MM-dd'">
@@ -57,11 +60,14 @@
               <label [for]="'comentarioRevisionado' + i" class="mr-2">{{'reviewComentarioRevisionado' | translate}}</label>
               <textarea [id]="'comentarioRevisionado' + i" class="form-control form-control-md" [name]="'comentarioRevisionado' + i" [(ngModel)]="revisionadoExistente.comentarioRevisionado" rows="1" style="overflow-y: auto;"></textarea>
             </div>
-            <div class="col-auto d-flex align-items-center">
-              <button class="btn btn-danger" (click)="confirmarEliminacion(i, revisionadoExistente.id)">{{'reviewEliminarRevisionado' | translate}}</button>
+            <div class="col-auto">
+              <button class="btn btn-danger" (click)="confirmarEliminacion(i, revisionadoExistente.id)">
+                <span class="d-none d-md-inline">{{'reviewEliminarRevisionado' | translate}}</span>
+                <i class="bi bi-trash d-md-none"></i>
+              </button>
             </div>
           </div>
-          <div *ngFor="let revisionadoNuevo of revisionadosNuevos; let i = index" class="row mb-3">
+          <div *ngFor="let revisionadoNuevo of revisionadosNuevos; let i = index" class="row mb-3 align-items-end">
             <div class="col-auto">
               <label [for]="'fechaRevisionadoNuevo' + i" class="mr-2">{{'reviewFechaRevisionado' | translate}}</label>
               <input type="date" [id]="'fechaRevisionadoNuevo' + i" class="form-control form-control-md" [name]="'fechaRevisionadoNuevo' + i" [ngModel]="revisionadoNuevo.fechaRevisionado | date:'yyyy-MM-dd'" (ngModelChange)="revisionadoNuevo.fechaRevisionado = $event" [min]="fecha | date:'yyyy-MM-dd'" [max]="hoy | date:'yyyy-MM-dd'">
@@ -71,7 +77,10 @@
               <textarea [id]="'comentarioRevisionadoNuevo' + i" class="form-control form-control-md" [name]="'comentarioRevisionadoNuevo' + i" [(ngModel)]="revisionadoNuevo.comentarioRevisionado" rows="1" style="overflow-y: auto;"></textarea>
             </div>
             <div class="col-auto d-flex align-items-center">
-                <button class="btn btn-danger" (click)="eliminarRevisionadoNuevo(i)">{{'reviewEliminarRevisionado' | translate}}</button>
+              <button class="btn btn-danger" (click)="eliminarRevisionadoNuevo(i)">
+                <span class="d-none d-md-inline">{{'reviewEliminarRevisionado' | translate}}</span>
+                <i class="bi bi-trash d-md-none"></i>
+              </button>
             </div>
           </div>
           <div *ngIf="mensajeError" class="alert alert-danger mt-3">{{ mensajeError }}</div>

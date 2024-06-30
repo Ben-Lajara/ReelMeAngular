@@ -59,6 +59,8 @@ import { AboutProfileCardComponent } from './about-profile-card/about-profile-ca
 import { DetallesUsuarioComponent } from './detalles-usuario/detalles-usuario.component';
 import { HomeCarouselComponent } from './home-carousel/home-carousel.component';
 import { HomeOpinionesComponent } from './home-opiniones/home-opiniones.component';
+import { DetallesServiciosComponent } from './detalles-servicios/detalles-servicios.component';
+import { DetallesStatsComponent } from './detalles-stats/detalles-stats.component';
 
 registerLocaleData(localeEs);
 registerLocaleData(localeEn);
@@ -110,6 +112,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DetallesUsuarioComponent,
     HomeCarouselComponent,
     HomeOpinionesComponent,
+    DetallesServiciosComponent,
+    DetallesStatsComponent,
   ],
   imports: [
     BrowserModule,

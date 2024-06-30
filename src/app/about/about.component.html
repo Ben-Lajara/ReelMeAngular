@@ -16,13 +16,13 @@
         <div class="tab-content m-2" id="myTabContent">
             <div class="tab-pane fade show active" id="actividad" role="tabpanel" aria-labelledby="actividad-tab">
                 <div class="d-flex flex-wrap justify-content-center" *ngIf="fadeInDone" [@listAnimation]="actividadReciente.length">
-                    <div  *ngFor="let resena of actividadReciente" class="card-container" >
+                    <div *ngFor="let resena of actividadReciente" class="card-container" >
                         <app-card-review-lastactivity [resena]="resena"></app-card-review-lastactivity>
                     </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="resenas" role="tabpanel" aria-labelledby="resenas-tab">
-                <div class="d-flex justify-content-center">
+                <!--<div class="justify-content-center d-none d-md-flex">
                     <ul class="list-unstyled">
                         <li *ngFor="let resena of resenasUsuario" class="text-center">
                             <a id="resena" [routerLink]="['/reviewed', resena.nomUsuario.nombre, resena.idPelicula.id]">{{resena.idPelicula.titulo}}</a> ({{resena.idPelicula.year}})
@@ -33,6 +33,11 @@
                             </span>
                         </li>
                     </ul>
+                </div>-->
+                <div class="d-flex flex-wrap">
+                  <div class="card-container" *ngFor="let resena of resenasUsuario">
+                    <app-card-review-lastactivity [resena]="resena"></app-card-review-lastactivity>
+                  </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="diario" role="tabpanel" aria-labelledby="diario-tab">

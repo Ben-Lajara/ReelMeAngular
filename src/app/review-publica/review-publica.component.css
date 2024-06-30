@@ -58,16 +58,14 @@ a {
   animation: fadeIn 0.5s;
 }
 
-/* Mejoras de estilo para el botón y el modal en móviles */
 .btn-danger {
   background-color: #dc3545;
   border: none;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease;
 }
 
 .btn-danger:hover {
   background-color: #c82333;
-  transform: scale(1.05);
 }
 
 /* Estilo para el modal centrado */

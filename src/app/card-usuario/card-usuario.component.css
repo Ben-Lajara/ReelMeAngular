@@ -34,7 +34,7 @@
 }
 
 .card {
-  height: auto; /* Cambio a auto para que la altura se ajuste al contenido */
+  height: auto;
   width: 100%;
   max-width: 12.5rem;
   transition: transform 0.3s ease;

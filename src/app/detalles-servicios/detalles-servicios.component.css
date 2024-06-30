@@ -1,0 +1,16 @@
+.serviciosMovil {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.iconosServiciosMovil {
+  float: right;
+}
+
+.servicioMovil {
+  width: 1.5rem;
+  margin: 2.5px;
+}

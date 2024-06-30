@@ -87,46 +87,12 @@
     <div class="col-12 col-md-3" id="dcha">
       <dt id="lineaDivisoria">{{'detallesEstadisticas' | translate}}</dt>
       <div *ngIf="puntuacionMedia !== 'NaN'; else sinResenas">
-      <div id="contenedorStats" class="container mb-2" style="display: flex; align-items: center;">
-        <div echarts [options]="chartOptions" class="chart-container" style="height:20vh; width:13vw;"></div>
-        <h4 style="margin-left: 20px">{{puntuacionMedia}}</h4>
-      </div>
-      <div class="container d-none d-md-flex">
-        <dl>
-          <dd><i class="bi bi-eye-fill text-info"></i> {{'detallesEstadisticasVistaPor' | translate}} {{resenas.length}} {{'detallesEstadisticasUsuarios' | translate}}</dd>
-          <dd><i class="bi bi-heart-fill text-info"></i> {{'detallesEstadisticasLeGusta' | translate}} {{getGustados()}} {{'detallesEstadisticasUsuarios' | translate}} </dd>
-          <!-- <dd *ngIf="(pelicula$ | async)?.Awards.startsWith('Won')"><i class="bi bi-award-fill text-info"></i> {{(pelicula$ | async)?.Awards.substring(0, (pelicula$ | async)?.Awards.indexOf('Oscars') + 'Oscars'.length)}}</dd>-->
-          <dd><i class="bi bi-coin text-info"></i> {{(pelicula$ | async)?.BoxOffice}} {{'detallesEstadisticasRecaudacion' | translate}}</dd>
-        </dl>
-      </div>
-      <div class="d-flex d-md-none card-container">
-        <div class="card tarjetaEstadisticasMovil text-bg-success">
-          <i class="bi bi-eye-fill icon-large"></i>
-          <span class="text-large">{{resenas.length}}</span>
-          <span>{{'detallesEstadisticasUsuarios' | translate}}</span>
+        <div id="contenedorStats" class="container mb-2" style="display: flex; align-items: center;">
+          <div echarts [options]="chartOptions" class="chart-container" style="height:20vh; width:13vw;"></div>
+          <h4 style="margin-left: 20px">{{puntuacionMedia}}</h4>
         </div>
-        <div class="card tarjetaEstadisticasMovil text-bg-danger">
-          <i class="bi bi-heart-fill text-white icon-large"></i>
-          <span class="text-large">{{getGustados()}}</span>
-          <span>{{'detallesEstadisticasUsuarios' | translate}}</span>
-        </div>
-      </div>
-      <div *ngIf="servicios" class="card text-bg-success mb-2 d-none d-md-block">
-        <div class="card-header">{{'detallesEstadisticasPlataformas' | translate}}</div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item" *ngFor="let servicio of servicios.flatrate">
-            <img class="rounded" [src]="'https://image.tmdb.org/t/p/w45' + servicio.logo_path" alt="{{servicio.provider_name}}">
-             {{servicio.provider_name}}
-          </li>
-        </ul>
-      </div>
-      
-      <div *ngIf="servicios" class="serviciosMovil d-block d-md-none">
-        <span>{{'detallesEstadisticasPlataformas' | translate}}</span>
-        <span class="iconosServiciosMovil" *ngFor="let servicio of servicios.flatrate">
-          <img class="rounded servicioMovil" [src]="'https://image.tmdb.org/t/p/w45' + servicio.logo_path" alt="{{servicio.provider_name}}">
-        </span>
-      </div>
+        <app-detalles-stats [gustados]="getGustados()" [resenas]="resenas" [taquilla]="(pelicula$ | async)?.BoxOffice"></app-detalles-stats>
+        <app-detalles-servicios [servicios]="servicios"></app-detalles-servicios>
       </div>
     </div>
     
