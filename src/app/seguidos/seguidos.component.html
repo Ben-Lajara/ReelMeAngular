@@ -1,10 +1,10 @@
 <div class="container mt-3">
     <h4>{{'seguidos' | translate}} {{username}}</h4>
     <div class="row row-cols-md-5">
-        <ng-container *ngFor="let seguido of seguidos">
-            <ng-container *ngIf="seguido.usuarioSeguido.nombre !== username">
+        <div class="card-container" *ngFor="let seguido of seguidos">
+            <div *ngIf="seguido.usuarioSeguido.nombre !== username">
                 <app-card-usuario [usuario]="seguido.usuarioSeguido" [username]="currentUser"></app-card-usuario>
-            </ng-container>
-        </ng-container>
+            </div>
+        </div>
     </div>
 </div>

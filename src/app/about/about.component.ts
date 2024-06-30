@@ -91,19 +91,6 @@ export class AboutComponent implements OnInit {
     return this.http.get(`${this.apiUrl}/${usuario}/reviewed`);
   }
 
-  getColor(rango: string): string {
-    switch (rango) {
-      case 'BRONCE':
-        return '#cd7f32';
-      case 'PLATA':
-        return '#c0c0c0';
-      case 'ORO':
-        return '#ffd700';
-      default:
-        return '#000000';
-    }
-  }
-
   onFadeInDone() {
     this.fadeInDone = true;
   }

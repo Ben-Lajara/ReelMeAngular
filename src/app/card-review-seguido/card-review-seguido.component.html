@@ -18,7 +18,7 @@
                     <i *ngIf="seguido.calificacion % 1 != 0" class="text-warning bi bi-star-fill"
                         [ngClass]="{'bi-star-fill': i <= seguido.calificacion}"></i>
                     <span *ngIf="seguido.calificacion % 1 != 0 && i == (seguido.calificacion - seguido.calificacion % 1) + 1"
-                        class="text-warning fs-4 fw-bold">&#189;</span>
+                        class="text-warning fw-bold" id="mitad">&#189;</span>
                 </span>
             </div>
             <div class="actions">

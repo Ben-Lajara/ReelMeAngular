@@ -1,6 +1,6 @@
 #contenedor-principal {
   position: relative;
-  overflow: visible; /* Asegúrate de que el contenedor permita el desplazamiento */
+  overflow: visible;
 }
 
 #backdrop {
@@ -71,7 +71,7 @@
 }
 
 .watch-providers h5 {
-  font-size: 18px; /* Tamaño de fuente reducido */
+  font-size: 18px;
   margin-bottom: 10px;
 }
 
@@ -91,8 +91,8 @@
 
 .watch-providers img {
   margin-right: 15px;
-  width: 30px; /* Tamaño de icono reducido */
-  height: 30px; /* Tamaño de icono reducido */
+  width: 30px;
+  height: 30px;
   border-radius: 8px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
@@ -103,13 +103,13 @@
 }
 
 .watch-providers .provider-name {
-  font-size: 10px; /* Tamaño de fuente reducido */
+  font-size: 10px;
   font-weight: bold;
 }
 
 .watch-providers .provider-type {
   color: #666666;
-  font-size: 10px; /* Tamaño de fuente reducido */
+  font-size: 10px;
 }
 
 .nav-link {
@@ -118,27 +118,6 @@
 
 .nav-link:active {
   color: black;
-}
-
-#seguidoResena:hover {
-  box-shadow: 0 0 5px white;
-}
-
-#resenaUsuario {
-  color: rgb(186, 186, 186);
-  text-decoration: none;
-}
-#resenaUsuario:hover {
-  color: orange;
-}
-
-#usuario {
-  text-decoration: none;
-  color: white;
-}
-
-#usuario:hover {
-  color: rgb(5, 225, 5);
 }
 
 i {
@@ -177,25 +156,6 @@ li {
   margin-bottom: 10px;
 }
 
-.resenaContainer {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  padding: 0.5rem;
-}
-
-.resenaContainer:hover {
-  background-color: #343a40;
-}
-
-.resenaContainer:last-child {
-  border-bottom: none;
-}
-
-.resenaContainer img {
-  margin-right: 10px;
-}
-
 .resena-usuario-link {
   margin-right: 5px;
 }
@@ -206,14 +166,6 @@ li {
 
 .estrellas {
   margin-right: 8px;
-}
-
-#perfilUsuario {
-  border: 2px solid;
-}
-
-#alertaSpoiler {
-  cursor: pointer;
 }
 
 #contenedorStats {
@@ -265,4 +217,57 @@ li {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
+}
+
+.peliActual {
+  opacity: 0.4;
+}
+
+.serviciosMovil {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.iconosServiciosMovil {
+  float: right;
+}
+
+.servicioMovil {
+  width: 1.5rem;
+  margin: 2.5px;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.tarjetaEstadisticasMovil {
+  width: 48%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1%;
+  box-shadow: 0 0 2px black;
+  padding-bottom: 0.5rem;
+}
+
+.icon-large {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.text-large {
+  font-size: 1.5em;
+}
+
+@media (max-width: 768px) {
+  .chart-container {
+    width: 100% !important;
+  }
 }

@@ -1,30 +1,7 @@
 <div class="container mt-3">
 
     <div *ngIf="!isLoading; else loading" [@fadeIn] (@fadeIn.done)="onFadeInDone()">
-        <div class="profile-card bg-black">
-            <div class="profile-header d-flex align-items-center">
-                <img [src]="'http://localhost:8080/uploads/' + datos.perfil" alt="" class="profile-image" [style.borderColor]="datos.color">
-                <div class="profile-info">
-                    <h3 *ngIf="datos.apodo; else nombreTemplate">
-                        {{datos.apodo}} <i *ngIf="datos.rango" class="bi bi-patch-check-fill" [ngStyle]="{'color': getColor(datos.rango)}"></i>
-                    </h3>
-                    <ng-template #nombreTemplate>
-                        <h3>&#64;{{datos.nombre}} <i *ngIf="datos.rango" class="bi bi-patch-check-fill" [ngStyle]="{'color': getColor(datos.rango)}"></i></h3>
-                    </ng-template>
-                    <p class="nombre" *ngIf="datos.apodo">&#64;{{datos.nombre}}</p>
-                    <p>{{datos.bio}}</p>
-                </div>
-            </div>
-            <p class="profile-stats">
-                {{datos.vistas}} {{'perfilMoviesWatched' | translate}}
-                &nbsp;|&nbsp;
-                {{datos.vistasYear}} {{'perfilThisYear' | translate}}
-                &nbsp;|&nbsp;
-                <a id="seguidores" [routerLink]="['/about', username, 'followers']">{{datos.seguidores}} {{'perfilFollowers' | translate}}</a>
-                &nbsp;|&nbsp;
-                <a id="seguidos" [routerLink]="['/about', username, 'following']">{{datos.seguidos}} {{'perfilFollowing' | translate}}</a>
-            </p>
-        </div>
+        <app-about-profile-card [datos]="datos" [username]="username" ></app-about-profile-card>
         <ul class="nav nav-underline justify-content-center" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
               <a class="nav-link active" id="actividad-tab" data-bs-toggle="tab" href="#actividad" role="tab" aria-controls="actividad" aria-selected="true">{{'tabsRecentActivity' | translate}}</a>

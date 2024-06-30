@@ -9,6 +9,7 @@ import { AuthService } from '../auth.service';
 })
 export class DetallesReviewedComponent {
   @Input() resena: any;
+  @Input() resenas: any;
   @Input() idPeli = '';
   isLoggedIn: Observable<boolean>;
   currentUsername: Observable<string>;

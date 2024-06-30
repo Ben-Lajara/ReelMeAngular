@@ -81,6 +81,7 @@ i.bi-heart-fill {
 .profile-info,
 .profile-stats {
   margin-bottom: 0;
+  margin-top: 1rem;
 }
 
 .profile-stats {
@@ -198,10 +199,6 @@ i.bi-heart-fill {
   .actions .bi {
     font-size: 0.75rem;
   }
-
-  .username {
-    font-size: 0.8rem;
-  }
 }
 
 @media (min-width: 576px) and (max-width: 768px) {
@@ -211,10 +208,6 @@ i.bi-heart-fill {
   }
   .card-title {
     display: none;
-  }
-
-  .username {
-    font-size: 0.5rem;
   }
 
   .rating i,
@@ -239,8 +232,5 @@ i.bi-heart-fill {
   .card-container {
     flex: 0 1 calc(25% - 1rem);
     max-width: calc(25% - 1rem);
-  }
-  .username {
-    font-size: 1.5rem;
   }
 }

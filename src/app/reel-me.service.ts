@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs';
+import { map, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +12,8 @@ export class ReelMeService {
   peli: any;
   peliTMDB: any;
   trailerUrl: any;
+  idColTMDB: any;
+  colTMDB: any;
   constructor(private http: HttpClient) {}
 
   getTmdbLanguage() {
@@ -58,10 +60,40 @@ export class ReelMeService {
       );
   }
 
+  idColeccionTMDB(id: string) {
+    return this.http
+      .get<any>(
+        this.urlTMDB +
+          '/movie/' +
+          id +
+          `?api_key=2663bd6e5dd4ea342aa1f60dd1d669f9&language=${this.getTmdbLanguage()}&external_source=imdb_id`
+      )
+      .pipe(
+        tap((response) => {
+          this.idColTMDB = response.belongs_to_collection
+            ? response.belongs_to_collection.id
+            : null;
+        }),
+        map((response) =>
+          response.belongs_to_collection
+            ? response.belongs_to_collection.id
+            : null
+        )
+      );
+  }
+
   sagaTMDB(id: string) {
-    return this.http.get(
-      `https://api.themoviedb.org/3/collection/${id}?api_key=2663bd6e5dd4ea342aa1f60dd1d669f9&external_source=imdb_id`
-    );
+    return this.http
+      .get<any>(
+        `https://api.themoviedb.org/3/collection/${id}?api_key=2663bd6e5dd4ea342aa1f60dd1d669f9`
+      )
+      .pipe(
+        map((response) =>
+          response.parts.filter(
+            (peli: { release_date: null }) => peli.release_date !== ''
+          )
+        )
+      );
   }
 
   trailerTMDB(id: string) {
@@ -98,5 +130,13 @@ export class ReelMeService {
 
   trailerUrlTMDB() {
     return this.trailerUrl;
+  }
+
+  idColeccion() {
+    return this.idColTMDB;
+  }
+
+  coleccionTMDB() {
+    return this.colTMDB;
   }
 }

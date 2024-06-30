@@ -14,7 +14,7 @@
                 <span *ngFor="let i of [1, 2, 3, 4, 5]">
                     <i *ngIf="resena.calificacion % 1 == 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
                     <i *ngIf="resena.calificacion % 1 != 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
-                    <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning fs-5 medio fw-bold">&#189;</span>
+                    <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning mitad fw-bold">&#189;</span>
                 </span>
             </div>
             <div class="actions">

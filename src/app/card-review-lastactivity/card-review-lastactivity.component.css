@@ -113,6 +113,11 @@ i.bi-heart-fill {
   transform: translateX(-50%);
 }
 
+.mitad {
+  font-size: 1.6rem;
+  text-shadow: 0 0 2px black;
+}
+
 @media (max-width: 576px) {
   .card-container {
     flex: 0 1 calc(50% - 1rem);
@@ -129,13 +134,9 @@ i.bi-heart-fill {
   }
 
   .rating .bi,
+  .rating .mitad,
   .actions .bi {
     font-size: 0.75rem;
-  }
-
-  .rating span.medio {
-    font-size: 0.75rem !important;
-    font-weight: bolder !important;
   }
 
   .username {

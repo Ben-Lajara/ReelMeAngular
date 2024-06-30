@@ -1,0 +1,25 @@
+<div *ngIf="currentUsername!=''" class="card text-bg-secondary mt-3">
+    <div class="card-body">
+      <div class="row align-items-center">
+        <div class="col-auto">
+          <img [src]="'http://localhost:8080/uploads/'+ perfil" alt="Foto de perfil" class="rounded-circle" width="50" height="50">
+        </div>
+        <div class="col">
+          <p *ngIf="calificacion!=0" class="mb-0">{{'detallesUsuarioCalificacion' | translate}} 
+            <span *ngFor="let i of [1, 2, 3, 4, 5]">
+              <i class="text-warning bi" [ngClass]="{'bi-star-fill': i <= calificacion}"></i>
+              <span *ngIf="calificacion % 1 != 0 && i == (calificacion - calificacion % 1) + 1" class="text-warning fw-bold">&#189;</span>
+            </span>
+          </p>
+          <p *ngIf="calificacion==0" class="mb-0">{{'detallesUsuarioSinResena' | translate}}</p>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-success shadow-sm" [routerLink]="['/review', currentUsername, idPelicula]">
+            <i class="bi bi-pencil-square mr-2"></i>
+            <span *ngIf="calificacion!=0"> {{'detallesUsuarioBotonEditar' | translate}}</span>
+            <span *ngIf="calificacion==0"> {{'detallesUsuarioBotonEscribir' | translate}}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

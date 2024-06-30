@@ -55,6 +55,8 @@ import localeEs from '@angular/common/locales/es';
 import localeEn from '@angular/common/locales/en';
 import { TraduccionService } from './traduccion.service';
 import { QuillModule } from 'ngx-quill';
+import { AboutProfileCardComponent } from './about-profile-card/about-profile-card.component';
+import { DetallesUsuarioComponent } from './detalles-usuario/detalles-usuario.component';
 
 registerLocaleData(localeEs);
 registerLocaleData(localeEn);
@@ -102,6 +104,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AjustesCambiarPwordComponent,
     AjustesBorrarCuentaComponent,
     PanelAdminPendienteComponent,
+    AboutProfileCardComponent,
+    DetallesUsuarioComponent,
   ],
   imports: [
     BrowserModule,

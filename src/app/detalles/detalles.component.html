@@ -57,36 +57,20 @@
         </div>
       </div>
 
-      <div *ngIf="(peliculaTMDB$ | async)?.belongs_to_collection != null">
-      </div>
+      <app-detalles-usuario [calificacion]="calificacion" [idPelicula]="(pelicula$ | async)?.imdbID" [currentUsername]="currentUsername" [perfil]="perfil"></app-detalles-usuario>
       
-      
-      <div *ngIf="currentUsername!=''" class="card text-bg-secondary mt-3">
-        <div class="card-body">
-          <div class="row align-items-center">
-            <div class="col-auto">
-              <img [src]="'http://localhost:8080/uploads/'+ perfil" alt="Foto de perfil" class="rounded-circle" width="50" height="50">
-            </div>
-            <div class="col">
-              <p *ngIf="calificacion!=0" class="mb-0">{{'detallesUsuarioCalificacion' | translate}} 
-                <span *ngFor="let i of [1, 2, 3, 4, 5]">
-                  <i class="text-warning bi" [ngClass]="{'bi-star-fill': i <= calificacion}"></i>
-                  <span *ngIf="calificacion % 1 != 0 && i == (calificacion - calificacion % 1) + 1" class="text-warning fw-bold">&#189;</span>
-                </span>
-              </p>
-              <p *ngIf="calificacion==0" class="mb-0">{{'detallesUsuarioSinResena' | translate}}</p>
-            </div>
-            <div class="col-auto">
-              <button class="btn btn-success shadow-sm" [routerLink]="['/review', currentUsername, (pelicula$ | async)?.imdbID]">
-                <i class="bi bi-pencil-square mr-2"></i>
-                <span *ngIf="calificacion!=0"> {{'detallesUsuarioBotonEditar' | translate}}</span>
-                <span *ngIf="calificacion==0"> {{'detallesUsuarioBotonEscribir' | translate}}</span>
-              </button>
-            </div>
+      <div class="mt-3" *ngIf="(peliculaTMDB$ | async)?.belongs_to_collection != null">
+        <dt id="lineaDivisoria">Otras películas de la saga</dt>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-around;">
+          <div *ngFor="let peli of (sagaTMDB$ | async)" style="flex: 0 1 calc(33.333% - 20px);">
+            <img [src]="'https://image.tmdb.org/t/p/w154' + peli.poster_path" 
+                 [ngClass]="{'peliActual': peli.id === (peliculaTMDB$ | async)?.id}" 
+                 alt="" 
+                 style="width: 100%;">
           </div>
         </div>
       </div>
-      
+
       <dl class="mt-3" *ngIf="resenasSeguidos.length > 0">
         <dt id="lineaDivisoria">{{'detallesSeguidos' | translate}}</dt>
         <dd class="d-flex flex-row flex-wrap">
@@ -97,39 +81,16 @@
         
       </dl>
 
-      <dl class="mt-3">
-        <dt id="lineaDivisoria">{{'detallesResenas' | translate}}</dt>
-        <dd [routerLink]="['/reviewed', resena.nomUsuario.nombre, (pelicula$ | async)?.imdbID]" *ngFor="let resena of resenas" class="resenaContainer rounded">
-          <img id="perfilUsuario" [src]="'http://localhost:8080/uploads/' + resena.nomUsuario.perfil" alt="" height="40px" width="40px" class="rounded-circle" [style.borderColor]="resena.nomUsuario.color" [routerLink]="['/about', resena.nomUsuario.nombre]">
-           {{resena.nomUsuario.nombre}}:&nbsp;
-          <span class="col-auto estrellas">
-            <ng-container *ngFor="let i of [1, 2, 3, 4, 5]">
-              <i *ngIf="resena.calificacion % 1 == 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
-              <i *ngIf="resena.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
-              <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning fs-6 fw-bold">&#189;</span>
-            </ng-container>
-          </span>
-          <div class="tooltip-title">
-            <span *ngIf="resena.comentario != null && !resena.spoiler" class="tooltip-title">
-              {{resena.comentario}}
-            </span>
-            <div id="alertaSpoiler" *ngIf="resena.spoiler" role="alert">
-              <i class="bi bi-exclamation-triangle me-2"></i> 
-              <span>{{'detallesAdvertencia' | translate}}</span>
-              <!--<p *ngIf="mostrarSpoiler">{{resena.comentario}}</p>-->
-          </div>
-          </div>
-        </dd>
-      </dl>
+      <app-detalles-reviewed [resenas]="resenas" [idPeli]="(pelicula$ | async)?.imdbID"></app-detalles-reviewed>
       
     </div>
     <div class="col-12 col-md-3" id="dcha">
       <dt id="lineaDivisoria">{{'detallesEstadisticas' | translate}}</dt>
-      <div id="contenedorStats" class="container" style="display: flex; align-items: center;">
+      <div id="contenedorStats" class="container mb-2" style="display: flex; align-items: center;">
         <div echarts [options]="chartOptions" class="chart-container" style="height:20vh; width:13vw;"></div>
         <h4 style="margin-left: 20px">{{puntuacionMedia}}</h4>
       </div>
-      <div class="container">
+      <div class="container d-none d-md-flex">
         <dl>
           <dd><i class="bi bi-eye-fill text-info"></i> {{'detallesEstadisticasVistaPor' | translate}} {{resenas.length}} {{'detallesEstadisticasUsuarios' | translate}}</dd>
           <dd><i class="bi bi-heart-fill text-info"></i> {{'detallesEstadisticasLeGusta' | translate}} {{getGustados()}} {{'detallesEstadisticasUsuarios' | translate}} </dd>
@@ -137,7 +98,19 @@
           <dd><i class="bi bi-coin text-info"></i> {{(pelicula$ | async)?.BoxOffice}} {{'detallesEstadisticasRecaudacion' | translate}}</dd>
         </dl>
       </div>
-      <div *ngIf="servicios" class="card text-bg-success">
+      <div class="d-flex d-md-none card-container">
+        <div class="card tarjetaEstadisticasMovil text-bg-success">
+          <i class="bi bi-eye-fill icon-large"></i>
+          <span class="text-large">{{resenas.length}}</span>
+          <span>{{'detallesEstadisticasUsuarios' | translate}}</span>
+        </div>
+        <div class="card tarjetaEstadisticasMovil text-bg-danger">
+          <i class="bi bi-heart-fill text-white icon-large"></i>
+          <span class="text-large">{{getGustados()}}</span>
+          <span>{{'detallesEstadisticasUsuarios' | translate}}</span>
+        </div>
+      </div>
+      <div *ngIf="servicios" class="card text-bg-success mb-2 d-none d-md-block">
         <div class="card-header">{{'detallesEstadisticasPlataformas' | translate}}</div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item" *ngFor="let servicio of servicios.flatrate">
@@ -145,6 +118,13 @@
              {{servicio.provider_name}}
           </li>
         </ul>
+      </div>
+      
+      <div *ngIf="servicios" class="serviciosMovil d-block d-md-none">
+        <span>{{'detallesEstadisticasPlataformas' | translate}}</span>
+        <span class="iconosServiciosMovil" *ngFor="let servicio of servicios.flatrate">
+          <img class="rounded servicioMovil" [src]="'https://image.tmdb.org/t/p/w45' + servicio.logo_path" alt="{{servicio.provider_name}}">
+        </span>
       </div>
     </div>
     

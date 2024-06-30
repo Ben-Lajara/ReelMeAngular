@@ -6,8 +6,8 @@
 
 @media (max-width: 576px) {
   .card-container {
-    flex: 0 1 calc(33.33% - 1rem);
-    max-width: calc(33.33% - 1rem);
+    flex: 0 1 calc(50% - 1rem);
+    max-width: calc(50% - 1rem);
   }
 }
 

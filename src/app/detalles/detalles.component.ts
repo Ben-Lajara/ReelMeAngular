@@ -9,7 +9,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ReelMeService } from '../reel-me.service';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth.service';
-import { Observable, first, tap } from 'rxjs';
+import { Observable, first, map, switchMap, tap } from 'rxjs';
 import 'chart.js/auto';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { trigger, transition, style, animate } from '@angular/animations';
@@ -77,10 +77,13 @@ export class DetallesComponent implements OnInit {
   peliculaTMDB$: Observable<any> | undefined;
   sagaTMDB: any;
   sagaTMDB$: Observable<any> | undefined;
+  restoFranquicia = [];
   trailerTMDB$: Observable<any> | undefined;
   isLoading = true;
   servicios: any;
-
+  idColeccionTMDB: any;
+  idColeccionTMDB$: Observable<any> | undefined;
+  idTMDB = '';
   constructor(
     private route: ActivatedRoute,
     private reelme: ReelMeService,
@@ -101,6 +104,8 @@ export class DetallesComponent implements OnInit {
       this.loadPeliculaTMDB();
       this.loadServiciosTMDB();
       this.loadTrailerTMDB();
+      //this.loadIdColeccionTMDB();
+      //this.loadSagaTMDB();
       this.loadActividad();
       this.loadReviews();
       this.loadResenasSeguidos();
@@ -127,6 +132,32 @@ export class DetallesComponent implements OnInit {
     this.reelme.busquedaIdTMDB(this.id).subscribe(() => {
       this.peliTMDB = this.reelme.peliculaTMDB();
       this.peliculaTMDB$ = this.reelme.busquedaIdTMDB(this.id);
+
+      this.reelme
+        .idColeccionTMDB(this.id)
+        .pipe(
+          tap((id) => {
+            this.idColeccionTMDB = id;
+          }),
+          switchMap((id) => {
+            if (id) {
+              return this.reelme.sagaTMDB(id);
+            } else {
+              return [];
+            }
+          })
+        )
+        .subscribe((saga) => {
+          this.sagaTMDB = saga;
+          this.sagaTMDB$ = this.reelme.sagaTMDB(this.idColeccionTMDB);
+        });
+    });
+  }
+
+  loadIdColeccionTMDB(): void {
+    this.reelme.idColeccionTMDB(this.id).subscribe(() => {
+      this.idColeccionTMDB = this.reelme.idColeccion();
+      this.idColeccionTMDB$ = this.reelme.idColeccionTMDB(this.id);
     });
   }
 
@@ -139,9 +170,10 @@ export class DetallesComponent implements OnInit {
   }
 
   loadSagaTMDB(): void {
-    this.reelme.sagaTMDB(this.id).subscribe(() => {
-      this.sagaTMDB = this.reelme.sagaTMDB(this.id);
-      this.sagaTMDB$ = this.reelme.sagaTMDB(this.id);
+    this.reelme.sagaTMDB(this.idColeccionTMDB).subscribe(() => {
+      this.sagaTMDB = this.reelme.coleccionTMDB();
+      this.sagaTMDB$ = this.reelme.sagaTMDB(this.idColeccionTMDB);
+      console.log(this.sagaTMDB$);
     });
   }
 
