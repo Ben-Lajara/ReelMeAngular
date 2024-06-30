@@ -23,7 +23,7 @@ import { CONFIG } from 'config';
     trigger('fadeIn', [
       transition(':enter', [
         style({ opacity: 0 }),
-        animate('600ms', style({ opacity: 1 })),
+        animate('800ms', style({ opacity: 1 })),
       ]),
     ]),
   ],
@@ -43,19 +43,6 @@ export class DetallesComponent implements OnInit {
   puntuacionMedia = '';
   apiUrl = CONFIG.apiUrl;
   imageUrl = '';
-
-  frecuenciasDiccionario = {
-    0.5: 0,
-    1: 0,
-    1.5: 0,
-    2: 0,
-    2.5: 0,
-    3: 0,
-    3.5: 0,
-    4: 0,
-    4.5: 0,
-    5: 0,
-  };
   chartOptions: any;
   frecuencias = new Map([
     [0.5, 0],
@@ -103,9 +90,6 @@ export class DetallesComponent implements OnInit {
       this.loadPelicula();
       this.loadPeliculaTMDB();
       this.loadServiciosTMDB();
-      this.loadTrailerTMDB();
-      //this.loadIdColeccionTMDB();
-      //this.loadSagaTMDB();
       this.loadActividad();
       this.loadReviews();
       this.loadResenasSeguidos();
@@ -174,15 +158,6 @@ export class DetallesComponent implements OnInit {
       this.sagaTMDB = this.reelme.coleccionTMDB();
       this.sagaTMDB$ = this.reelme.sagaTMDB(this.idColeccionTMDB);
       console.log(this.sagaTMDB$);
-    });
-  }
-
-  loadTrailerTMDB(): void {
-    this.reelme.trailerTMDB(this.id).subscribe(() => {
-      this.trailerTMDB$ = this.reelme.trailerTMDB(this.id);
-      this.trailerUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-        `https://www.youtube.com/embed/${this.reelme.trailerUrlTMDB()}`
-      );
     });
   }
 

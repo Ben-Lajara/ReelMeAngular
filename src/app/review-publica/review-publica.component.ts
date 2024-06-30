@@ -3,11 +3,20 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs';
 import { CONFIG } from 'config';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-review-publica',
   templateUrl: './review-publica.component.html',
   styleUrls: ['./review-publica.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('800ms', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class ReviewPublicaComponent implements OnInit {
   id = '';
@@ -20,6 +29,7 @@ export class ReviewPublicaComponent implements OnInit {
   denunciaExistente: any;
   mostrarSpoiler = false;
   apiUrl = CONFIG.apiUrl;
+  isLoading = true;
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit(): void {
@@ -30,6 +40,7 @@ export class ReviewPublicaComponent implements OnInit {
       this.getResenaPublica(this.username, this.id).subscribe((res: any) => {
         this.resena = res;
         console.log(this.resena);
+        this.isLoading = false;
         this.getDenuncia().subscribe((res: any) => {
           this.denunciaExistente = res;
         });

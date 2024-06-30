@@ -60,7 +60,7 @@
       <app-detalles-usuario [calificacion]="calificacion" [idPelicula]="(pelicula$ | async)?.imdbID" [currentUsername]="currentUsername" [perfil]="perfil"></app-detalles-usuario>
       
       <div class="mt-3" *ngIf="(peliculaTMDB$ | async)?.belongs_to_collection != null">
-        <dt id="lineaDivisoria">Otras películas de la saga</dt>
+        <dt id="lineaDivisoria">{{'detallesSaga' | translate}}</dt>
         <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-around;">
           <div *ngFor="let peli of (sagaTMDB$ | async)" style="flex: 0 1 calc(33.333% - 20px);">
             <img [src]="'https://image.tmdb.org/t/p/w154' + peli.poster_path" 
@@ -86,6 +86,7 @@
     </div>
     <div class="col-12 col-md-3" id="dcha">
       <dt id="lineaDivisoria">{{'detallesEstadisticas' | translate}}</dt>
+      <div *ngIf="puntuacionMedia !== 'NaN'; else sinResenas">
       <div id="contenedorStats" class="container mb-2" style="display: flex; align-items: center;">
         <div echarts [options]="chartOptions" class="chart-container" style="height:20vh; width:13vw;"></div>
         <h4 style="margin-left: 20px">{{puntuacionMedia}}</h4>
@@ -126,11 +127,18 @@
           <img class="rounded servicioMovil" [src]="'https://image.tmdb.org/t/p/w45' + servicio.logo_path" alt="{{servicio.provider_name}}">
         </span>
       </div>
+      </div>
     </div>
     
   </div>
     
 </div>
+
+<ng-template #sinResenas>
+  <div class="alert alert-info" role="alert">
+    {{'detallesSinResenas' | translate}}
+  </div>
+</ng-template>
 
 <ng-template #loading>
   <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">

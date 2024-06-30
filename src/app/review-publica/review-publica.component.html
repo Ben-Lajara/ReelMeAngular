@@ -1,9 +1,9 @@
-<div class="container mt-3">
+<div *ngIf="!isLoading; else loading" [@fadeIn] class="container mt-3">
     <div class="row">
-        <td class="col-3">
+        <td class="d-none d-md-block col-md-3">
             <img src="{{resena.foto}}" class="rounded card-img-top img-fluid" routerLink="/details/{{id}}">
         </td>
-        <td class="col-6">
+        <td class="col-12 col-md-6">
             <h6 id='encabezado'>{{'reviewPublicaTitulo' | translate}} <a [routerLink]="['/about', resena.usuario]" id="usuario">{{resena.usuario}}</a></h6>
             <h4>
                 {{resena.titulo}} ({{resena.year}}) 
@@ -13,7 +13,7 @@
                 <i *ngIf="resena.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
                 <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning fs-4 fw-bold">&#189;</span>
             </span>
-            <div>
+            <div class="mt-2">
                 <p *ngIf="resena.comentario != null && !resena.spoiler">{{resena.comentario}}</p>
                 <div *ngIf="resena.spoiler" (click)="mostrarSpoiler = true" [class.alert]="!mostrarSpoiler" [class.spoiler-revealed]="mostrarSpoiler" role="alert" style="cursor: pointer;">
                     <i class="bi bi-exclamation-triangle me-2" *ngIf="!mostrarSpoiler"></i> 
@@ -55,3 +55,11 @@
         </td>
     </div>
 </div>
+
+<ng-template #loading>
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+      <div class="spinner-grow" role="status">
+        <!--<span class="sr-only">Loading...</span>-->
+      </div>
+    </div>
+  </ng-template>

@@ -194,20 +194,6 @@ li {
   width: 100%;
 }
 
-.alert {
-  display: flex;
-  align-items: center;
-  background-color: #fff3cd;
-  color: #856404;
-  border: 1px solid #ffeeba;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.alert .bi-exclamation-triangle {
-  margin-right: 0.5rem;
-}
-
 #loading {
   height: 100vh;
 }

@@ -31,12 +31,6 @@ i.bi-heart-fill {
   color: white;
 }
 
-.card-container {
-  flex: 0 1 100%;
-  max-width: 100%;
-  margin: 0.5rem;
-}
-
 .card {
   height: auto;
   min-width: 40%;
@@ -118,11 +112,6 @@ i.bi-heart-fill {
 }
 
 @media (max-width: 576px) {
-  .card-container {
-    flex: 0 1 calc(50% - 1rem);
-    max-width: calc(50% - 1rem);
-  }
-
   .card .card-body {
     margin: 0;
     padding: 0.5rem;
@@ -146,10 +135,6 @@ i.bi-heart-fill {
 }
 
 @media (min-width: 576px) and (max-width: 768px) {
-  .card-container {
-    flex: 0 1 calc(25% - 1rem);
-    max-width: calc(25% - 1rem);
-  }
   .card-title {
     display: none;
   }
@@ -165,10 +150,6 @@ i.bi-heart-fill {
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
-  .card-container {
-    flex: 0 1 calc(25% - 1rem);
-    max-width: calc(25% - 1rem);
-  }
   .username,
   .rating .bi,
   .actions .bi {
@@ -177,10 +158,6 @@ i.bi-heart-fill {
 }
 
 @media (min-width: 992px) {
-  .card-container {
-    flex: 0 1 calc(25% - 1rem);
-    max-width: calc(25% - 1rem);
-  }
   .username {
     font-size: 1.5rem;
   }

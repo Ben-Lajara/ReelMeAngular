@@ -1,24 +1,32 @@
 <dl class="mt-3">
   <dt id="lineaDivisoria">{{'detallesResenas' | translate}}</dt>
-  <dd [routerLink]="['/reviewed', resena.nomUsuario.nombre, idPeli]" *ngFor="let resena of resenas" class="resenaContainer rounded">
-    <img id="perfilUsuario" [src]="'http://localhost:8080/uploads/' + resena.nomUsuario.perfil" alt="" height="40px" width="40px" class="rounded-circle" [style.borderColor]="resena.nomUsuario.color" [routerLink]="['/about', resena.nomUsuario.nombre]">
-     {{resena.nomUsuario.nombre}}:&nbsp;
-    <span class="col-auto estrellas">
-      <ng-container *ngFor="let i of [1, 2, 3, 4, 5]">
-        <i *ngIf="resena.calificacion % 1 == 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
-        <i *ngIf="resena.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
-        <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning fs-6 fw-bold">&#189;</span>
-      </ng-container>
-    </span>
-    <div class="tooltip-title">
-      <span *ngIf="resena.comentario != null && !resena.spoiler" class="tooltip-title">
-        {{resena.comentario}}
+  <div *ngIf="resenas.length > 0; else sinResenas">
+    <dd [routerLink]="['/reviewed', resena.nomUsuario.nombre, idPeli]" *ngFor="let resena of resenas" class="resenaContainer rounded">
+      <img id="perfilUsuario" [src]="'http://localhost:8080/uploads/' + resena.nomUsuario.perfil" alt="" height="40px" width="40px" class="rounded-circle" [style.borderColor]="resena.nomUsuario.color" [routerLink]="['/about', resena.nomUsuario.nombre]">
+      {{resena.nomUsuario.nombre}}:&nbsp;
+      <span class="col-auto estrellas">
+        <ng-container *ngFor="let i of [1, 2, 3, 4, 5]">
+          <i *ngIf="resena.calificacion % 1 == 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
+          <i *ngIf="resena.calificacion % 1 != 0" class="text-warning" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
+          <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning fs-6 fw-bold">&#189;</span>
+        </ng-container>
       </span>
-      <div id="alertaSpoiler" *ngIf="resena.spoiler" role="alert">
-        <i class="bi bi-exclamation-triangle me-2"></i> 
-        <span class="advertenciaSpoiler">{{'detallesAdvertencia' | translate}}</span>
-        <!--<p *ngIf="mostrarSpoiler">{{resena.comentario}}</p>-->
-    </div>
-    </div>
-  </dd>
+      <div class="tooltip-title">
+        <span *ngIf="resena.comentario != null && !resena.spoiler" class="tooltip-title">
+          {{resena.comentario}}
+        </span>
+        <div id="alertaSpoiler" *ngIf="resena.spoiler" role="alert">
+          <i class="bi bi-exclamation-triangle me-2"></i> 
+          <span class="advertenciaSpoiler">{{'detallesAdvertencia' | translate}}</span>
+          <!--<p *ngIf="mostrarSpoiler">{{resena.comentario}}</p>-->
+      </div>
+      </div>
+    </dd>
+  </div>
 </dl>
+
+<ng-template #sinResenas>
+  <div class="alert alert-info" role="alert">
+    {{'detallesSinResenas' | translate}}
+  </div>
+</ng-template>

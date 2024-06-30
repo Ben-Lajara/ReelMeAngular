@@ -1,0 +1,35 @@
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+.carousel-caption {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  background-color: rgba(77, 77, 77, 0.6);
+  text-align: center;
+  width: 50%;
+  padding: 1rem;
+}
+
+.carousel-caption h4,
+.carousel-caption h5 {
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+  font-weight: bold !important;
+}
+
+.carousel-indicators button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #fff !important;
+}
+
+.carousel-indicators .active {
+  background-color: #007bff;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(100%);
+}

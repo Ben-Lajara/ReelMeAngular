@@ -57,6 +57,8 @@ import { TraduccionService } from './traduccion.service';
 import { QuillModule } from 'ngx-quill';
 import { AboutProfileCardComponent } from './about-profile-card/about-profile-card.component';
 import { DetallesUsuarioComponent } from './detalles-usuario/detalles-usuario.component';
+import { HomeCarouselComponent } from './home-carousel/home-carousel.component';
+import { HomeOpinionesComponent } from './home-opiniones/home-opiniones.component';
 
 registerLocaleData(localeEs);
 registerLocaleData(localeEn);
@@ -106,6 +108,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PanelAdminPendienteComponent,
     AboutProfileCardComponent,
     DetallesUsuarioComponent,
+    HomeCarouselComponent,
+    HomeOpinionesComponent,
   ],
   imports: [
     BrowserModule,
