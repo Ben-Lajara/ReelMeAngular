@@ -43,6 +43,10 @@ export class AuthService {
   }
 
   constructor(private http: HttpClient, private router: Router) {
+    this.inicializarUsuario();
+  }
+
+  inicializarUsuario() {
     const authToken = localStorage.getItem('authToken');
     const username = localStorage.getItem('username');
     const rolesString = localStorage.getItem('roles');
@@ -54,6 +58,17 @@ export class AuthService {
       this.username.next(username);
       this.roles.next(roles);
     }
+  }
+
+  setSession(username: string, token: string, roles: string[], perfil: string) {
+    localStorage.setItem('username', username);
+    localStorage.setItem('authToken', token);
+    localStorage.setItem('roles', JSON.stringify(roles));
+    localStorage.setItem('perfil', perfil);
+
+    this.loggedIn.next(true);
+    this.username.next(username);
+    this.roles.next(roles);
   }
 
   register(nombre: string, email: string, pword: string): Observable<any> {
@@ -74,20 +89,10 @@ export class AuthService {
       }),
       tap((data: any) => {
         if (data.status === 'success') {
-          this.loggedIn.next(true);
-          this.username.next(data.username);
-          localStorage.setItem('username', data.username);
-          localStorage.setItem('veto', data.veto);
-          this.roles.next(data.roles);
           const rolesArray = Array.isArray(data.roles)
             ? data.roles
             : [data.roles];
-          this.roles.next(rolesArray);
-          console.log('Logged in');
-          localStorage.setItem('isAuthenticated', 'true');
-          localStorage.setItem('authToken', data.token);
-          localStorage.setItem('perfil', data.perfil);
-          localStorage.setItem('roles', JSON.stringify(rolesArray));
+          this.setSession(data.username, data.token, rolesArray, data.perfil);
         }
       })
     );

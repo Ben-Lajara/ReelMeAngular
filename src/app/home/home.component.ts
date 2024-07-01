@@ -44,53 +44,25 @@ export class HomeComponent implements OnInit {
   apiUrl = CONFIG.apiUrl;
   isLoading = true;
   fadeInDone = false;
-  constructor(
-    private route: ActivatedRoute,
-    private http: HttpClient,
-    private authService: AuthService,
-    private translate: TranslateService
-  ) {
-    this.authService.currentUsername.subscribe((username) => {
-      this.username = username;
-      console.log(this.username);
-    });
-  }
   seguidos: any[] = [];
   peliculas: { [key: string]: any } = {};
   ids: any[] = [];
   showAll: boolean = false;
   visibleSeguidos: any[] = [];
   top4Peliculas: any[] = [];
-  testimonials: any;
+  //testimonials: any;
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private authService: AuthService
+  ) {
+    this.authService.currentUsername.subscribe((username) => {
+      this.username = username;
+      console.log(this.username);
+    });
+  }
 
   ngOnInit(): void {
-    this.testimonials = [
-      {
-        name: 'Ana Pérez',
-        role: 'Cinéfila Apasionada',
-        image: 'https://via.placeholder.com/70',
-        text: 'ReelMe ha cambiado la forma en que descubro nuevas películas. La comunidad es increíble y siempre encuentro recomendaciones valiosas.',
-      },
-      {
-        name: 'Carlos Gómez',
-        role: 'Crítico de Cine',
-        image: 'https://via.placeholder.com/70',
-        text: 'Como crítico de cine, ReelMe me permite conectar con otros apasionados del cine y compartir mis reseñas de manera efectiva. ¡Una plataforma imprescindible!',
-      },
-      {
-        name: 'María López',
-        role: 'Amante del Cine Indie',
-        image: 'https://via.placeholder.com/70',
-        text: 'Lo que más me gusta de ReelMe es la variedad de opiniones y la posibilidad de seguir a amigos con gustos similares. ¡Totalmente recomendada!',
-      },
-      {
-        name: 'Jorge Fernández',
-        role: 'Estudiante de Cine',
-        image: 'https://via.placeholder.com/70',
-        text: 'ReelMe es una herramienta fantástica para estudiantes de cine. Puedo ver las reseñas de películas clásicas y contemporáneas, y discutirlas con otros estudiantes.',
-      },
-    ];
-
     if (this.username) {
       forkJoin({
         seguidos: this.getSeguidos(this.username),

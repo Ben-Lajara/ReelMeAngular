@@ -2,6 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs';
 
+/*En este servicio se manejan las llamadas a las APIs de OMDB y TMDB.
+  La API de OMDB se utiliza para buscar y almacenar los datos de las películas, ya que solo muestra los datos en inglés.
+  Por otro lado, se hace uso de la API de TMDB para el apartado de detalles de la película puesto que ofrece mayor variedad
+  de datos y los proporciona en diversos idiomas.
+*/
 @Injectable({
   providedIn: 'root',
 })
@@ -16,23 +21,38 @@ export class ReelMeService {
   colTMDB: any;
   constructor(private http: HttpClient) {}
 
-  getTmdbLanguage() {
-    return localStorage.getItem('tmdbLanguage') || 'en-US';
-  }
-
+  //Método para buscar películas por nombre en la API de OMDB. Se usa en la búsqueda de películas.
   busqueda(mensaje: string) {
     this.http
       .get<Array<any>>(this.urlBase + '&s=' + mensaje)
       .subscribe((response: any) => {
+        //Devuelve un array de películas.
         this.pelis = response.Search.filter(
+          //Se filtran por tipo 'movie' para evitar series y videojuegos en la medida de lo posible.
           (peli: { Type: string }) => peli.Type === 'movie'
         );
       });
   }
 
+  //Busca por id específico en la API de OMDB. Se utiliza para los detalles y la reseña.
+  busquedaId(id: string) {
+    return this.http.get<any>(this.urlBase + '&i=' + id).pipe(
+      tap((response) => {
+        this.peli = response;
+      })
+    );
+  }
+
+  //Método para aplicar el idioma a la llamada de la API de TMDB.
+  getTmdbLanguage() {
+    return localStorage.getItem('tmdbLanguage') || 'en-US';
+  }
+
+  //Busca por id específico en la API de TMDB. Se utiliza para los detalles de la película.
   busquedaIdTMDB(id: string) {
     return this.http
       .get<any>(
+        //Para simplificar y tener uniformidad en el código, se usa la ID de IMDB con el parámetro 'external_source=imdb_id'
         this.urlTMDB +
           '/movie/' +
           id +
@@ -45,6 +65,7 @@ export class ReelMeService {
       );
   }
 
+  //Este método muestra los servicios de streaming donde se encuentra disponible la película en el territorio especificado.
   serviciosTMDB(id: string) {
     return this.http
       .get<any>(
@@ -60,6 +81,7 @@ export class ReelMeService {
       );
   }
 
+  //Obtiene la ID de la colección a la que pertenece la película, si pertenece a alguna.
   idColeccionTMDB(id: string) {
     return this.http
       .get<any>(
@@ -82,6 +104,7 @@ export class ReelMeService {
       );
   }
 
+  //Mediante el id de la colección devuelve toda la franquicia/saga a la que pertenece la película.
   sagaTMDB(id: string) {
     return this.http
       .get<any>(
@@ -96,6 +119,7 @@ export class ReelMeService {
       );
   }
 
+  //Este método no se usa actualmente, pero se le puede dar uso en caso de fallo de la API de Google.
   trailerTMDB(id: string) {
     return this.http
       .get<any>(
@@ -106,14 +130,6 @@ export class ReelMeService {
           this.trailerUrl = response.results[0].key;
         })
       );
-  }
-
-  busquedaId(id: string) {
-    return this.http.get<any>(this.urlBase + '&i=' + id).pipe(
-      tap((response) => {
-        this.peli = response;
-      })
-    );
   }
 
   peliculas() {

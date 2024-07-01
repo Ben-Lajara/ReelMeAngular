@@ -1,4 +1,5 @@
   <div *ngIf="username == ''" [@fadeIn] class="container mt-3">
+    <!--Landing page antes de iniciar sesión/registrarse-->
     <h3 class="welcome-title">{{'homeTitulo' | translate}}</h3>
     <p class="welcome-text">
         {{'homeBienvenida' | translate}}
@@ -8,6 +9,7 @@
     <div class="mb-3">
       <h5>{{'masPopulares' | translate}}</h5>
     </div>
+    <!--Se muestran las películas más populares como parte de la landing page.-->
     <div class="d-flex flex-wrap justify-content-start" *ngIf="fadeInDone" [@listAnimation]="top4Peliculas.length">
       <div *ngFor="let pelicula of top4Peliculas" class="card-container">
         <app-card-peli-bd [peli]="pelicula"></app-card-peli-bd>
@@ -18,6 +20,7 @@
   </div>
   
   <div *ngIf="!isLoading; else loading" [@fadeIn] (@fadeIn.done)="onFadeInDone()">
+    <!--Muestra la última película vista de cada cuenta que sigue el usuario.-->
     <div *ngIf="username != ''" class="container mt-3" >
       <div class="mb-3">
         <h5 id="actividadReciente">{{ 'actividadReciente' | translate}}</h5>
@@ -25,6 +28,7 @@
           {{ showAll ? ('mostrarMenos' | translate) : ('verTodos' | translate) }}
         </h6>
       </div>
+      <!--Si el usuario no sigue ninguna cuenta, muestra una alerta.-->
       <div *ngIf="seguidos.length === 0" class="alert alert-info" role="alert">
         {{'homeSinSeguir' | translate}}
       </div>
@@ -37,11 +41,13 @@
       <div class="mb-3">
         <h5 >{{'masPopulares' | translate}}</h5>
       </div>
+      <!--Muestra las 4 películas más populares.-->
       <div class="d-flex flex-wrap justify-content-start" *ngIf="fadeInDone" [@listAnimation]="top4Peliculas.length">
         <div *ngFor="let pelicula of top4Peliculas" class="card-container">
           <app-card-peli-bd [peli]="pelicula"></app-card-peli-bd>
         </div>
       </div>
+      <!--Se pueden añadir más secciones tras crearlas en el backend.-->
     </div>
 </div>
 <ng-template #loading>
