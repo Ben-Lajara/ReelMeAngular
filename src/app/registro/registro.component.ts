@@ -11,11 +11,20 @@ import {
 import { Observable, catchError, map, of } from 'rxjs';
 import { CONFIG } from 'config';
 import { Router } from '@angular/router';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('800ms', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class RegistroComponent {
   registroForm!: UntypedFormGroup;

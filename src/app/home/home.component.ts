@@ -50,7 +50,6 @@ export class HomeComponent implements OnInit {
   showAll: boolean = false;
   visibleSeguidos: any[] = [];
   top4Peliculas: any[] = [];
-  //testimonials: any;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,

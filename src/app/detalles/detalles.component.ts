@@ -34,7 +34,7 @@ export class DetallesComponent implements OnInit {
   perfil = '';
   id = '';
   resenas: any[] = [];
-  resenasSeguidos: any[] = [];
+  resenasSeguidos: any;
   resena: any;
   calificacion = 0;
   starsCache: { [key: number]: string } = {};
@@ -83,106 +83,109 @@ export class DetallesComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.isLoading = true;
-    this.route.params.subscribe((params) => {
+    this.route.params.subscribe(async (params) => {
       this.id = params['id'];
-      this.loadPelicula();
-      this.loadPeliculaTMDB();
-      this.loadServiciosTMDB();
-      this.loadActividad();
-      this.loadReviews();
-      this.loadResenasSeguidos();
-      console.log('pelicula$ ', this.pelicula$);
-      console.log('calificacion ', this.calificacion.toString());
-      this.perfil = localStorage.getItem('perfil') || '';
-    });
-  }
-
-  loadPelicula(): void {
-    this.reelme.busquedaId(this.id).subscribe(() => {
-      this.peli = this.reelme.pelicula();
-      this.getTrailer(
-        `${this.reelme.pelicula().Title} ${this.reelme.pelicula().Year}`
-      );
-      this.pelicula$ = this.reelme.busquedaId(this.id);
-      this.pelicula$?.pipe(first()).subscribe(() => {
-        this.isLoading = false;
-      });
-    });
-  }
-
-  loadPeliculaTMDB(): void {
-    this.reelme.busquedaIdTMDB(this.id).subscribe(() => {
-      this.peliTMDB = this.reelme.peliculaTMDB();
-      this.peliculaTMDB$ = this.reelme.busquedaIdTMDB(this.id);
-
-      this.reelme
-        .idColeccionTMDB(this.id)
-        .pipe(
-          tap((id) => {
-            this.idColeccionTMDB = id;
-          }),
-          switchMap((id) => {
-            if (id) {
-              return this.reelme.sagaTMDB(id);
-            } else {
-              return [];
-            }
-          })
-        )
-        .subscribe((saga) => {
-          this.sagaTMDB = saga;
-          this.sagaTMDB$ = this.reelme.sagaTMDB(this.idColeccionTMDB);
-        });
-    });
-  }
-
-  loadIdColeccionTMDB(): void {
-    this.reelme.idColeccionTMDB(this.id).subscribe(() => {
-      this.idColeccionTMDB = this.reelme.idColeccion();
-      this.idColeccionTMDB$ = this.reelme.idColeccionTMDB(this.id);
-    });
-  }
-
-  loadServiciosTMDB(): void {
-    this.reelme.serviciosTMDB(this.id).subscribe((data) => {
-      if (data.results && data.results.ES) {
-        this.servicios = data.results.ES;
+      try {
+        await this.loadPelicula();
+        await this.loadPeliculaTMDB();
+        await this.loadServiciosTMDB();
+        await this.loadActividad();
+        await this.loadReviews();
+        await this.loadResenasSeguidos();
+        console.log('pelicula$ ', this.pelicula$);
+        console.log('calificacion ', this.calificacion.toString());
+        this.perfil = localStorage.getItem('perfil') || '';
+      } catch (error) {
+        console.error('Error loading data', error);
       }
     });
   }
 
-  loadSagaTMDB(): void {
-    this.reelme.sagaTMDB(this.idColeccionTMDB).subscribe(() => {
-      this.sagaTMDB = this.reelme.coleccionTMDB();
-      this.sagaTMDB$ = this.reelme.sagaTMDB(this.idColeccionTMDB);
-      console.log(this.sagaTMDB$);
-    });
+  async loadPelicula(): Promise<void> {
+    try {
+      await this.reelme.busquedaId(this.id).toPromise();
+      this.peli = this.reelme.pelicula();
+      await this.getTrailer(
+        `${this.reelme.pelicula().Title} ${this.reelme.pelicula().Year}`
+      );
+      this.pelicula$ = this.reelme.busquedaId(this.id);
+      await this.pelicula$?.pipe(first()).toPromise();
+      //this.isLoading = false;
+    } catch (error) {
+      console.error('Error loading pelicula', error);
+      //this.isLoading = false;
+    }
   }
 
-  loadActividad(): void {
-    this.getActividad(this.currentUsername, this.id).subscribe(() => {
+  async loadPeliculaTMDB(): Promise<void> {
+    try {
+      await this.reelme.busquedaIdTMDB(this.id).toPromise();
+      this.peliTMDB = this.reelme.peliculaTMDB();
+      this.peliculaTMDB$ = this.reelme.busquedaIdTMDB(this.id);
+      const id = await this.reelme
+        .idColeccionTMDB(this.id)
+        .pipe(first())
+        .toPromise();
+      this.idColeccionTMDB = id;
+      if (id) {
+        this.sagaTMDB = await this.reelme
+          .sagaTMDB(id)
+          .pipe(first())
+          .toPromise();
+        this.sagaTMDB$ = this.reelme.sagaTMDB(this.idColeccionTMDB);
+      }
+      this.isLoading = false;
+    } catch (error) {
+      console.error('Error loading peliculaTMDB', error);
+      this.isLoading = false;
+    }
+  }
+
+  async loadServiciosTMDB(): Promise<void> {
+    try {
+      const data = await this.reelme.serviciosTMDB(this.id).toPromise();
+      if (data.results && data.results.ES) {
+        this.servicios = data.results.ES;
+      }
+    } catch (error) {
+      console.error('Error loading serviciosTMDB', error);
+    }
+  }
+
+  async loadActividad(): Promise<void> {
+    try {
+      await this.getActividad(this.currentUsername, this.id).toPromise();
       console.log(this.vista);
-    });
+    } catch (error) {
+      console.error('Error loading actividad', error);
+    }
   }
 
-  loadReviews(): void {
-    this.getReviewsPelicula().subscribe((res: any) => {
+  async loadReviews(): Promise<void> {
+    try {
+      const res = await this.getReviewsPelicula().toPromise();
       this.resenas = res;
       this.calculateFrequencies();
       this.initializeChart();
       console.log(this.frecuencias);
-    });
+    } catch (error) {
+      console.error('Error loading reviews', error);
+    }
   }
 
-  loadResenasSeguidos(): void {
-    this.getResenasSeguidos(this.currentUsername, this.id).subscribe(
-      (res: any) => {
-        this.resenasSeguidos = res;
-        console.log(this.resenasSeguidos);
-      }
-    );
+  async loadResenasSeguidos(): Promise<void> {
+    try {
+      const res = await this.getResenasSeguidos(
+        this.currentUsername,
+        this.id
+      ).toPromise();
+      this.resenasSeguidos = res;
+      console.log(this.resenasSeguidos);
+    } catch (error) {
+      console.error('Error loading resenasSeguidos', error);
+    }
   }
 
   getReviewsPelicula(): Observable<any> {
@@ -213,6 +216,7 @@ export class DetallesComponent implements OnInit {
         })
       );
   }
+
   getGustados() {
     return this.resenas.filter((resena) => resena.gustado === true).length;
   }
@@ -339,16 +343,20 @@ export class DetallesComponent implements OnInit {
     };
   }
 
-  getTrailer(nombre: string) {
+  async getTrailer(nombre: string) {
     const apiKey = 'AIzaSyDGIswB-EArefbRs6cdzWa_fRjq_NXhfZI';
-    //const apiKey = 'AIzaSyDR-mngrtrilvHbvrvrmqmJGWnRODRPDw0';
     const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${nombre} official trailer&key=${apiKey}`;
-    this.http.get<YoutubeResponse>(searchUrl).subscribe((response) => {
-      const videoId = response.items[0].id.videoId;
+    try {
+      const response = await this.http
+        .get<YoutubeResponse>(searchUrl)
+        .toPromise();
+      const videoId = response?.items[0].id.videoId;
       this.trailerUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
         `https://www.youtube.com/embed/${videoId}`
       );
-    });
+    } catch (error) {
+      console.error('Error fetching trailer', error);
+    }
   }
 }
 

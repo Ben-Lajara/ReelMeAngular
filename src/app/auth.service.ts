@@ -51,12 +51,14 @@ export class AuthService {
     const username = localStorage.getItem('username');
     const rolesString = localStorage.getItem('roles');
     const roles = rolesString ? JSON.parse(rolesString) : [];
+    const perfil = localStorage.getItem('perfil');
     console.log('Roles const: ', roles);
 
-    if (authToken && username && roles) {
+    if (authToken && username && roles && perfil) {
       this.loggedIn.next(true);
       this.username.next(username);
       this.roles.next(roles);
+      this.perfil.next(perfil);
     }
   }
 
@@ -69,6 +71,7 @@ export class AuthService {
     this.loggedIn.next(true);
     this.username.next(username);
     this.roles.next(roles);
+    this.perfil.next(perfil);
   }
 
   register(nombre: string, email: string, pword: string): Observable<any> {
@@ -110,6 +113,8 @@ export class AuthService {
     // Elimina el token de autenticación y el nombre de usuario de localStorage
     localStorage.removeItem('authToken');
     localStorage.removeItem('username');
+    localStorage.removeItem('roles');
+    localStorage.removeItem('perfil');
     this.router.navigate(['/home']);
   }
 }

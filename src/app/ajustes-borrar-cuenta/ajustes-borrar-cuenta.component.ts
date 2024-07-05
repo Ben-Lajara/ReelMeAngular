@@ -8,6 +8,7 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-ajustes-borrar-cuenta',
@@ -27,7 +28,8 @@ export class AjustesBorrarCuentaComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private http: HttpClient,
-    private fb: UntypedFormBuilder
+    private fb: UntypedFormBuilder,
+    private translate: TranslateService
   ) {
     this.isLoggedIn = this.authService.isLoggedIn;
     this.currentUsername = this.authService.currentUsername;
@@ -52,13 +54,13 @@ export class AjustesBorrarCuentaComponent implements OnInit {
       return;
     }
 
-    if (
-      !confirm(
-        '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.'
-      )
-    ) {
-      return;
-    }
+    this.translate
+      .get('ajustesBorrarCuentaConfirmacion')
+      .subscribe((mensaje: string) => {
+        if (!confirm(mensaje)) {
+          return;
+        }
+      });
 
     console.log('Eliminando usuario');
     const { pwordBorrar, pwordBorrar2 } = this.eliminarForm.value;

@@ -1,5 +1,5 @@
+<!--Este componente muestra el perfil del usuario-->
 <div class="container mt-3">
-
     <div *ngIf="!isLoading; else loading" [@fadeIn] (@fadeIn.done)="onFadeInDone()">
         <app-about-profile-card [datos]="datos" [username]="username" ></app-about-profile-card>
         <ul class="nav nav-underline justify-content-center" id="myTab" role="tablist">

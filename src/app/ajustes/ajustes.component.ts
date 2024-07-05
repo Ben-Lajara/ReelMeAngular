@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CONFIG } from 'config';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-ajustes',
@@ -41,24 +42,15 @@ export class AjustesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUsuario();
-    this.getNumResenas();
-  }
-
-  getUsuario() {
-    this.http
-      .get(`${this.apiUrl}/usuario/${this.username}`)
-      .subscribe((res: any) => {
-        this.usuario = res;
-      });
-  }
-
-  getNumResenas() {
-    this.http
-      .get(`${this.apiUrl}/usuario/numResenas/${this.username}`)
-      .subscribe((res: any) => {
-        this.numResenas = res;
-        this.isLoading = false;
-      });
+    forkJoin({
+      usuario: this.http.get(`${this.apiUrl}/usuario/${this.username}`),
+      numResenas: this.http.get(
+        `${this.apiUrl}/usuario/numResenas/${this.username}`
+      ),
+    }).subscribe(({ usuario, numResenas }: any) => {
+      this.usuario = usuario;
+      this.numResenas = numResenas;
+      this.isLoading = false;
+    });
   }
 }

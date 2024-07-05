@@ -1,3 +1,4 @@
+<!--Apartado de ajustes-->
 <div *ngIf="!isLoading; else loading" [@fadeIn] [ngClass]="{'fade-in': true, 'show': !isLoading}" class="container mt-3">
   <app-ajustes-foto-perfil [usuario]="usuario" [username]="username" [perfil]="usuario.perfil"></app-ajustes-foto-perfil>
   

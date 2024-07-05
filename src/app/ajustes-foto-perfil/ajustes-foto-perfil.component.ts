@@ -19,8 +19,8 @@ export class AjustesFotoPerfilComponent implements OnInit {
   imagenesDisponibles: string[] = [];
   imagenSeleccionada = '';
   apiUrl = CONFIG.apiUrl;
-
   timestamp = new Date().getTime();
+
   constructor(private authService: AuthService, private http: HttpClient) {
     this.isLoggedIn = this.authService.isLoggedIn;
     this.currentUsername = this.authService.currentUsername;
@@ -42,7 +42,7 @@ export class AjustesFotoPerfilComponent implements OnInit {
     this.imagenSeleccionada = imagen;
   }
 
-  onUpload() {
+  onSelect() {
     if (this.imagenSeleccionada) {
       const nuevoPerfil = this.imagenSeleccionada;
       this.http

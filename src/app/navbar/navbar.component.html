@@ -13,7 +13,7 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" aria-current="home" href="#">{{'navbarInicio' | translate}}</a>
+            <a class="nav-link" routerLink="home" class="nav-link">{{'navbarInicio' | translate}}</a>
           </li>
           <li class="nav-item">
             <a *ngIf="!(isLoggedIn | async)" routerLink="query" class="nav-link">{{'navbarBuscar' | translate}}</a>
@@ -55,7 +55,7 @@
           
         <div class="d-flex" *ngIf="(isLoggedIn | async)">
           <a routerLink="/settings" class="nav-link">
-            <img [src]="'http://localhost:8080/uploads/' + perfil" alt="" height="30px" width="30px" class="rounded-circle">
+            <img [src]="'http://localhost:8080/uploads/' + (perfil | async)" alt="" height="30px" width="30px" class="rounded-circle">
           </a>
         </div>
       </div>
