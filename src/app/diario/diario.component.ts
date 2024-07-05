@@ -41,12 +41,7 @@ export class DiarioComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.username = params['username'];
-      console.log(this.username);
       this.getReviews(this.username);
-      console.log(this.reviews);
-      console.log(this.ids);
-      //this.getPeliculas();
-      console.log(this.peliculas);
     });
   }
 
@@ -54,13 +49,14 @@ export class DiarioComponent implements OnInit {
     this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
     if (this.reviews) {
       this.reviews = this.groupReviewsByMonth(
-        Object.values(this.reviews).flat()
+        Object.values(this.reviews).flat(),
+        this.sortOrder
       );
       this.cdr.detectChanges();
     }
   }
 
-  groupReviewsByMonth(reviews: any[]): any {
+  groupReviewsByMonth(reviews: any[], order: string): any {
     const groups: { [key: string]: any[] } = {};
 
     reviews.forEach((review) => {
@@ -79,7 +75,11 @@ export class DiarioComponent implements OnInit {
         const [yearA, monthA] = a.split('-').map(Number);
         const [yearB, monthB] = b.split('-').map(Number);
 
-        return yearB - yearA || monthB - monthA;
+        if (order === 'asc') {
+          return yearA - yearB || monthA - monthB;
+        } else {
+          return yearB - yearA || monthB - monthA;
+        }
       })
       .forEach((key) => {
         sortedGroups[key] = groups[key].sort((a, b) => {
@@ -88,7 +88,9 @@ export class DiarioComponent implements OnInit {
 
           // Ordenar por fecha primero
           if (dateA.getTime() !== dateB.getTime()) {
-            return dateB.getTime() - dateA.getTime();
+            return order === 'asc'
+              ? dateA.getTime() - dateB.getTime()
+              : dateB.getTime() - dateA.getTime();
           }
 
           // Si las fechas son iguales, ordenar por esRevisionado
@@ -107,9 +109,8 @@ export class DiarioComponent implements OnInit {
     this.http.get(`${this.apiUrl}/diario/${usuario}`).subscribe(
       async (res: Object) => {
         console.log(res);
-        this.reviews = this.groupReviewsByMonth(res as any[]);
+        this.reviews = this.groupReviewsByMonth(res as any[], this.sortOrder);
         await this.getPeliculas();
-        console.log(this.peliculas);
         this.isLoading = false;
         this.cdr.detectChanges();
       },
