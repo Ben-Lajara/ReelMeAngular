@@ -48,13 +48,11 @@ import { AjustesBorrarCuentaComponent } from './ajustes-borrar-cuenta/ajustes-bo
 import { PanelAdminPendienteComponent } from './panel-admin-pendiente/panel-admin-pendiente.component';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { AngularCropperjsModule } from 'angular-cropperjs';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import localeEn from '@angular/common/locales/en';
 import { TraduccionService } from './traduccion.service';
-import { QuillModule } from 'ngx-quill';
 import { AboutProfileCardComponent } from './about-profile-card/about-profile-card.component';
 import { DetallesUsuarioComponent } from './detalles-usuario/detalles-usuario.component';
 import { HomeCarouselComponent } from './home-carousel/home-carousel.component';
@@ -132,8 +130,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),
-    AngularCropperjsModule,
-    QuillModule.forRoot(),
   ],
   providers: [
     AuthGuard,
