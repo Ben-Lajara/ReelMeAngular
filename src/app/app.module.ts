@@ -18,7 +18,6 @@ import { OrderByPipe } from './order-by.pipe';
 import { CardReviewComponent } from './card-review/card-review.component';
 import { KeysPipe } from './keys.pipe';
 import { AuthGuard } from './auth-guard.service';
-import { OrdenPipe } from './orden.pipe';
 import { PerfilComponent } from './perfil/perfil.component';
 import { ReviewPublicaComponent } from './review-publica/review-publica.component';
 import { AboutComponent } from './about/about.component';
@@ -84,7 +83,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     OrderByPipe,
     CardReviewComponent,
     KeysPipe,
-    OrdenPipe,
     PerfilComponent,
     ReviewPublicaComponent,
     AboutComponent,

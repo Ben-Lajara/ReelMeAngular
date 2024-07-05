@@ -11,6 +11,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { CONFIG } from 'config';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-review',
@@ -45,7 +46,8 @@ export class ReviewComponent implements OnInit {
     private route: ActivatedRoute,
     private reelme: ReelMeService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {}
 
   id = '';
@@ -72,19 +74,13 @@ export class ReviewComponent implements OnInit {
 
       this.reelme.busquedaId(this.id).subscribe(() => {
         this.peli = this.reelme.pelicula();
-        console.log(this.reelme.pelicula().Title);
         this.pelicula$ = this.reelme.busquedaId(this.id);
         this.pelicula$?.pipe(first()).subscribe(() => {
           this.isLoading = false;
         });
       });
 
-      console.log('fecha inicial al entrar: ', this.fecha);
-
       this.getResena(this.username, this.id).subscribe(() => {
-        console.log(this.editado);
-        console.log('fecha al recuperar los datos: ', this.fecha);
-        console.log('revisionados: ', this.revisionados);
         this.checkVeto();
       });
     });
@@ -112,8 +108,6 @@ export class ReviewComponent implements OnInit {
     revisionados: any[],
     revisionadosNuevos: any[]
   ) {
-    console.log('this.fecha: ', this.fecha);
-    console.log('fecha params: ', fecha);
     const body: any = {
       fecha,
       calificacion,
@@ -129,28 +123,21 @@ export class ReviewComponent implements OnInit {
       revisionadosNuevos,
     };
     if (this.editado) {
-      console.log('Editado');
-      console.log('Fecha al actualizar: ' + fecha);
       return this.http.put(`${this.apiUrl}/review`, body).subscribe(
         (response) => {
-          console.log(response);
           return response;
         },
         (error) => {
-          console.error(error);
           return error;
         }
       );
     } else {
-      console.log('Enviado');
       console.log(body);
       return this.http.post(`${this.apiUrl}/review`, body).subscribe(
         (response) => {
-          console.log(response);
           return response;
         },
         (error) => {
-          console.error(error);
           return error;
         }
       );
@@ -158,7 +145,6 @@ export class ReviewComponent implements OnInit {
   }
 
   getResena(usuario: string, id_pelicula: string) {
-    console.log('Existente');
     return this.http
       .get(`${this.apiUrl}/review`, {
         headers: {
@@ -198,8 +184,6 @@ export class ReviewComponent implements OnInit {
 
   onSubmit(): void {
     console.log(this.id);
-    console.log('revisionados', this.revisionados);
-    console.log('revisionadosNuevos', this.revisionadosNuevos);
     this.enviarResena(
       this.fecha,
       this.calificacion,
@@ -246,9 +230,13 @@ export class ReviewComponent implements OnInit {
   }
 
   confirmarEliminacion(i: number, id: number) {
-    if (confirm('¿Estás seguro de que quieres eliminar este elemento?')) {
-      this.eliminarRevisionado(i, id);
-    }
+    this.translate
+      .get('reviewConfirmarEliminacionRevisionado')
+      .subscribe((mensaje: string) => {
+        if (confirm(mensaje)) {
+          this.eliminarRevisionado(i, id);
+        }
+      });
   }
 
   eliminarRevisionado(i: number, id: number) {
@@ -275,31 +263,31 @@ export class ReviewComponent implements OnInit {
   }
 
   eliminarReview(nombreUsuario: string, idPelicula: string) {
-    if (
-      confirm(
-        '¿Estás seguro de que quieres eliminar esta reseña? Se eliminarán también sus revisionados.'
-      )
-    ) {
-      this.http
-        .delete(`${this.apiUrl}/review`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-          params: {
-            usuario: nombreUsuario,
-            idPelicula: idPelicula,
-          },
-        })
-        .subscribe(
-          (response) => {
-            console.log(response);
-            this.router.navigate(['/about', nombreUsuario]);
-          },
-          (error) => {
-            console.error(error);
-          }
-        );
-    }
+    this.translate
+      .get('reviewConfirmarEliminacion')
+      .subscribe((mensaje: string) => {
+        if (confirm(mensaje)) {
+          this.http
+            .delete(`${this.apiUrl}/review`, {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+              },
+              params: {
+                usuario: nombreUsuario,
+                idPelicula: idPelicula,
+              },
+            })
+            .subscribe(
+              (response) => {
+                console.log(response);
+                this.router.navigate(['/about', nombreUsuario]);
+              },
+              (error) => {
+                console.error(error);
+              }
+            );
+        }
+      });
   }
 
   avisarCambiosGuardados() {
