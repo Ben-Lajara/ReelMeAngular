@@ -14,8 +14,8 @@
                 <span *ngIf="resena.calificacion % 1 != 0 && i == (resena.calificacion - resena.calificacion % 1) + 1" class="text-warning fs-4 fw-bold">&#189;</span>
             </span>
             <div class="mt-2">
-                <p *ngIf="resena.comentario != null && !resena.spoiler">{{resena.comentario}}</p>
-                <div *ngIf="resena.spoiler" (click)="mostrarSpoiler = true" [class.alert]="!mostrarSpoiler" [class.spoiler-revealed]="mostrarSpoiler" role="alert" style="cursor: pointer;">
+                <p *ngIf="resena.comentario != null && !resena.spoiler && !resena.denunciada">{{resena.comentario}}</p>
+                <div *ngIf="resena.spoiler && resena.denunciada == 0" (click)="mostrarSpoiler = true" [class.alert]="!mostrarSpoiler" [class.spoiler-revealed]="mostrarSpoiler" role="alert" style="cursor: pointer;">
                     <i class="bi bi-exclamation-triangle me-2" *ngIf="!mostrarSpoiler"></i> 
                     <span *ngIf="!mostrarSpoiler">{{'reviewPublicaSpoiler' | translate}}</span>
                     <p *ngIf="mostrarSpoiler">{{resena.comentario}}</p>

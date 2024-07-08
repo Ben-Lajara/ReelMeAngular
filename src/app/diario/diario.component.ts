@@ -108,7 +108,6 @@ export class DiarioComponent implements OnInit {
   async getReviews(usuario: string): Promise<void> {
     this.http.get(`${this.apiUrl}/diario/${usuario}`).subscribe(
       async (res: Object) => {
-        console.log(res);
         this.reviews = this.groupReviewsByMonth(res as any[], this.sortOrder);
         await this.getPeliculas();
         this.isLoading = false;

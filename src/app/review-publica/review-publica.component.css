@@ -12,7 +12,7 @@ img {
 
 img:hover {
   border: 2px solid white;
-  transition: border 0.3s ease;
+  transition: border 0.1s ease;
 }
 
 a {

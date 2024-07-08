@@ -56,7 +56,6 @@ export class AboutComponent implements OnInit {
       this.isLoading = true;
       this.getUserData().subscribe((res: any) => {
         this.datos = res;
-        console.log(this.datos);
         this.loadAdditionalData();
       });
     });

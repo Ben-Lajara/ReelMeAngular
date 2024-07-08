@@ -20,14 +20,8 @@ import { forkJoin } from 'rxjs';
   ],
 })
 export class AjustesComponent implements OnInit {
-  fotoSeleccionada: File | null = null;
   username = '';
   usuario: any;
-  pword = '';
-  pword2 = '';
-  pwordBorrar = '';
-  pwordBorrar2 = '';
-  exito = '';
   numResenas = 0;
   isLoading = true;
   apiUrl = CONFIG.apiUrl;

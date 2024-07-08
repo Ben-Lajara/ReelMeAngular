@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
@@ -26,11 +26,16 @@ import {
   ],
 })
 export class PerfilComponent implements OnInit {
+  @Input() usuario: any;
+  email = '';
+  apodo = '';
+  direccion = '';
+  bio = '';
   username = '';
   apiUrl = CONFIG.apiUrl;
   exito = false;
   error = false;
-  mensaje = '';
+  mensaje = false;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -39,66 +44,73 @@ export class PerfilComponent implements OnInit {
   ) {
     this.authService.currentUsername.subscribe((username) => {
       this.username = username;
-      console.log(this.username);
     });
   }
 
   seguidos: any[] = [];
   peliculas: { [key: string]: any } = {};
   ids: any[] = [];
-  usuario: any;
 
   ngOnInit(): void {
     this.getUser().subscribe((res: any) => {
       this.usuario = res;
-      console.log(this.usuario);
+      this.email = this.usuario.email ? this.usuario.email : '';
+      this.apodo = this.usuario.apodo ? this.usuario.apodo : '';
+      this.direccion = this.usuario.direccion ? this.usuario.direccion : '';
+      this.bio = this.usuario.bio ? this.usuario.bio : '';
     });
   }
 
   onSubmit() {
-    this.http.put(`${this.apiUrl}/usuario`, this.usuario).subscribe(
-      (success) => {
-        this.mostrarExito();
-      },
-      (error) => {
-        this.mostrarError();
-      }
-    );
+    this.http
+      .put(
+        `${this.apiUrl}/usuario`,
+        {},
+        {
+          params: {
+            nombre: this.usuario.nombre,
+            email: this.email,
+            apodo: this.apodo,
+            direccion: this.direccion,
+            bio: this.bio,
+          },
+        }
+      )
+      .subscribe(
+        (success) => {
+          this.mostrarExito();
+        },
+        (error) => {
+          this.mostrarError();
+        }
+      );
   }
 
   getUser() {
     return this.http.get(`${this.apiUrl}/usuario/${this.username}`);
   }
 
-  deleteUser() {
-    console.log('Eliminando usuario');
-    console.log(this.usuario);
-    this.http
-      .delete(`${this.apiUrl}/usuario/delete`, { body: this.usuario })
-      .subscribe(
-        (success) => {
-          console.log('Usuario Eliminado');
-          this.router.navigate(['/']);
-        },
-        (error) => {
-          console.log('Error al eliminar usuario', error.error);
-        }
-      );
-  }
-
   mostrarExito() {
-    this.mensaje = 'Se han guardado los cambios correctamente';
+    this.error = false;
     this.exito = true;
+    this.mensaje = true;
+    setTimeout(() => {
+      this.mensaje = false;
+    }, 5000);
     setTimeout(() => {
       this.exito = false;
-    }, 5000);
+    }, 6000);
   }
 
   mostrarError() {
-    this.mensaje = 'Error al guardar los cambios';
+    this.exito = false;
     this.error = true;
+    this.mensaje = true;
+    setTimeout(() => {
+      this.mensaje = false;
+    }, 5000);
     setTimeout(() => {
       this.error = false;
-    }, 5000);
+    }, 6000);
   }
 }

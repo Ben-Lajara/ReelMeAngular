@@ -8,11 +8,26 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-ajustes-cambiar-pword',
   templateUrl: './ajustes-cambiar-pword.component.html',
   styleUrl: './ajustes-cambiar-pword.component.css',
+  animations: [
+    trigger('fade', [
+      state('hidden', style({ opacity: 0 })),
+      state('visible', style({ opacity: 1 })),
+      transition('hidden => visible', [animate('300ms ease-in')]),
+      transition('visible => hidden', [animate('300ms ease-out')]),
+    ]),
+  ],
 })
 export class AjustesCambiarPwordComponent implements OnInit {
   @Input() usuario: any;
@@ -25,6 +40,7 @@ export class AjustesCambiarPwordComponent implements OnInit {
   pwordForm!: UntypedFormGroup;
   exito = false;
   hayError = false;
+  mensaje = false;
 
   constructor(
     private authService: AuthService,
@@ -46,18 +62,52 @@ export class AjustesCambiarPwordComponent implements OnInit {
       return;
     }
 
-    const { pword, pword2 } = this.pwordForm.value;
+    this.http
+      .put(
+        `${this.apiUrl}/usuario/cambiarPword`,
+        {},
+        {
+          params: {
+            nombre: this.usuario.nombre,
+            pword: this.pwordForm.value.pword,
+            pword2: this.pwordForm.value.pword2,
+          },
+        }
+      )
+      .subscribe(
+        (success) => {
+          this.avisarExito();
+          this.pwordForm.reset();
+        },
+        (error) => {
+          this.avisarError();
+        }
+      );
+  }
 
-    this.usuario.pword = pword2;
-    this.http.put(`${this.apiUrl}/cambiarPword`, this.usuario).subscribe(
-      (success) => {
-        this.exito = true;
-        this.hayError = false;
-        this.pwordForm.reset();
-      },
-      (error) => {
-        this.hayError = true;
-      }
-    );
+  avisarExito() {
+    this.hayError = false;
+    this.exito = true;
+    this.mensaje = true;
+    setTimeout(() => {
+      this.mensaje = false;
+    }, 5000);
+    // Se crean dos setTimeouts para evitar que "exito" sea false antes de que desaparezca el mensaje
+    setTimeout(() => {
+      this.exito = false;
+    }, 6000);
+  }
+
+  avisarError() {
+    this.exito = false;
+    this.hayError = true;
+    this.mensaje = true;
+    setTimeout(() => {
+      this.mensaje = false;
+    }, 5000);
+    // Se crean dos setTimeouts para evitar que "hayError" sea false antes de que desaparezca el mensaje
+    setTimeout(() => {
+      this.hayError = false;
+    }, 6000);
   }
 }

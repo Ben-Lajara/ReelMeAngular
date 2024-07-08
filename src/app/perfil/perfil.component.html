@@ -1,42 +1,41 @@
 
-    <form #userForm="ngForm" (ngSubmit)="onSubmit()">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="nombre">{{'ajustesPerfilNombre' | translate}}</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="usuario.nombre" disabled>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="email">{{'ajustesPerfilCorreo' | translate}}</label>
-                    <input type="email" class="form-control" id="email" name="email" [(ngModel)]="usuario.email" required>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="apodo">{{'ajustesPerfilApodo' | translate}}</label>
-                    <input type="text" class="form-control" id="apodo" name="apodo" [(ngModel)]="usuario.apodo">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="ubicacion">{{'ajustesPerfilUbicacion' | translate}}</label>
-                    <input type="ubicacion" class="form-control" id="direccion" name="direccion" [(ngModel)]="usuario.direccion">
-                </div>
-            </div>
-            
+<form #userForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-md-6">
             <div class="form-group">
-                <label for="bio">{{'ajustesPerfilBio' | translate}}</label>
-                <textarea class="form-control" id="bio" name="bio" [(ngModel)]="usuario.bio" required></textarea>
+                <label for="nombre">{{'ajustesPerfilNombre' | translate}}</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="usuario.nombre" disabled>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary w-100">{{'ajustesPerfilActualizar' | translate}}</button>
-        <div [@fade]="exito ? 'visible' : 'hidden'" class="alert alert-success mt-3" role="alert">
-            {{ 'ajustesPerfilExito' | translate}}
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="email">{{'ajustesPerfilCorreo' | translate}}</label>
+                <input type="email" class="form-control" id="email" name="email" [(ngModel)]="email" required [placeholder]="'ajustesPerfilCorreoPlaceholder' | translate">
+            </div>
         </div>
-        <div [@fade]="error ? 'visible' : 'hidden'" class="alert alert-danger mt-3" role="alert">
-            {{ 'ajustesPerfilError' | translate}}
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="apodo">{{'ajustesPerfilApodo' | translate}}</label>
+                <input type="text" class="form-control" id="apodo" name="apodo" [(ngModel)]="apodo" [placeholder]="'ajustesPerfilApodoPlaceholder' | translate">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="ubicacion">{{'ajustesPerfilUbicacion' | translate}}</label>
+                <input type="ubicacion" class="form-control" id="direccion" name="direccion" [(ngModel)]="direccion" [placeholder]="'ajustesPerfilUbicacionPlaceholder' | translate">
+            </div>
         </div>
         
-    </form>
+        <div class="form-group">
+            <label for="bio">{{'ajustesPerfilBio' | translate}}</label>
+            <textarea class="form-control" id="bio" name="bio" [(ngModel)]="bio" [placeholder]="'ajustesPerfilBioPlaceholder' | translate"></textarea>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">{{'ajustesPerfilActualizar' | translate}}</button>
+    <div [@fade]="mensaje ? 'visible': 'hidden'" 
+        [ngClass]="exito ? 'alert alert-success mt-3' : 'alert alert-danger mt-3'" 
+        role="alert">
+          {{ exito ? ('ajustesPerfilExito' | translate) : ('ajustesPerfilError' | translate) }}
+      </div>
+    
+</form>

@@ -71,6 +71,7 @@ export class ReviewComponent implements OnInit {
       this.id = params['id'];
       this.username = params['username'];
       this.busquedaID();
+      this.checkVeto();
 
       this.reelme.busquedaId(this.id).subscribe(() => {
         this.peli = this.reelme.pelicula();
@@ -80,9 +81,7 @@ export class ReviewComponent implements OnInit {
         });
       });
 
-      this.getResena(this.username, this.id).subscribe(() => {
-        this.checkVeto();
-      });
+      this.getResena(this.username, this.id).subscribe(() => {});
     });
   }
 
@@ -208,14 +207,26 @@ export class ReviewComponent implements OnInit {
   }
 
   checkVeto() {
-    if (
-      localStorage.getItem('veto') == null ||
-      localStorage.getItem('veto') == 'null'
-    ) {
-      this.hayVeto = false;
-    } else {
-      this.hayVeto = true;
-    }
+    this.http
+      .get(`${this.apiUrl}/usuario/comprobarVeto`, {
+        params: {
+          nombre: this.username,
+        },
+      })
+      .subscribe(
+        (response: any) => {
+          if (response.status === 'User is vetoed') {
+            console.log('Vetado ' + response.status);
+            this.hayVeto = true;
+          } else {
+            console.log('No vetado ' + response.status);
+            this.hayVeto = false;
+          }
+        },
+        (error) => {
+          console.error('Error: ' + error);
+        }
+      );
   }
 
   agregarRevisionadoNuevo() {

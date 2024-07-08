@@ -26,7 +26,6 @@ export class CardPeliBdComponent implements OnInit {
     const img = new Image();
     img.crossOrigin = 'Anonymous';
     img.onload = () => {
-      console.log('Imagen cargada');
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       const targetWidth = 300;
@@ -37,7 +36,6 @@ export class CardPeliBdComponent implements OnInit {
         ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
         const resizedImageUrl = canvas.toDataURL('image/jpeg');
         this.peli.foto = resizedImageUrl;
-        console.log('Imagen redimensionada');
       } else {
         console.error('No se pudo obtener el contexto del canvas');
       }

@@ -25,12 +25,7 @@ export class CardReviewComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    console.log(this.usuarioRuta);
-    console.log(this.currentUsername);
-    console.log(this.review);
-    console.log(this.peli.id);
-  }
+  ngOnInit(): void {}
 
   redirigir() {
     if (this.usuarioRuta === this.currentUsername) {

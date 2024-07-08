@@ -12,10 +12,10 @@
         </ng-container>
       </span>
       <div class="tooltip-title">
-        <span *ngIf="resena.comentario != null && !resena.spoiler" class="tooltip-title">
+        <span *ngIf="resena.comentario != null && !resena.spoiler && !resena.denunciada" class="tooltip-title">
           {{resena.comentario}}
         </span>
-        <div id="alertaSpoiler" *ngIf="resena.spoiler" role="alert">
+        <div id="alertaSpoiler" *ngIf="resena.spoiler && !resena.denunciada" role="alert">
           <i class="bi bi-exclamation-triangle me-2"></i> 
           <span class="advertenciaSpoiler">{{'detallesAdvertencia' | translate}}</span>
           <!--<p *ngIf="mostrarSpoiler">{{resena.comentario}}</p>-->

@@ -34,12 +34,11 @@
         {{ 'ajustesCambiarPwordBoton' | translate }}
       </button>
       
+      <div [@fade]="mensaje ? 'visible': 'hidden'" 
+        [ngClass]="exito ? 'alert alert-success mt-3' : 'alert alert-danger mt-3'" 
+        role="alert">
+          {{ exito ? ('ajustesCambiarPwordExito' | translate) : ('ajustesCambiarPwordError' | translate) }}
+      </div>
     </form>
-    <div *ngIf="exito" class="alert alert-success mt-3" role="alert">
-      {{'ajustesCambiarPwordExito' | translate}}
-    </div>
-    <div *ngIf="hayError" class="alert alert-danger mt-3" role="alert">
-      {{'ajustesCambiarPwordError' | translate}}
-    </div>
   </div>
 </div>

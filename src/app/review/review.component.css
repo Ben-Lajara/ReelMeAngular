@@ -42,3 +42,28 @@ i {
 img {
   max-width: 100%;
 }
+
+.textarea-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.textarea-wrapper textarea:disabled {
+  cursor: not-allowed;
+}
+
+.textarea-wrapper .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  text-align: center;
+  pointer-events: none; /* Permite que los eventos pasen al textarea deshabilitado */
+  border-radius: 0.25rem;
+}
