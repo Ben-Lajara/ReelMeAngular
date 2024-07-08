@@ -26,11 +26,15 @@ export class ReelMeService {
     this.http
       .get<Array<any>>(this.urlBase + '&s=' + mensaje)
       .subscribe((response: any) => {
-        //Devuelve un array de películas.
-        this.pelis = response.Search.filter(
-          //Se filtran por tipo 'movie' para evitar series y videojuegos en la medida de lo posible.
-          (peli: { Type: string }) => peli.Type === 'movie'
-        );
+        // Filtra los resultados por categoría 'movie'.
+        const peliculas = response.Search
+          ? response.Search.filter(
+              (peli: { Type: string }) => peli.Type === 'movie'
+            )
+          : [];
+
+        // Asigna las películas filtradas o 'undefined' si no se encuentra ninguna.
+        this.pelis = peliculas.length > 0 ? peliculas : undefined;
       });
   }
 

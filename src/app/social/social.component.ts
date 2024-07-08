@@ -11,11 +11,20 @@ import {
 import { AuthService } from '../auth.service';
 import { FormControl } from '@angular/forms';
 import { CONFIG } from 'config';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-social',
   templateUrl: './social.component.html',
   styleUrls: ['./social.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('500ms', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class SocialComponent implements OnInit {
   usuarios: any[] = [];
