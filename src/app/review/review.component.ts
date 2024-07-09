@@ -275,7 +275,7 @@ export class ReviewComponent implements OnInit {
 
   eliminarReview(nombreUsuario: string, idPelicula: string) {
     this.translate
-      .get('reviewConfirmarEliminacion')
+      .get('reviewConfirmacionEliminacionResena')
       .subscribe((mensaje: string) => {
         if (confirm(mensaje)) {
           this.http

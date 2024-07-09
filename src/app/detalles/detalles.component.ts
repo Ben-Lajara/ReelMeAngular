@@ -23,7 +23,7 @@ import { CONFIG } from 'config';
     trigger('fadeIn', [
       transition(':enter', [
         style({ opacity: 0 }),
-        animate('800ms', style({ opacity: 1 })),
+        animate('1500ms', style({ opacity: 1 })),
       ]),
     ]),
   ],

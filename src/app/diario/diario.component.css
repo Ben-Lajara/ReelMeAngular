@@ -30,3 +30,34 @@ th {
   justify-content: space-between;
   align-items: center;
 }
+
+h2 {
+  margin-left: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .encabezado {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  h2 {
+    margin-left: 0.2rem;
+    margin-bottom: 0.2rem;
+    font-size: 1rem;
+    font-weight: 450;
+  }
+
+  .toggle-sort-button {
+    padding-bottom: 0.1rem;
+    padding-top: 0.1rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+  }
+
+  .encabezado .bi {
+    font-size: 0.8rem;
+  }
+}

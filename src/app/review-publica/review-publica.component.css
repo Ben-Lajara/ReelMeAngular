@@ -10,9 +10,20 @@ img {
   border-bottom: 1px solid #ffffff;
 }
 
-img:hover {
+.img-fluid:hover {
   border: 2px solid white;
-  transition: border 0.1s ease;
+}
+
+.usuario {
+  margin-bottom: 0.4rem;
+}
+
+#perfilUsuario {
+  transition: transform 0.3s ease-in-out;
+}
+
+#perfilUsuario:hover {
+  transform: scale(1.1);
 }
 
 a {

@@ -3,7 +3,7 @@
       <ng-container *ngFor="let monthYear of reviews | keys; let i = index">
         <thead>
           <tr>
-            <th><h2>{{ monthYear | date: 'MMMM yyyy' }}</h2><button *ngIf="i === 0" class="btn btn-secondary-outline btn-md toggle-sort-button" (click)="toggleSortOrder()">
+            <th class="encabezado"><h2>{{ monthYear | date: 'MMMM yyyy' }}</h2><button *ngIf="i === 0" class="btn btn-secondary-outline btn-md toggle-sort-button" (click)="toggleSortOrder()">
               <i class="bi" [ngClass]="{'bi-sort-down': sortOrder === 'asc', 'bi-sort-up': sortOrder === 'desc'}"></i>
             </button></th>
           </tr>

@@ -127,6 +127,7 @@ i.bi-heart-fill {
   }
 
   .rating .bi,
+  .rating .mitad,
   .actions .bi {
     font-size: 0.75rem;
   }
@@ -134,6 +135,7 @@ i.bi-heart-fill {
 
 @media (min-width: 768px) and (max-width: 992px) {
   .rating .bi,
+  .rating .mitad,
   .actions .bi {
     font-size: 0.8rem;
   }

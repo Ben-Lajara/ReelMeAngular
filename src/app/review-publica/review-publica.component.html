@@ -4,9 +4,11 @@
             <img src="{{resena.foto}}" class="rounded card-img-top img-fluid" routerLink="/details/{{id}}">
         </td>
         <td class="col-12 col-md-6">
-            <h6 id='encabezado'>{{'reviewPublicaTitulo' | translate}} <a [routerLink]="['/about', resena.usuario]" id="usuario">{{resena.usuario}}</a></h6>
+            <!--<h6 id='encabezado'>{{'reviewPublicaTitulo' | translate}} <a [routerLink]="['/about', resena.usuario]" id="usuario">{{resena.usuario}}</a></h6>-->
+            <div class="usuario"><img id="perfilUsuario" [src]="'http://localhost:8080/uploads/' + resena.perfil" alt="" height="30px" width="30px" class="rounded-circle" [routerLink]="['/about', resena.usuario]">
+                {{resena.usuario}}</div>
             <h4>
-                {{resena.titulo}} ({{resena.year}}) 
+                <strong>{{resena.titulo}}</strong> ({{resena.year}}) 
             </h4>
             <span *ngFor="let i of [1, 2, 3, 4, 5]">
                 <i *ngIf="resena.calificacion % 1 == 0" class="text-warning bi" [ngClass]="{'bi-star-fill': i <= resena.calificacion}"></i>
