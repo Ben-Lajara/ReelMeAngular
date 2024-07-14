@@ -49,6 +49,20 @@ La aplicación cuenta con la posibilidad de alternar entre los idiomas _español
 
 Es la página inicial, mostrada antes del inicio de sesión o del registro. Muestra una serie de información para animar a que los usuarios se registren.
 
+### Inicio de sesión
+
+Formulario para iniciar sesión. En caso de no estar registrado, el usuario puede registrarse pinchando en el enlace que le redirige al `registro`. Si no recuerda su contraseña, puede hacer uso del `restablecimiento de contraseña`.
+
+### Registro
+
+Formulario para crear cuenta en la aplicación. Son necesarios el _nombre de usuario_, el _email_ y la _contraseña_ (es necesario repetirla a modo de confirmación). Tras introducir un nombre de usuario y pasar a la siguiente casilla del formulario, se realiza una búsqueda en la base de datos para comprobar si el nombre está disponible. En caso de no estarlo se indica el error, impidiendo el envío del formulario.
+
+### Restablecer / Restablecimiento
+
+Si el usuario no recuerda su contraseña, puede restablecerla. El componente `restablecer` consiste en un breve formulario en el que se debe introducir el `email` del usuario. Desde el `backend` se envía un enlace al correo, que redirige a `restablecimiento`.
+
+El componente `restablecimiento` pide la nueva contraseña dos veces a modo de confirmación. Si todo está correcto, se restablecerá la contraseña y el usuario será redirigido al `inicio de sesión`.
+
 ### Inicio
 
 En esta página se muestran las películas más populares y la última película vista por las cuentas que sigue el usuario (si no sigue ninguna cuenta, se muestra un aviso indicándolo).
