@@ -11,8 +11,10 @@ import { map, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class ReelMeService {
-  urlBase = 'http://www.omdbapi.com/?apikey=495d7a25';
+  urlBase = 'http://www.omdbapi.com/?apikey=';
+  apiOMDB = '(Introduce tu API Key de OMDB)';
   urlTMDB = 'https://api.themoviedb.org/3';
+  apiTMDB = '(Introduce tu API Key de TMDB)';
   pelis = new Array();
   peli: any;
   peliTMDB: any;
@@ -24,7 +26,7 @@ export class ReelMeService {
   //Método para buscar películas por nombre en la API de OMDB. Se usa en la búsqueda de películas.
   busqueda(mensaje: string) {
     this.http
-      .get<Array<any>>(this.urlBase + '&s=' + mensaje)
+      .get<Array<any>>(this.urlBase + this.apiOMDB + '&s=' + mensaje)
       .subscribe((response: any) => {
         // Filtra los resultados por categoría 'movie'.
         const peliculas = response.Search
@@ -40,7 +42,7 @@ export class ReelMeService {
 
   //Busca por id específico en la API de OMDB. Se utiliza para los detalles y la reseña.
   busquedaId(id: string) {
-    return this.http.get<any>(this.urlBase + '&i=' + id).pipe(
+    return this.http.get<any>(this.urlBase + this.apiOMDB + '&i=' + id).pipe(
       tap((response) => {
         this.peli = response;
       })
@@ -60,7 +62,9 @@ export class ReelMeService {
         this.urlTMDB +
           '/movie/' +
           id +
-          `?api_key=2663bd6e5dd4ea342aa1f60dd1d669f9&language=${this.getTmdbLanguage()}&external_source=imdb_id`
+          `?api_key=` +
+          this.apiTMDB +
+          `&language=${this.getTmdbLanguage()}&external_source=imdb_id`
       )
       .pipe(
         tap((response) => {
@@ -76,7 +80,9 @@ export class ReelMeService {
         this.urlTMDB +
           '/movie/' +
           id +
-          `/watch/providers?api_key=2663bd6e5dd4ea342aa1f60dd1d669f9&language=${this.getTmdbLanguage()}&external_source=imdb_id`
+          `/watch/providers?api_key=` +
+          this.apiTMDB +
+          `&language=${this.getTmdbLanguage()}&external_source=imdb_id`
       )
       .pipe(
         tap((response) => {
@@ -92,7 +98,9 @@ export class ReelMeService {
         this.urlTMDB +
           '/movie/' +
           id +
-          `?api_key=2663bd6e5dd4ea342aa1f60dd1d669f9&language=${this.getTmdbLanguage()}&external_source=imdb_id`
+          `?api_key=` +
+          this.apiTMDB +
+          `&language=${this.getTmdbLanguage()}&external_source=imdb_id`
       )
       .pipe(
         tap((response) => {
@@ -112,7 +120,7 @@ export class ReelMeService {
   sagaTMDB(id: string) {
     return this.http
       .get<any>(
-        `https://api.themoviedb.org/3/collection/${id}?api_key=2663bd6e5dd4ea342aa1f60dd1d669f9`
+        `https://api.themoviedb.org/3/collection/${id}?api_key=` + this.apiTMDB
       )
       .pipe(
         map((response) =>
@@ -127,7 +135,9 @@ export class ReelMeService {
   trailerTMDB(id: string) {
     return this.http
       .get<any>(
-        `https://api.themoviedb.org/3/movie/${id}/videos?api_key=2663bd6e5dd4ea342aa1f60dd1d669f9&language=en-US&external_source=imdb_id`
+        `https://api.themoviedb.org/3/movie/${id}/videos?api_key=` +
+          this.apiTMDB +
+          `&language=en-US&external_source=imdb_id`
       )
       .pipe(
         tap((response) => {

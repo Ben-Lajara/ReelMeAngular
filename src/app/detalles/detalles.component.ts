@@ -344,7 +344,7 @@ export class DetallesComponent implements OnInit {
   }
 
   async getTrailer(nombre: string) {
-    const apiKey = 'AIzaSyDGIswB-EArefbRs6cdzWa_fRjq_NXhfZI';
+    const apiKey = '(Introduce tu API Key de Youtube)';
     const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${nombre} official trailer&key=${apiKey}`;
     try {
       const response = await this.http

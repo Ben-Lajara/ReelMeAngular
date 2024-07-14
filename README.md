@@ -6,9 +6,44 @@ ReelMe es una aplicación web de reseñas de películas, donde los usuarios pued
 
 ## Descripción
 
-Este _frontend_ está desarrollado en `Angular` y provee la interfaz de usuario del proyecto. Para ello, hace uso de llamadas a la `API` del _backend_ y a las `APIs` de `OMDB` y `TMDB`.
+Este _frontend_ está desarrollado en `Angular` y provee la interfaz de usuario del proyecto. Para ello, hace uso de llamadas a la `API` del _backend_ y a las `APIs` de `OMDB`, `TMDB` y `YouTube`.
 
 ## Funcionamiento
+
+### APIs
+
+El frontend de _ReelMe_ hace uso de 4 `APIs` para su funcionamiento. Tres de ellas son externas, mientras que la cuarta es la que genera el _backend_.
+
+> [!IMPORTANT]
+> Para las _APIs_ externas es necesario el uso de sus respectivas _API Keys_.
+
+#### Open Movie Database (OMDB)
+
+Se usa en la búsqueda de las películas y es de donde se extraen los datos para las películas al insertarlas en la base de datos. Su elección para esta función es debido a que solo provee los datos en inglés, proporcionando así uniformidad en la base de datos.
+
+Su _API Key_ se debe especificar en el parámetro `apiOMDB`, en `reel-me.service.ts`. Se puede generar [aquí](https://www.omdbapi.com/apikey.aspx).
+
+#### The Movie Database (TMDB)
+
+Esta _API_ se usa únicamente en el apartado de detalles de las películas, ya que proporciona más datos que la _API_ de _OMDB_ pero lo hace en múltiples idiomas que pueden ser especificados al realizar la llamada. El idioma se especifica mediante el desplegable de idiomas de la barra de navegación.
+
+Su _API Key_ se debe especificar en el parámetro `apiTMDB`, en `reel-me.service.ts`. Se puede generar [aquí](https://developer.themoviedb.org/reference/intro/getting-started).
+
+#### YouTube
+
+Se usa para mostrar el _trailer_ de la película en la sección de detalles. Devuelve el primer resultado de la búsqueda del nombre de la película y su año de estreno más las palabras clave _official trailer_.
+
+Su _API Key_ se debe especificar en la constante `apiKey` del método `getTrailer` de `detalles.component.ts`. Se puede obtener la _API Key_ siguiendo [estas instrucciones](https://developers.google.com/youtube/v3/getting-started?hl=es-419).
+
+#### API REST del _backend_
+
+Se trata de la _API REST_ generada por el _backend_ de la aplicación, cuyo código y documentación se encuentran en [este repositorio](https://github.com/Ben-Lajara/ReelMeSpringBoot). Su uso es imprescindible para el funcionamiento de la aplicación, ya que se encarga de extraer, modificar e insertar información en la base de datos.
+
+### Internacionalización
+
+La aplicación cuenta con la posibilidad de alternar entre los idiomas _español_ e _inglés_ gracias a un desplegable en la `navbar`. Los textos de la aplicación se encuentran en los ficheros `es.js` y `en.js`, preparados para su llamada en el código de la aplicación, que los filtra mediante la _pipe_ `translate` en el caso de los ficheros _HTML_ y del método `translate` en los ficheros _TypeScript_.
+
+## Estructura
 
 ### Landing Page
 
@@ -51,6 +86,19 @@ Se trata de un formulario donde el usuario podrá puntuar la película mediante 
 Además puede anotar sus revisionados, los cuales no pueden tener una fecha superior a la actual ni anterior al visionado original.
 
 Si el usuario ya ha efectuado una reseña de la película, se mostrarán los datos guardados, permitiendo modificar tanto la reseña como los revisionados.
+
+### Ajustes
+
+En esta sección, el usuario podrá realizar modificaciones en su cuenta. En los dispositivos estrechos (móviles), se presentan las diversas secciones a modo de desplegable, mientras que en el resto se hace uso de `navs`.
+
+| Sección                  | Descripción                                                                                                                                                                                           | Componente               |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| Cambiar imagen de perfil | En la zona superior del apartado, se muestra el icono de perfil del usuario. Al pulsarlo se muestra un `modal` donde podrá elegir una de las imágenes disponibles, que se establecerá como su perfil. | `ajustes-foto-perfil`    |
+| Barra de progreso        | Se ubica bajo la imagen de perfil e indica las películas restantes para que el usuario pase al siguiente rango.                                                                                       | `ajustes-barra-progreso` |
+| Editar perfil            | Formulario que permite editar el `correo`, el `apodo`, la `ubicación` y la `bio` del usuario.                                                                                                         | `perfil`                 |
+| Personalizar avatar      | Muestra los colores disponibles para los marcos de perfil. El usuario solo podrá hacer uso de los que sean apropiados a su rango.                                                                     | `ajustes-personalizar`   |
+| Cambiar contraseña       | Breve formulario que permite cambiar de contraseña.                                                                                                                                                   | `ajustes-cambiar-pword`  |
+| Borrar cuenta            | Un breve formulario que pide introducir la contraseña dos veces. Si el usuario acepta en el `confirm`, se borrará automáticamente la cuenta.                                                          | `ajustes-borrar-cuenta`  |
 
 ### Panel de administrador
 

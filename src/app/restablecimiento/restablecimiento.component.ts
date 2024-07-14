@@ -1,3 +1,10 @@
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -12,6 +19,14 @@ import { CONFIG } from 'config';
   selector: 'app-restablecimiento',
   templateUrl: './restablecimiento.component.html',
   styleUrls: ['./restablecimiento.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('800ms', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class RestablecimientoComponent implements OnInit {
   token = '';
@@ -66,10 +81,20 @@ export class RestablecimientoComponent implements OnInit {
   }
 
   restablecerPword() {
-    const pword = this.restablecimientoForm.get('pword2')?.value;
-    this.usuario.pword = pword;
+    console.log(this.token);
     this.http
-      .put(`${this.apiUrl}/usuario/cambiarPword`, this.usuario)
+      .put(
+        `${this.apiUrl}/usuario/resetPword`,
+        {},
+        {
+          params: {
+            nombre: this.usuario.nombre,
+            pword: this.restablecimientoForm.value.pword1,
+            pword2: this.restablecimientoForm.value.pword2,
+            token: this.token,
+          },
+        }
+      )
       .subscribe(
         (success) => {
           console.log('Password Updated');

@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -12,6 +13,14 @@ import { CONFIG } from 'config';
   selector: 'app-restablecer',
   templateUrl: './restablecer.component.html',
   styleUrls: ['./restablecer.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('800ms', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class RestablecerComponent implements OnInit {
   restablecerForm!: UntypedFormGroup;
