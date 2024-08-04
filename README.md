@@ -93,9 +93,13 @@ Muestra los resultados a través de tarjetas, que al pulsarlas redirigen a los d
 
 ### Detalles
 
-Muestra información de una película en específico, así como sus estadísticas en la aplicación. Si el usuario ha iniciado sesión, muestra dos secciones más: una tarjeta que muestra si ha reseñado o no la película (y la calificación que le ha dado en caso de haberlo hecho), además del botón de escribir/editar reseña y un apartado mostrando las cuentas que sigue el usuario que han reseñado la película.
+Muestra información de una película en específico, así como sus estadísticas en la aplicación.
 
 ![Detalles](/src/assets/images/capturas/detalles.png)
+
+Si el usuario ha iniciado sesión, muestra dos secciones más: una tarjeta que muestra si ha reseñado o no la película (y la calificación que le ha dado en caso de haberlo hecho), además del botón de escribir/editar reseña y un apartado mostrando las cuentas que sigue el usuario que han reseñado la película.
+
+![Detalles continuación](/src/assets/images/capturas/detalles2.png)
 
 ### Perfil
 
@@ -143,14 +147,14 @@ En esta sección, el usuario podrá realizar modificaciones en su cuenta. En los
 
 ![Ajustes](/src/assets/images/capturas/ajustes.png)
 
-| Sección                  | Descripción                                                                                                                                                                                           | Componente               | Imagen                                                                     |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | -------------------------------------------------------------------------- |
-| Cambiar imagen de perfil | En la zona superior del apartado, se muestra el icono de perfil del usuario. Al pulsarlo se muestra un `modal` donde podrá elegir una de las imágenes disponibles, que se establecerá como su perfil. | `ajustes-foto-perfil`    | ![Cambiar perfil](/src/assets/images/capturas/ajustesCambiarPerfil.png)    |
-| Barra de progreso        | Se ubica bajo la imagen de perfil e indica las películas restantes para que el usuario pase al siguiente rango.                                                                                       | `ajustes-barra-progreso` | ![Barra de progreso](/src/assets/images/capturas/ajustesBarraProgreso.png) |
-| Editar perfil            | Formulario que permite editar el `correo`, el `apodo`, la `ubicación` y la `bio` del usuario.                                                                                                         | `perfil`                 | ![Editar perfil](/src/assets/images/capturas/ajustesEditarPerfil.png)      |
-| Personalizar avatar      | Muestra los colores disponibles para los marcos de perfil. El usuario solo podrá hacer uso de los que sean apropiados a su rango.                                                                     | `ajustes-personalizar`   | ![Personalizar](/src/assets/images/capturas/ajustesPersonalizar.png)       |
-| Cambiar contraseña       | Breve formulario que permite cambiar de contraseña.                                                                                                                                                   | `ajustes-cambiar-pword`  | ![Cambiar contraseña](/src/assets/images/capturas/ajustesCambiarPword.png) |
-| Borrar cuenta            | Un breve formulario que pide introducir la contraseña dos veces. Si el usuario acepta en el `confirm`, se borrará automáticamente la cuenta.                                                          | `ajustes-borrar-cuenta`  | ![Borrar cuenta](/src/assets/images/capturas/ajustesBorrarCuenta.png)      |
+| Sección                  | Descripción                                                                                                                                                                                           | Imagen                                                                     |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Cambiar imagen de perfil | En la zona superior del apartado, se muestra el icono de perfil del usuario. Al pulsarlo se muestra un `modal` donde podrá elegir una de las imágenes disponibles, que se establecerá como su perfil. | ![Cambiar perfil](/src/assets/images/capturas/ajustesCambiarPerfil.png)    |
+| Barra de progreso        | Se ubica bajo la imagen de perfil e indica las películas restantes para que el usuario pase al siguiente rango.                                                                                       | ![Barra de progreso](/src/assets/images/capturas/ajustesBarraProgreso.png) |
+| Editar perfil            | Formulario que permite editar el `correo`, el `apodo`, la `ubicación` y la `bio` del usuario.                                                                                                         | ![Editar perfil](/src/assets/images/capturas/ajustesEditarPerfil.png)      |
+| Personalizar avatar      | Muestra los colores disponibles para los marcos de perfil. El usuario solo podrá hacer uso de los que sean apropiados a su rango.                                                                     | ![Personalizar](/src/assets/images/capturas/ajustesPersonalizar.png)       |
+| Cambiar contraseña       | Breve formulario que permite cambiar de contraseña.                                                                                                                                                   | ![Cambiar contraseña](/src/assets/images/capturas/ajustesCambiarPword.png) |
+| Borrar cuenta            | Un breve formulario que pide introducir la contraseña dos veces. Si el usuario acepta en el `confirm`, se borrará automáticamente la cuenta.                                                          | ![Borrar cuenta](/src/assets/images/capturas/ajustesBorrarCuenta.png)      |
 
 ### Panel de administrador
 
