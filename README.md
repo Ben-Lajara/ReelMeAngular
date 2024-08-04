@@ -49,27 +49,45 @@ La aplicación cuenta con la posibilidad de alternar entre los idiomas _español
 
 Es la página inicial, mostrada antes del inicio de sesión o del registro. Muestra una serie de información para animar a que los usuarios se registren.
 
+![Landing page](/src/assets/images/capturas/landingPage.png)
+
+![Landing page](/src/assets/images/capturas/landingPage2.png)
+
 ### Inicio de sesión
 
 Formulario para iniciar sesión. En caso de no estar registrado, el usuario puede registrarse pinchando en el enlace que le redirige al `registro`. Si no recuerda su contraseña, puede hacer uso del `restablecimiento de contraseña`.
+
+![Inicio de sesión](/src/assets/images/capturas/login.png)
 
 ### Registro
 
 Formulario para crear cuenta en la aplicación. Son necesarios el _nombre de usuario_, el _email_ y la _contraseña_ (es necesario repetirla a modo de confirmación). Tras introducir un nombre de usuario y pasar a la siguiente casilla del formulario, se realiza una búsqueda en la base de datos para comprobar si el nombre está disponible. En caso de no estarlo se indica el error, impidiendo el envío del formulario.
 
+![Registro](/src/assets/images/capturas/registro.png)
+
 ### Restablecer / Restablecimiento
 
 Si el usuario no recuerda su contraseña, puede restablecerla. El componente `restablecer` consiste en un breve formulario en el que se debe introducir el `email` del usuario. Desde el `backend` se envía un enlace al correo, que redirige a `restablecimiento`.
 
+![Restablecer](/src/assets/images/capturas/restablecer.png)
+
 El componente `restablecimiento` pide la nueva contraseña dos veces a modo de confirmación. Si todo está correcto, se restablecerá la contraseña y el usuario será redirigido al `inicio de sesión`.
+
+![Restablecimiento](/src/assets/images/capturas/restablecimiento.png)
 
 ### Inicio
 
 En esta página se muestran las películas más populares y la última película vista por las cuentas que sigue el usuario (si no sigue ninguna cuenta, se muestra un aviso indicándolo).
 
+![Página de inicio](/src/assets/images/capturas/inicio.png)
+
 ### Búsqueda
 
 Si el usuario ha iniciado sesión, permite buscar películas y usuarios mediante una `nav` para elegir la opción. En caso contrario, permite buscar únicamente las películas.
+
+![Búsqueda de películas](/src/assets/images/capturas/busquedaPeliculas.png)
+
+![Búsqueda de usuarios](/src/assets/images/capturas/busquedaUsuarios.png)
 
 Muestra los resultados a través de tarjetas, que al pulsarlas redirigen a los detalles de la película o al perfil del usuario.
 
@@ -77,13 +95,17 @@ Muestra los resultados a través de tarjetas, que al pulsarlas redirigen a los d
 
 Muestra información de una película en específico, así como sus estadísticas en la aplicación. Si el usuario ha iniciado sesión, muestra dos secciones más: una tarjeta que muestra si ha reseñado o no la película (y la calificación que le ha dado en caso de haberlo hecho), además del botón de escribir/editar reseña y un apartado mostrando las cuentas que sigue el usuario que han reseñado la película.
 
+![Detalles](/src/assets/images/capturas/detalles.png)
+
 ### Perfil
 
 Muestra los datos públicos del usuario, con una tarjeta en la parte superior indicando su nombre, una _badge_ indicativa (en caso de tener suficiente rango), el número de películas reseñadas, las películas vistas este año, los seguidores y los seguidos.
 
+![Perfil](/src/assets/images/capturas/perfil.png)
+
 Debajo de esta tarjeta, se muestran 3 apartados:
 
-- _Actividad reciente_, que muestra las cuatro últimas películas reseñadas e indica si se trata de un visionado.
+- _Actividad reciente_, que muestra las cuatro últimas películas reseñadas e indica si se trata de un revisionado.
 - _Reseñas_, que muestra todas las reseñas que ha realizado el usuario.
 - _Diario_, que permite visualizar el diario del usuario. Si se trata del usuario con sesión iniciada en el dispositivo, muestra el botón de editar.
 
@@ -93,6 +115,8 @@ En este apartado se visualizan a modo de historial las películas reseñadas por
 
 El componente comprueba si se trata del mismo usuario con sesión iniciada, de manera que muestra el botón de editar en caso afirmativo, redirigiendo al formulario de reseña.
 
+![Diario](/src/assets/images/capturas/diario.png)
+
 ### Reseña
 
 Se trata de un formulario donde el usuario podrá puntuar la película mediante un sistema de estrellas, indicar si le ha gustado y escribir una reseña (pudiendo indicar si contiene _spoilers_). La fecha es obligatoria y por defecto es la actual, no permitiendo una fecha posterior a la misma.
@@ -101,22 +125,38 @@ Además puede anotar sus revisionados, los cuales no pueden tener una fecha supe
 
 Si el usuario ya ha efectuado una reseña de la película, se mostrarán los datos guardados, permitiendo modificar tanto la reseña como los revisionados.
 
+![Reseña](/src/assets/images/capturas/resena.png)
+
+### Reseña pública
+
+Muestra la calificación y el comentario del usuario, indicando si hay revisionados con sus respectivos comentarios (si los hay).
+
+![Reseña pública](/src/assets/images/capturas/resenaPublica.png)
+
+En caso de presentar contenido ofensivo, se puede realizar una denuncia.
+
+![Denuncia de reseña pública](/src/assets/images/capturas/resenaPublicaDenuncia.png)
+
 ### Ajustes
 
 En esta sección, el usuario podrá realizar modificaciones en su cuenta. En los dispositivos estrechos (móviles), se presentan las diversas secciones a modo de desplegable, mientras que en el resto se hace uso de `navs`.
 
-| Sección                  | Descripción                                                                                                                                                                                           | Componente               |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
-| Cambiar imagen de perfil | En la zona superior del apartado, se muestra el icono de perfil del usuario. Al pulsarlo se muestra un `modal` donde podrá elegir una de las imágenes disponibles, que se establecerá como su perfil. | `ajustes-foto-perfil`    |
-| Barra de progreso        | Se ubica bajo la imagen de perfil e indica las películas restantes para que el usuario pase al siguiente rango.                                                                                       | `ajustes-barra-progreso` |
-| Editar perfil            | Formulario que permite editar el `correo`, el `apodo`, la `ubicación` y la `bio` del usuario.                                                                                                         | `perfil`                 |
-| Personalizar avatar      | Muestra los colores disponibles para los marcos de perfil. El usuario solo podrá hacer uso de los que sean apropiados a su rango.                                                                     | `ajustes-personalizar`   |
-| Cambiar contraseña       | Breve formulario que permite cambiar de contraseña.                                                                                                                                                   | `ajustes-cambiar-pword`  |
-| Borrar cuenta            | Un breve formulario que pide introducir la contraseña dos veces. Si el usuario acepta en el `confirm`, se borrará automáticamente la cuenta.                                                          | `ajustes-borrar-cuenta`  |
+![Ajustes](/src/assets/images/capturas/ajustes.png)
+
+| Sección                  | Descripción                                                                                                                                                                                           | Componente               | Imagen                                                                     |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | -------------------------------------------------------------------------- |
+| Cambiar imagen de perfil | En la zona superior del apartado, se muestra el icono de perfil del usuario. Al pulsarlo se muestra un `modal` donde podrá elegir una de las imágenes disponibles, que se establecerá como su perfil. | `ajustes-foto-perfil`    | ![Cambiar perfil](/src/assets/images/capturas/ajustesCambiarPerfil.png)    |
+| Barra de progreso        | Se ubica bajo la imagen de perfil e indica las películas restantes para que el usuario pase al siguiente rango.                                                                                       | `ajustes-barra-progreso` | ![Barra de progreso](/src/assets/images/capturas/ajustesBarraProgreso.png) |
+| Editar perfil            | Formulario que permite editar el `correo`, el `apodo`, la `ubicación` y la `bio` del usuario.                                                                                                         | `perfil`                 | ![Editar perfil](/src/assets/images/capturas/ajustesEditarPerfil.png)      |
+| Personalizar avatar      | Muestra los colores disponibles para los marcos de perfil. El usuario solo podrá hacer uso de los que sean apropiados a su rango.                                                                     | `ajustes-personalizar`   | ![Personalizar](/src/assets/images/capturas/ajustesPersonalizar.png)       |
+| Cambiar contraseña       | Breve formulario que permite cambiar de contraseña.                                                                                                                                                   | `ajustes-cambiar-pword`  | ![Cambiar contraseña](/src/assets/images/capturas/ajustesCambiarPword.png) |
+| Borrar cuenta            | Un breve formulario que pide introducir la contraseña dos veces. Si el usuario acepta en el `confirm`, se borrará automáticamente la cuenta.                                                          | `ajustes-borrar-cuenta`  | ![Borrar cuenta](/src/assets/images/capturas/ajustesBorrarCuenta.png)      |
 
 ### Panel de administrador
 
 Esta sección solo está disponible para el usuario con rol de administrador (`ROLE_ADMIN`) y muestra las denuncias efectuadas por los usuarios en las reseñas públicas. El administrador podrá aceptar o rechazar las solicitudes, indicando el tiempo de amonestación en caso de aceptarla.
+
+![Panel de administrador](/src/assets/images/capturas/panelAdmin.png)
 
 Al efectuar un veto, la reseña que ha sido denunciada se oculta de cara al público y el usuario no podrá escribir reseñas durante el periodo que el administrador ha establecido conveniente (sí puede, no obstante, hacer uso del resto del formulario de reseña).
 
